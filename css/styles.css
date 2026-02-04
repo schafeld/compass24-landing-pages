@@ -368,6 +368,158 @@ a:focus {
 }
 
 /* ============================================
+   GRIDS
+   ============================================ */
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-6);
+  margin-top: var(--space-8);
+}
+
+.card-grid--benefits {
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--space-8);
+}
+
+.process-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--space-6);
+  margin-top: var(--space-8);
+}
+
+/* ============================================
+   PROCESS STEPS
+   ============================================ */
+
+.process-step {
+  text-align: center;
+}
+
+.process-step__number {
+  width: 80px;
+  height: 80px;
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  margin: 0 auto var(--space-4);
+}
+
+.process-step__title {
+  font-size: var(--font-size-lg);
+  margin-bottom: var(--space-2);
+}
+
+.process-step__description {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+/* ============================================
+   JOB LISTINGS
+   ============================================ */
+
+.job-listing__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+
+.job-listing__content {
+  flex: 1;
+  min-width: 250px;
+}
+
+.job-listing__meta {
+  display: flex;
+  gap: var(--space-4);
+  margin-bottom: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.job-listing__meta-item {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+.job-listing__tasks {
+  margin-top: var(--space-4);
+}
+
+.job-listing__tasks-title {
+  color: var(--color-text-primary);
+}
+
+.job-listing__tasks-list {
+  margin: var(--space-2) 0 0 var(--space-6);
+  color: var(--color-text-secondary);
+}
+
+/* ============================================
+   SPECIAL TEXT STYLES
+   ============================================ */
+
+.section__intro {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+  font-size: var(--font-size-lg);
+  color: var(--color-text-secondary);
+}
+
+.cta__description {
+  font-size: var(--font-size-lg);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-6);
+}
+
+.emoji-icon {
+  font-size: var(--font-size-4xl);
+  color: var(--color-primary);
+  margin-bottom: var(--space-3);
+}
+
+/* ============================================
+   CTA SECTION
+   ============================================ */
+
+.cta-box {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+  border-radius: var(--border-radius-xl);
+  padding: var(--space-12);
+  text-align: center;
+  color: var(--color-white);
+}
+
+.cta-box__title {
+  font-size: var(--font-size-3xl);
+  margin-bottom: var(--space-4);
+  color: var(--color-white);
+}
+
+.cta-box__description {
+  font-size: var(--font-size-lg);
+  margin-bottom: var(--space-8);
+  color: var(--color-gray-100);
+}
+
+.cta-box__actions {
+  display: flex;
+  gap: var(--space-4);
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* ============================================
    UTILITIES
    ============================================ */
 
