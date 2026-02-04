@@ -8,11 +8,16 @@
  * - Auto-play with pause on hover
  * - Responsive design
  * - Reduced motion support
+ * - Placeholder support for development
  * 
  * Usage:
  * <image-slider auto-play="5000">
  *   <img src="image1.jpg" alt="Description 1">
  *   <img src="image2.jpg" alt="Description 2">
+ * </image-slider>
+ * 
+ * For placeholders (no images):
+ * <image-slider placeholder="3">
  * </image-slider>
  */
 
@@ -24,9 +29,11 @@ class ImageSlider extends HTMLElement {
     this.autoPlayInterval = null;
     this.touchStartX = 0;
     this.touchEndX = 0;
+    this._slides = [];
   }
 
   connectedCallback() {
+    this.collectSlides();
     this.render();
     this.setupEventListeners();
     this.startAutoPlay();
@@ -36,16 +43,69 @@ class ImageSlider extends HTMLElement {
     this.stopAutoPlay();
   }
 
+  collectSlides() {
+    // Check for placeholder attribute first
+    const placeholderCount = parseInt(this.getAttribute('placeholder') || '0', 10);
+    
+    if (placeholderCount > 0) {
+      // Generate placeholder slides
+      this._slides = Array.from({ length: placeholderCount }, (_, i) => ({
+        type: 'placeholder',
+        index: i + 1,
+        alt: `Placeholder ${i + 1}`
+      }));
+    } else {
+      // Collect actual image elements
+      this._slides = Array.from(this.querySelectorAll('img, picture')).map((el, i) => ({
+        type: 'image',
+        src: el.src || el.querySelector('img')?.src,
+        alt: el.alt || el.querySelector('img')?.alt || `Bild ${i + 1}`,
+        element: el
+      }));
+    }
+
+    // Fallback: if no slides and no placeholder, create demo placeholders
+    if (this._slides.length === 0) {
+      this._slides = [
+        { type: 'placeholder', index: 1, alt: 'Bild 1' },
+        { type: 'placeholder', index: 2, alt: 'Bild 2' },
+        { type: 'placeholder', index: 3, alt: 'Bild 3' }
+      ];
+    }
+  }
+
   get slides() {
-    return Array.from(this.querySelectorAll('img, picture'));
+    return this._slides;
   }
 
   get autoPlayDelay() {
-    return parseInt(this.getAttribute('auto-play') || '0', 10);
+    return parseInt(this.getAttribute('auto-play') || '5000', 10);
   }
 
   get reducedMotion() {
     return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  }
+
+  renderSlide(slide, index) {
+    if (slide.type === 'placeholder') {
+      const colors = ['#003366', '#0066b3', '#0099cc', '#004d99'];
+      const bgColor = colors[index % colors.length];
+      return `
+        <div class="slide slide--placeholder" style="background: linear-gradient(135deg, ${bgColor} 0%, ${bgColor}dd 100%);">
+          <div class="placeholder-content">
+            <svg viewBox="0 0 24 24" class="placeholder-icon" aria-hidden="true">
+              <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/>
+            </svg>
+            <span class="placeholder-text">Bild ${slide.index}</span>
+          </div>
+        </div>
+      `;
+    }
+    return `
+      <div class="slide">
+        <img src="${slide.src}" alt="${slide.alt}" loading="${index === 0 ? 'eager' : 'lazy'}">
+      </div>
+    `;
   }
 
   render() {
@@ -57,29 +117,66 @@ class ImageSlider extends HTMLElement {
           display: block;
           position: relative;
           overflow: hidden;
-          border-radius: var(--border-radius-lg, 8px);
+          border-radius: var(--border-radius-lg, 12px);
+          background: #f0f4f8;
+          min-height: 200px;
         }
 
-        .slider {
+        .slider-track {
           display: flex;
-          transition: transform 0.5s ease-in-out;
+          transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
           will-change: transform;
+          height: 100%;
         }
 
-        :host-context([data-reduced-motion="true"]) .slider,
         @media (prefers-reduced-motion: reduce) {
-          .slider {
+          .slider-track {
             transition: none;
           }
         }
 
-        .slider ::slotted(img),
-        .slider ::slotted(picture) {
+        .slide {
           flex: 0 0 100%;
           width: 100%;
-          height: auto;
+          min-height: 280px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .slide img {
+          width: 100%;
+          height: 100%;
           object-fit: cover;
           aspect-ratio: 16 / 9;
+        }
+
+        .slide--placeholder {
+          background: linear-gradient(135deg, #003366 0%, #0066b3 100%);
+          color: white;
+          aspect-ratio: 16 / 9;
+        }
+
+        .placeholder-content {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: 1rem;
+          padding: 2rem;
+          text-align: center;
+        }
+
+        .placeholder-icon {
+          width: 64px;
+          height: 64px;
+          fill: rgba(255, 255, 255, 0.6);
+        }
+
+        .placeholder-text {
+          font-size: 1.25rem;
+          font-weight: 500;
+          opacity: 0.8;
         }
 
         .controls {
@@ -182,6 +279,10 @@ class ImageSlider extends HTMLElement {
             width: 10px;
             height: 10px;
           }
+
+          .slide {
+            min-height: 200px;
+          }
         }
 
         /* Hide controls if only one slide */
@@ -191,8 +292,8 @@ class ImageSlider extends HTMLElement {
         }
       </style>
 
-      <div class="slider" role="region" aria-label="Bildergalerie" aria-live="polite">
-        <slot></slot>
+      <div class="slider-track" role="region" aria-label="Bildergalerie" aria-live="polite">
+        ${this.slides.map((slide, i) => this.renderSlide(slide, i)).join('')}
       </div>
 
       ${slideCount > 1 ? `
@@ -230,7 +331,7 @@ class ImageSlider extends HTMLElement {
     const prevBtn = this.shadowRoot.querySelector('.nav-btn--prev');
     const nextBtn = this.shadowRoot.querySelector('.nav-btn--next');
     const dots = this.shadowRoot.querySelectorAll('.dot');
-    const slider = this.shadowRoot.querySelector('.slider');
+    const slider = this.shadowRoot.querySelector('.slider-track');
 
     if (prevBtn) {
       prevBtn.addEventListener('click', () => this.prev());
@@ -248,14 +349,16 @@ class ImageSlider extends HTMLElement {
     });
 
     // Touch support
-    slider.addEventListener('touchstart', (e) => {
-      this.touchStartX = e.changedTouches[0].screenX;
-    }, { passive: true });
+    if (slider) {
+      slider.addEventListener('touchstart', (e) => {
+        this.touchStartX = e.changedTouches[0].screenX;
+      }, { passive: true });
 
-    slider.addEventListener('touchend', (e) => {
-      this.touchEndX = e.changedTouches[0].screenX;
-      this.handleSwipe();
-    }, { passive: true });
+      slider.addEventListener('touchend', (e) => {
+        this.touchEndX = e.changedTouches[0].screenX;
+        this.handleSwipe();
+      }, { passive: true });
+    }
 
     // Pause on hover
     this.addEventListener('mouseenter', () => this.stopAutoPlay());
@@ -290,7 +393,7 @@ class ImageSlider extends HTMLElement {
   }
 
   updateSlider() {
-    const slider = this.shadowRoot.querySelector('.slider');
+    const slider = this.shadowRoot.querySelector('.slider-track');
     const dots = this.shadowRoot.querySelectorAll('.dot');
 
     if (slider) {
@@ -341,5 +444,3 @@ class ImageSlider extends HTMLElement {
 }
 
 customElements.define('image-slider', ImageSlider);
-
-export default ImageSlider;

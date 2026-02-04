@@ -1,0 +1,44 @@
+{
+  "name": "compass24-landing-pages",
+  "version": "1.0.0",
+  "description": "Modern, responsive landing pages for Compass24.de",
+  "type": "module",
+  "scripts": {
+    "dev": "browser-sync start --server --files '**/*.html, **/*.css, **/*.js' --no-notify",
+    "build": "node scripts/build.js",
+    "build:watch": "node scripts/build.js --watch",
+    "lint": "npm run lint:html && npm run lint:css && npm run lint:js",
+    "lint:html": "html-validate '*.html'",
+    "lint:css": "stylelint 'css/**/*.css'",
+    "lint:js": "eslint 'js/**/*.js'",
+    "lint:fix": "npm run lint:css -- --fix && npm run lint:js -- --fix",
+    "clean": "rm -rf dist"
+  },
+  "keywords": [
+    "compass24",
+    "landing-pages",
+    "watersports",
+    "yacht"
+  ],
+  "author": "Oliver Schafeld",
+  "license": "UNLICENSED, copyright Compass24 may apply",
+  "private": true,
+  "devDependencies": {
+    "browser-sync": "^3.0.2",
+    "chokidar": "^3.6.0",
+    "clean-css": "^5.3.3",
+    "eslint": "^8.57.0",
+    "html-minifier-terser": "^7.2.0",
+    "html-validate": "^8.18.2",
+    "postcss": "^8.4.38",
+    "postcss-import": "^16.1.0",
+    "stylelint": "^16.3.1",
+    "stylelint-config-standard": "^36.0.0",
+    "terser": "^5.30.3"
+  },
+  "browserslist": [
+    "last 2 versions",
+    "> 1%",
+    "not dead"
+  ]
+}
