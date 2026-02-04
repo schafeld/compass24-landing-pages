@@ -464,6 +464,10 @@ a:focus {
   color: var(--color-text-secondary);
 }
 
+.job-listing-card {
+  margin-bottom: var(--space-6);
+}
+
 /* ============================================
    SPECIAL TEXT STYLES
    ============================================ */
