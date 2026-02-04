@@ -4,22 +4,30 @@
  * This file contains all design system variables including colors, typography,
  * spacing, and other design primitives. These tokens ensure consistency across
  * all pages and components.
+ * 
+ * Brand: Compass24 - Europe's largest online shop for boat equipment,
+ * watersports, sailing clothing & yacht accessories.
+ * 
+ * These design tokens are derived from the live compass24.de website
+ * and should maintain brand consistency.
  */
 
 :root {
   /* ============================================
-     COLORS - Brand Colors (DO NOT MODIFY)
+     COLORS - Brand Colors (DO NOT CHANGE)
      ============================================ */
   
-  /* Primary Brand Colors */
-  --color-primary: #0066b3;           /* Compass24 Blue */
-  --color-primary-light: #3385c4;
-  --color-primary-dark: #004d8a;
-  --color-primary-darker: #003461;
+  /* Primary Brand Colors - Compass24 Blue */
+  --color-primary: #003366;           /* Compass24 Deep Navy Blue */
+  --color-primary-light: #0066b3;     /* Compass24 Blue */
+  --color-primary-dark: #002244;      /* Dark Navy */
+  --color-primary-darker: #001a33;    /* Deepest Navy */
   
   /* Secondary Colors */
-  --color-secondary: #00a3e0;         /* Light Blue */
-  --color-accent: #ff6b35;            /* Orange Accent */
+  --color-secondary: #0099cc;         /* Ocean Blue */
+  --color-accent: #cc0000;            /* Compass Red (for CTAs/Sales) */
+  --color-accent-light: #ff3333;      /* Light Red */
+  --color-highlight: #ffcc00;         /* Yellow Highlight (for badges) */
   
   /* Neutral Colors */
   --color-white: #ffffff;

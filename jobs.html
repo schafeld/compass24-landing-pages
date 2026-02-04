@@ -3,340 +3,440 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Karriere bei Compass24 - Entdecken Sie spannende Jobmöglichkeiten und werden Sie Teil unseres Teams.">
-  <title>Jobs - Compass24</title>
+  <meta name="description" content="Karriere bei Compass24 - Komm an Bord! Ausbildungsplätze und Stellenangebote bei Europas größtem Wassersport-Versandhaus.">
+  <title>Jobs & Karriere - Compass24</title>
   
   <!-- Design Tokens & Styles -->
   <link rel="stylesheet" href="css/design-tokens.css">
   <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/components/accordion.css">
+
+  <!-- Web Components -->
+  <script type="module" src="js/main.js"></script>
 </head>
 <body>
-  <!-- Skip to main content for accessibility -->
-  <a href="#main-content" class="skip-link">Skip to main content</a>
+  <!-- 
+    NOTE: This content is designed to be injected into div.cms-page on the live site.
+    The header and footer below are for development/preview purposes only.
+  -->
   
-  <!-- Header -->
+  <!-- Skip to main content for accessibility -->
+  <a href="#main-content" class="skip-link">Zum Hauptinhalt springen</a>
+  
+  <!-- Header (Development Only - Not included in CMS injection) -->
   <header class="header" role="banner">
     <div class="header__container">
       <div class="header__logo-container">
-        <!-- Placeholder for Compass24 logo -->
-        <svg class="header__logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 60" aria-label="Compass24 Logo">
-          <text x="10" y="40" font-family="Arial, sans-serif" font-size="32" font-weight="bold" fill="#0066b3">
-            COMPASS24
-          </text>
-        </svg>
+        <a href="https://www.compass24.de" class="header__logo-link">
+          <img 
+            src="https://compass24.b-cdn.net/theme/24/skin/frontend/Compass/production24/images/logo.svg" 
+            alt="Compass24 - Europas größter Online-Shop für Bootszubehör" 
+            class="header__logo"
+            width="180"
+            height="50"
+            loading="eager"
+          >
+        </a>
       </div>
-      <nav class="header__nav" role="navigation" aria-label="Main navigation">
+      <button class="header__nav-toggle" aria-label="Navigation öffnen" aria-expanded="false">☰</button>
+      <nav class="header__nav" role="navigation" aria-label="Hauptnavigation">
         <a href="/" class="header__nav-link">Home</a>
         <a href="ueber-uns.html" class="header__nav-link">Über uns</a>
-        <a href="jobs.html" class="header__nav-link header__nav-link--active">Jobs</a>
-        <a href="#contact" class="header__nav-link">Kontakt</a>
+        <a href="jobs.html" class="header__nav-link header__nav-link--active" aria-current="page">Jobs</a>
+        <a href="https://www.compass24.de/kontakt" class="header__nav-link">Kontakt</a>
       </nav>
     </div>
   </header>
 
-  <!-- Hero Section -->
-  <section class="hero" role="complementary">
-    <div class="container">
-      <h1 class="hero__title">Karriere bei Compass24</h1>
-      <p class="hero__subtitle">
-        Gestalten Sie mit uns die digitale Zukunft. Werden Sie Teil eines innovativen Teams,
-        das seit 1995 wegweisende Lösungen entwickelt.
-      </p>
-    </div>
-  </section>
+  <!-- ============================================
+       CMS PAGE CONTENT START
+       This is the content that will be injected
+       ============================================ -->
+  <div class="cms-page">
+    
+    <!-- Hero Section -->
+    <section class="hero hero--jobs" role="banner" aria-labelledby="hero-title">
+      <div class="hero__background">
+        <picture>
+          <source 
+            media="(min-width: 1024px)" 
+            srcset="https://compass24.b-cdn.net/media/a5/c0/25/1715172571/com-banner-jobs-azubi-desk.webp"
+          >
+          <img 
+            src="https://compass24.b-cdn.net/media/a5/c0/25/1715172571/com-banner-jobs-azubi-desk.webp" 
+            alt="Collage mit Yacht, Segelbooten und Team bei Compass" 
+            class="hero__image"
+            loading="eager"
+          >
+        </picture>
+        <div class="hero__overlay"></div>
+      </div>
+      <div class="container hero__content">
+        <p class="hero__eyebrow" data-animate="fade-up">Karriere bei Compass</p>
+        <h1 id="hero-title" class="hero__title" data-animate="fade-up">Komm an Bord!</h1>
+        <p class="hero__subtitle" data-animate="fade-up">
+          Werde Teil von Europas größtem Versandhaus für Motorboot- und Segelsport.
+        </p>
+      </div>
+    </section>
 
-  <!-- Main Content -->
-  <main id="main-content" class="main" role="main">
-    <div class="container">
-      <!-- Why Work With Us Section -->
-      <section class="section">
-        <h2 class="section__title">Warum Compass24?</h2>
-        <div class="card-grid card-grid--benefits">
-          <div class="card">
-            <div class="emoji-icon">🚀</div>
-            <h3 class="card__title">Innovation & Technologie</h3>
-            <p class="card__content">
-              Arbeiten Sie mit modernsten Technologien und gestalten Sie innovative 
-              Lösungen für die Herausforderungen von morgen.
+    <!-- Main Content -->
+    <main id="main-content" class="main" role="main">
+      
+      <!-- Introduction Section -->
+      <section class="section" aria-labelledby="intro-title">
+        <div class="container">
+          <div class="content-block content-block--centered" data-animate="fade-up">
+            <h2 id="intro-title" class="section__title">Aktuelle Stellenangebote bei Compass</h2>
+            <p class="section__intro">
+              Compass und Sealand – zwei herausragende Katalog- und Shop Anbieter im Versand-, 
+              Distanz- und Onlinehandel unter einem Dach mit Sitz im Münsterland.
             </p>
-          </div>
-          <div class="card">
-            <div class="emoji-icon">🎯</div>
-            <h3 class="card__title">Spannende Projekte</h3>
-            <p class="card__content">
-              Von Cloud-Lösungen bis KI - arbeiten Sie an vielfältigen Projekten 
-              für namhafte Kunden aus verschiedenen Branchen.
+            <p>
+              Sealand gilt als Spezialist für anspruchsvolle Freizeitkleidung und innovative 
+              Funktionskleidung, wohingegen Compass Europas größter Anbieter/Shop für Bootszubehör 
+              und Wassersportartikel ist.
             </p>
-          </div>
-          <div class="card">
-            <div class="emoji-icon">🌱</div>
-            <h3 class="card__title">Persönliche Entwicklung</h3>
-            <p class="card__content">
-              Individuelle Weiterbildung, Konferenzbesuche und interne Schulungen - 
-              wir investieren in Ihre berufliche Entwicklung.
-            </p>
-          </div>
-          <div class="card">
-            <div class="emoji-icon">⚖️</div>
-            <h3 class="card__title">Work-Life-Balance</h3>
-            <p class="card__content">
-              Flexible Arbeitszeiten, Home-Office-Möglichkeiten und 30 Tage Urlaub - 
-              Ihre Work-Life-Balance liegt uns am Herzen.
-            </p>
-          </div>
-          <div class="card">
-            <div class="emoji-icon">👥</div>
-            <h3 class="card__title">Starkes Team</h3>
-            <p class="card__content">
-              Werden Sie Teil eines engagierten Teams, das gemeinsam an großartigen 
-              Lösungen arbeitet und Erfolge feiert.
-            </p>
-          </div>
-          <div class="card">
-            <div class="emoji-icon">💰</div>
-            <h3 class="card__title">Attraktive Benefits</h3>
-            <p class="card__content">
-              Wettbewerbsfähiges Gehalt, betriebliche Altersvorsorge, Job-Ticket 
-              und weitere Benefits für Ihre Zufriedenheit.
+            <p>
+              Mit einer riesigen Markenvielfalt aus aller Welt und vielen exklusiven Produkten 
+              präsentiert Compass eine einmalige Auswahl an Bootszubehör, Segelbedarf bis hin 
+              zu maritimer Mode. Namhafte Marken wie z.B. Helly Hansen und starke Eigenmarken 
+              (über 39.000 Produkte) prägen den Offline-Katalog (über 400 Seiten) ebenso wie 
+              internationale Online-Shops in mittlerweile 11 Ländern.
             </p>
           </div>
         </div>
       </section>
 
-      <!-- Open Positions Section -->
-      <section class="section">
-        <h2 class="section__title">Offene Stellen</h2>
-        
-        <!-- Job Listing: Senior Software Developer -->
-        <div class="card job-listing-card">
-          <div class="job-listing__header">
-            <div class="job-listing__content">
-              <h3 class="card__title">Senior Software Developer (m/w/d)</h3>
-              <div class="job-listing__meta">
-                <span class="job-listing__meta-item">
-                  📍 München oder Remote
-                </span>
-                <span class="job-listing__meta-item">
-                  💼 Vollzeit
-                </span>
-                <span class="job-listing__meta-item">
-                  📅 Ab sofort
-                </span>
-              </div>
-              <p class="card__content">
-                Wir suchen einen erfahrenen Software Developer zur Verstärkung unseres Teams. 
-                Sie arbeiten an der Entwicklung moderner Cloud-Anwendungen und bringen Ihre 
-                Expertise in Java, Spring Boot und Microservices ein.
+      <!-- Why Work Here Section -->
+      <section class="section section--alt" aria-labelledby="benefits-title">
+        <div class="container">
+          <h2 id="benefits-title" class="section__title">Warum Compass?</h2>
+          
+          <div class="benefits-grid" data-animate="fade-up">
+            <div class="benefit-card">
+              <div class="benefit-card__icon" aria-hidden="true">⛵</div>
+              <h3 class="benefit-card__title">Maritime Leidenschaft</h3>
+              <p class="benefit-card__text">
+                Arbeite in einem Unternehmen, das seit 1979 die Leidenschaft für Wassersport lebt. 
+                Viele Kollegen sind selbst aktive Segler und Wassersportler.
               </p>
-              <div class="job-listing__tasks">
-                <strong class="job-listing__tasks-title">Ihre Aufgaben:</strong>
-                <ul class="job-listing__tasks-list">
-                  <li>Entwicklung von skalierbaren Backend-Systemen</li>
-                  <li>Code Reviews und Mentoring von Junior-Entwicklern</li>
-                  <li>Architektur-Design und technische Konzeption</li>
-                </ul>
-              </div>
             </div>
-            <a href="#apply" class="btn btn--primary">Jetzt bewerben</a>
-          </div>
-        </div>
 
-        <!-- Job Listing: Frontend Developer -->
-        <div class="card job-listing-card">
-          <div class="job-listing__header">
-            <div class="job-listing__content">
-              <h3 class="card__title">Frontend Developer (m/w/d)</h3>
-              <div class="job-listing__meta">
-                <span class="job-listing__meta-item">
-                  📍 Berlin oder Remote
-                </span>
-                <span class="job-listing__meta-item">
-                  💼 Vollzeit / Teilzeit
-                </span>
-                <span class="job-listing__meta-item">
-                  📅 Ab sofort
-                </span>
-              </div>
-              <p class="card__content">
-                Sie lieben es, ansprechende und performante Benutzeroberflächen zu entwickeln? 
-                Dann sind Sie bei uns richtig! Wir suchen einen Frontend Developer mit Erfahrung 
-                in React, TypeScript und modernem CSS.
+            <div class="benefit-card">
+              <div class="benefit-card__icon" aria-hidden="true">👨‍👩‍👧‍👦</div>
+              <h3 class="benefit-card__title">Familienunternehmen</h3>
+              <p class="benefit-card__text">
+                Flache Hierarchien, kurze Entscheidungswege und ein persönliches Miteinander 
+                zeichnen uns als Familienunternehmen in zweiter Generation aus.
               </p>
-              <div class="job-listing__tasks">
-                <strong class="job-listing__tasks-title">Ihre Aufgaben:</strong>
-                <ul class="job-listing__tasks-list">
-                  <li>Entwicklung moderner Web-Anwendungen mit React</li>
-                  <li>Implementierung responsiver und barrierefreier UIs</li>
-                  <li>Enge Zusammenarbeit mit UX-Designern</li>
-                </ul>
-              </div>
             </div>
-            <a href="#apply" class="btn btn--primary">Jetzt bewerben</a>
-          </div>
-        </div>
 
-        <!-- Job Listing: DevOps Engineer -->
-        <div class="card job-listing-card">
-          <div class="job-listing__header">
-            <div class="job-listing__content">
-              <h3 class="card__title">DevOps Engineer (m/w/d)</h3>
-              <div class="job-listing__meta">
-                <span class="job-listing__meta-item">
-                  📍 Frankfurt oder Remote
-                </span>
-                <span class="job-listing__meta-item">
-                  💼 Vollzeit
-                </span>
-                <span class="job-listing__meta-item">
-                  📅 Ab sofort
-                </span>
-              </div>
-              <p class="card__content">
-                Zur Verstärkung unseres DevOps-Teams suchen wir einen erfahrenen Engineer. 
-                Sie bringen Kenntnisse in Kubernetes, Docker, CI/CD und Infrastructure as Code mit.
+            <div class="benefit-card">
+              <div class="benefit-card__icon" aria-hidden="true">🚀</div>
+              <h3 class="benefit-card__title">Wachstum & Innovation</h3>
+              <p class="benefit-card__text">
+                Als Marktführer in Europa investieren wir kontinuierlich in modernste Technologie, 
+                Logistik und digitale Services.
               </p>
-              <div class="job-listing__tasks">
-                <strong class="job-listing__tasks-title">Ihre Aufgaben:</strong>
-                <ul class="job-listing__tasks-list">
-                  <li>Aufbau und Wartung von CI/CD-Pipelines</li>
-                  <li>Container-Orchestrierung mit Kubernetes</li>
-                  <li>Monitoring und Optimierung der Infrastruktur</li>
-                </ul>
-              </div>
             </div>
-            <a href="#apply" class="btn btn--primary">Jetzt bewerben</a>
-          </div>
-        </div>
 
-        <!-- Job Listing: UX/UI Designer -->
-        <div class="card job-listing-card">
-          <div class="job-listing__header">
-            <div class="job-listing__content">
-              <h3 class="card__title">UX/UI Designer (m/w/d)</h3>
-              <div class="job-listing__meta">
-                <span class="job-listing__meta-item">
-                  📍 München oder Remote
-                </span>
-                <span class="job-listing__meta-item">
-                  💼 Vollzeit
-                </span>
-                <span class="job-listing__meta-item">
-                  📅 Ab 01.03.2024
-                </span>
-              </div>
-              <p class="card__content">
-                Sie haben ein Auge für großartiges Design und verstehen, wie man intuitive 
-                Benutzererlebnisse schafft? Dann freuen wir uns auf Ihre Bewerbung!
+            <div class="benefit-card">
+              <div class="benefit-card__icon" aria-hidden="true">🌍</div>
+              <h3 class="benefit-card__title">International</h3>
+              <p class="benefit-card__text">
+                Mit Online-Shops in 11 Ländern und einem internationalen Kundenkreis bieten 
+                wir ein spannendes, vielfältiges Arbeitsumfeld.
               </p>
-              <div class="job-listing__tasks">
-                <strong class="job-listing__tasks-title">Ihre Aufgaben:</strong>
-                <ul class="job-listing__tasks-list">
-                  <li>Konzeption und Design von User Interfaces</li>
-                  <li>Durchführung von User Research und Usability Tests</li>
-                  <li>Erstellung von Wireframes, Prototypen und Design Systems</li>
-                </ul>
-              </div>
             </div>
-            <a href="#apply" class="btn btn--primary">Jetzt bewerben</a>
+
+            <div class="benefit-card">
+              <div class="benefit-card__icon" aria-hidden="true">📚</div>
+              <h3 class="benefit-card__title">Ausbildung & Entwicklung</h3>
+              <p class="benefit-card__text">
+                Wir bilden aus und fördern die Weiterentwicklung unserer Mitarbeiter 
+                durch Schulungen und vielfältige Karrieremöglichkeiten.
+              </p>
+            </div>
+
+            <div class="benefit-card">
+              <div class="benefit-card__icon" aria-hidden="true">📍</div>
+              <h3 class="benefit-card__title">Standort Münsterland</h3>
+              <p class="benefit-card__text">
+                Unser Hauptsitz in Ascheberg bietet eine hervorragende Anbindung und 
+                ein angenehmes Arbeitsumfeld abseits des Großstadttrubels.
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
-      <!-- Application Process Section -->
-      <section class="section">
-        <h2 class="section__title">Unser Bewerbungsprozess</h2>
-        <div class="process-grid">
-          <div class="process-step">
-            <div class="process-step__number">1</div>
-            <h3 class="process-step__title">Bewerbung</h3>
-            <p class="process-step__description">
-              Senden Sie uns Ihre Unterlagen per E-Mail oder über unser Bewerbungsformular.
-            </p>
+      <!-- Current Openings Section -->
+      <section class="section" aria-labelledby="openings-title">
+        <div class="container">
+          <h2 id="openings-title" class="section__title">Starte jetzt deine Ausbildung bei Compass</h2>
+          
+          <div class="job-highlight" data-animate="fade-up">
+            <div class="job-highlight__image">
+              <img 
+                src="https://compass24.b-cdn.net/media/a5/c0/25/1715172571/com-banner-jobs-azubi-desk.webp" 
+                alt="Ausbildung bei Compass - Kollegen arbeiten zusammen"
+                loading="lazy"
+              >
+            </div>
+            <div class="job-highlight__content">
+              <h3 class="job-highlight__title">Wir bieten Ausbildungsplätze</h3>
+              <p class="job-highlight__intro">
+                Du suchst einen spannenden Einstieg in die Berufswelt? Bei Compass kannst du 
+                deine Karriere in einem dynamischen Familienunternehmen starten!
+              </p>
+              
+              <div class="job-positions">
+                <div class="job-position">
+                  <div class="job-position__icon" aria-hidden="true">🛒</div>
+                  <div class="job-position__details">
+                    <h4 class="job-position__title">Kaufmann/-frau im Einzelhandel</h4>
+                    <p class="job-position__description">
+                      Lerne den Verkauf in unserem Maritim-Shop, Kundenberatung und alle 
+                      Aspekte des modernen Einzelhandels.
+                    </p>
+                  </div>
+                </div>
+
+                <div class="job-position">
+                  <div class="job-position__icon" aria-hidden="true">💼</div>
+                  <div class="job-position__details">
+                    <h4 class="job-position__title">Verkäufer/-in</h4>
+                    <p class="job-position__description">
+                      Werde Experte für unsere maritime Produktwelt und begeistere 
+                      Kunden mit deinem Fachwissen.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <p class="job-highlight__cta-text">
+                <strong>Interessiert?</strong> Wir freuen uns auf deine Bewerbung!
+              </p>
+            </div>
           </div>
-          <div class="process-step">
-            <div class="process-step__number">2</div>
-            <h3 class="process-step__title">Erstgespräch</h3>
-            <p class="process-step__description">
-              Kurzes Kennenlernen per Telefon oder Video-Call (ca. 30 Minuten).
-            </p>
+        </div>
+      </section>
+
+      <!-- Application Info Section -->
+      <section class="section section--alt" aria-labelledby="apply-title">
+        <div class="container">
+          <h2 id="apply-title" class="section__title">So bewirbst du dich</h2>
+          
+          <div class="apply-process" data-animate="fade-up">
+            <div class="apply-step">
+              <div class="apply-step__number" aria-hidden="true">1</div>
+              <div class="apply-step__content">
+                <h3 class="apply-step__title">Unterlagen vorbereiten</h3>
+                <p class="apply-step__text">
+                  Stelle deine Bewerbungsunterlagen zusammen: Anschreiben, Lebenslauf 
+                  und deine letzten Zeugnisse.
+                </p>
+              </div>
+            </div>
+
+            <div class="apply-step">
+              <div class="apply-step__number" aria-hidden="true">2</div>
+              <div class="apply-step__content">
+                <h3 class="apply-step__title">Bewerbung senden</h3>
+                <p class="apply-step__text">
+                  Sende deine Bewerbung per E-Mail oder Post an unsere Personalabteilung. 
+                  Wir freuen uns auf dich!
+                </p>
+              </div>
+            </div>
+
+            <div class="apply-step">
+              <div class="apply-step__number" aria-hidden="true">3</div>
+              <div class="apply-step__content">
+                <h3 class="apply-step__title">Kennenlernen</h3>
+                <p class="apply-step__text">
+                  Nach Sichtung deiner Unterlagen laden wir dich zu einem persönlichen 
+                  Gespräch ein, um dich kennenzulernen.
+                </p>
+              </div>
+            </div>
+
+            <div class="apply-step">
+              <div class="apply-step__number" aria-hidden="true">4</div>
+              <div class="apply-step__content">
+                <h3 class="apply-step__title">Willkommen an Bord!</h3>
+                <p class="apply-step__text">
+                  Bei gegenseitiger Begeisterung starten wir gemeinsam in eine 
+                  erfolgreiche Zukunft bei Compass.
+                </p>
+              </div>
+            </div>
           </div>
-          <div class="process-step">
-            <div class="process-step__number">3</div>
-            <h3 class="process-step__title">Fachgespräch</h3>
-            <p class="process-step__description">
-              Detailliertes Gespräch mit dem Team und optional technische Aufgabe.
-            </p>
-          </div>
-          <div class="process-step">
-            <div class="process-step__number">4</div>
-            <h3 class="process-step__title">Angebot</h3>
-            <p class="process-step__description">
-              Bei gegenseitiger Begeisterung erhalten Sie ein Vertragsangebot von uns.
-            </p>
+        </div>
+      </section>
+
+      <!-- FAQ Section -->
+      <section class="section" aria-labelledby="faq-title">
+        <div class="container">
+          <h2 id="faq-title" class="section__title">Häufige Fragen</h2>
+
+          <div class="accordion-group" data-animate="fade-up">
+            <details class="accordion">
+              <summary class="accordion__header">Welche Voraussetzungen brauche ich für eine Ausbildung?</summary>
+              <div class="accordion__content">
+                <p>
+                  Für unsere Ausbildungsplätze erwarten wir in der Regel einen guten Schulabschluss 
+                  (Haupt-, Realschule oder Abitur), Interesse am Handel und Kundenservice sowie 
+                  Begeisterung für unsere maritimen Produkte. Wichtiger als Noten ist uns deine 
+                  Motivation und dein Teamgeist!
+                </p>
+              </div>
+            </details>
+
+            <details class="accordion">
+              <summary class="accordion__header">Wie lange dauert die Ausbildung?</summary>
+              <div class="accordion__content">
+                <p>
+                  Die Ausbildung zum/zur Kaufmann/-frau im Einzelhandel dauert in der Regel 3 Jahre, 
+                  die Ausbildung zum/zur Verkäufer/-in 2 Jahre. Bei guten Leistungen ist eine 
+                  Verkürzung möglich.
+                </p>
+              </div>
+            </details>
+
+            <details class="accordion">
+              <summary class="accordion__header">Gibt es auch Praktikumsplätze?</summary>
+              <div class="accordion__content">
+                <p>
+                  Ja, wir bieten Schülerpraktika und Orientierungspraktika an. So kannst du 
+                  einen Einblick in unseren Arbeitsalltag bekommen und herausfinden, ob eine 
+                  Ausbildung bei Compass das Richtige für dich ist.
+                </p>
+              </div>
+            </details>
+
+            <details class="accordion">
+              <summary class="accordion__header">Welche Übernahmechancen gibt es nach der Ausbildung?</summary>
+              <div class="accordion__content">
+                <p>
+                  Wir bilden für den eigenen Bedarf aus! Bei guten Leistungen während der 
+                  Ausbildung stehen die Chancen auf eine Übernahme sehr gut. Viele unserer 
+                  langjährigen Mitarbeiter haben ihre Karriere mit einer Ausbildung bei uns begonnen.
+                </p>
+              </div>
+            </details>
+
+            <details class="accordion">
+              <summary class="accordion__header">Kann ich auch eine Initiativbewerbung senden?</summary>
+              <div class="accordion__content">
+                <p>
+                  Ja, Initiativbewerbungen sind herzlich willkommen! Auch wenn aktuell keine 
+                  passende Stelle ausgeschrieben ist, nehmen wir deine Bewerbung gerne in 
+                  unseren Pool auf und melden uns, sobald eine passende Position frei wird.
+                </p>
+              </div>
+            </details>
           </div>
         </div>
       </section>
 
       <!-- Contact Section -->
-      <section class="section" id="apply">
-        <div class="cta-box">
-          <h2 class="cta-box__title">
-            Ihre Traumposition ist nicht dabei?
-          </h2>
-          <p class="cta-box__description">
-            Wir freuen uns auch über Initiativbewerbungen! Senden Sie uns Ihre Unterlagen 
-            und erzählen Sie uns, wie Sie unser Team bereichern möchten.
-          </p>
-          <div class="cta-box__actions">
-            <a href="mailto:jobs@compass24.de" class="btn btn--secondary btn--large">
-              E-Mail senden
-            </a>
-            <a href="ueber-uns.html" class="btn btn--secondary btn--large">
-              Mehr über uns erfahren
-            </a>
+      <section class="section section--cta" aria-labelledby="contact-title">
+        <div class="container">
+          <div class="cta-box cta-box--contact" data-animate="fade-up">
+            <h2 id="contact-title" class="cta-box__title">Kontakt zur Personalabteilung</h2>
+            <p class="cta-box__description">
+              Du hast Fragen oder möchtest deine Bewerbung einreichen? 
+              Wir freuen uns von dir zu hören!
+            </p>
+
+            <div class="contact-info">
+              <address class="contact-info__address">
+                <strong>Compass Yachtzubehör Handels-GmbH & Co. KG</strong><br>
+                z.H. Frau Richter-Weiß<br>
+                Lüdinghauser Str. 34<br>
+                59387 Ascheberg
+              </address>
+
+              <div class="contact-info__details">
+                <p>
+                  <strong>Telefon:</strong><br>
+                  <a href="tel:+4925939150">02593 - 915 0</a>
+                </p>
+                <p>
+                  <strong>E-Mail:</strong><br>
+                  <a href="mailto:sekretariat@compass24.de">sekretariat@compass24.de</a>
+                </p>
+              </div>
+            </div>
+
+            <div class="cta-box__actions">
+              <a href="mailto:sekretariat@compass24.de" class="btn btn--secondary btn--large">
+                E-Mail schreiben
+              </a>
+              <a href="ueber-uns.html" class="btn btn--outline btn--large">
+                Mehr über uns
+              </a>
+            </div>
           </div>
         </div>
       </section>
-    </div>
-  </main>
 
-  <!-- Footer -->
+    </main>
+  </div>
+  <!-- ============================================
+       CMS PAGE CONTENT END
+       ============================================ -->
+
+  <!-- Footer (Development Only - Not included in CMS injection) -->
   <footer class="footer" role="contentinfo">
     <div class="footer__container">
       <div class="footer__content">
-        <div>
+        <div class="footer__section">
           <h3 class="footer__section-title">Compass24</h3>
-          <p>Ihr Partner für digitale Transformation seit 1995</p>
+          <p>Europas größtes Versandhaus für Motorboot- und Segelsport seit 1979</p>
+          <div class="footer__social">
+            <a href="https://www.facebook.com/compass24.de/" class="footer__social-link" aria-label="Facebook">
+              <span aria-hidden="true">📘</span>
+            </a>
+            <a href="https://www.instagram.com/compass_yachtzubehoer/" class="footer__social-link" aria-label="Instagram">
+              <span aria-hidden="true">📷</span>
+            </a>
+            <a href="https://www.youtube.com/channel/UCui1xiRHtB85fb0_k16_3DA" class="footer__social-link" aria-label="YouTube">
+              <span aria-hidden="true">▶️</span>
+            </a>
+          </div>
         </div>
-        <div>
+        <div class="footer__section">
           <h3 class="footer__section-title">Navigation</h3>
           <ul class="footer__links">
-            <li><a href="/" class="footer__link">Home</a></li>
+            <li><a href="https://www.compass24.de/" class="footer__link">Shop</a></li>
             <li><a href="ueber-uns.html" class="footer__link">Über uns</a></li>
             <li><a href="jobs.html" class="footer__link">Jobs</a></li>
-            <li><a href="#contact" class="footer__link">Kontakt</a></li>
+            <li><a href="https://www.compass24.de/kontakt" class="footer__link">Kontakt</a></li>
           </ul>
         </div>
-        <div>
+        <div class="footer__section">
           <h3 class="footer__section-title">Kontakt</h3>
-          <ul class="footer__links">
-            <li>Email: info@compass24.de</li>
-            <li>Tel: +49 (0) 123 456789</li>
-            <li>Adresse: Musterstraße 123</li>
-            <li>12345 Musterstadt</li>
-          </ul>
+          <address class="footer__address">
+            Compass Yachtzubehör Handels-GmbH & Co. KG<br>
+            Lüdinghauser Str. 34<br>
+            59387 Ascheberg<br>
+            <a href="mailto:info@compass24.de">info@compass24.de</a>
+          </address>
         </div>
-        <div>
+        <div class="footer__section">
           <h3 class="footer__section-title">Rechtliches</h3>
           <ul class="footer__links">
-            <li><a href="#" class="footer__link">Impressum</a></li>
-            <li><a href="#" class="footer__link">Datenschutz</a></li>
-            <li><a href="#" class="footer__link">AGB</a></li>
+            <li><a href="https://www.compass24.de/impressum" class="footer__link">Impressum</a></li>
+            <li><a href="https://www.compass24.de/datenschutz" class="footer__link">Datenschutz</a></li>
+            <li><a href="https://www.compass24.de/agb" class="footer__link">AGB</a></li>
           </ul>
         </div>
       </div>
       <div class="footer__bottom">
-        <p>&copy; 2024 Compass24. Alle Rechte vorbehalten.</p>
+        <p>&copy; 2024 Compass Yachtzubehör Handels GmbH & Co. KG. Alle Rechte vorbehalten.</p>
       </div>
     </div>
   </footer>

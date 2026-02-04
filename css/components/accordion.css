@@ -1,0 +1,197 @@
+/**
+ * Accordion Component Styles
+ * 
+ * Native HTML details/summary accordion styling.
+ * Uses modern CSS for smooth animations.
+ */
+
+/* ============================================
+   BASE ACCORDION STYLES
+   ============================================ */
+
+.accordion {
+  border: 1px solid var(--color-gray-200);
+  border-radius: var(--border-radius-lg);
+  margin-bottom: var(--space-4);
+  overflow: hidden;
+  background: var(--color-white);
+  transition: box-shadow var(--transition-base);
+}
+
+.accordion:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.accordion[open] {
+  box-shadow: var(--shadow-md);
+}
+
+/* ============================================
+   ACCORDION HEADER (Summary)
+   ============================================ */
+
+.accordion__header {
+  padding: var(--space-5) var(--space-6);
+  cursor: pointer;
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-lg);
+  color: var(--color-primary);
+  background: var(--color-gray-50);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  list-style: none;
+  transition: all var(--transition-base);
+}
+
+.accordion__header::-webkit-details-marker {
+  display: none;
+}
+
+.accordion__header::after {
+  content: '';
+  width: 12px;
+  height: 12px;
+  border-right: 2px solid var(--color-primary);
+  border-bottom: 2px solid var(--color-primary);
+  transform: rotate(-45deg);
+  transition: transform var(--transition-base);
+  flex-shrink: 0;
+}
+
+.accordion[open] .accordion__header::after {
+  transform: rotate(45deg);
+}
+
+.accordion__header:hover {
+  background: var(--color-gray-100);
+}
+
+.accordion__header:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: -2px;
+}
+
+.accordion__header:focus:not(:focus-visible) {
+  outline: none;
+}
+
+.accordion__header:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: -2px;
+}
+
+/* ============================================
+   ACCORDION CONTENT
+   ============================================ */
+
+.accordion__content {
+  padding: var(--space-6);
+  color: var(--color-text-secondary);
+  line-height: var(--line-height-relaxed);
+  border-top: 1px solid var(--color-gray-200);
+  overflow: hidden;
+  transition: max-height var(--transition-base), padding var(--transition-base);
+}
+
+/* Animation support (JS enhances this) */
+.accordion:not([open]) .accordion__content {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+/* ============================================
+   ACCORDION VARIANTS
+   ============================================ */
+
+/* Borderless variant */
+.accordion--borderless {
+  border: none;
+  border-radius: 0;
+  border-bottom: 1px solid var(--color-gray-200);
+}
+
+.accordion--borderless:last-child {
+  border-bottom: none;
+}
+
+.accordion--borderless .accordion__header {
+  background: transparent;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.accordion--borderless .accordion__content {
+  padding-left: 0;
+  padding-right: 0;
+  border-top: none;
+}
+
+/* Primary colored variant */
+.accordion--primary .accordion__header {
+  background: var(--color-primary);
+  color: var(--color-white);
+}
+
+.accordion--primary .accordion__header::after {
+  border-color: var(--color-white);
+}
+
+.accordion--primary .accordion__header:hover {
+  background: var(--color-primary-dark);
+}
+
+/* ============================================
+   FAQ ACCORDION GROUP
+   ============================================ */
+
+.accordion-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.accordion-group--connected .accordion {
+  margin-bottom: 0;
+  border-radius: 0;
+}
+
+.accordion-group--connected .accordion:first-child {
+  border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0;
+}
+
+.accordion-group--connected .accordion:last-child {
+  border-radius: 0 0 var(--border-radius-lg) var(--border-radius-lg);
+}
+
+.accordion-group--connected .accordion + .accordion {
+  border-top: none;
+}
+
+/* ============================================
+   REDUCED MOTION
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .accordion__header::after,
+  .accordion,
+  .accordion__content {
+    transition: none;
+  }
+}
+
+/* ============================================
+   MOBILE RESPONSIVE
+   ============================================ */
+
+@media (max-width: 767px) {
+  .accordion__header {
+    padding: var(--space-4) var(--space-5);
+    font-size: var(--font-size-base);
+  }
+
+  .accordion__content {
+    padding: var(--space-4) var(--space-5);
+  }
+}
