@@ -21,7 +21,48 @@ class AnimatedCounter extends HTMLElement {
   }
 
   connectedCallback() {
-    this.setupObserver();
+    // Check if already visible (for injection scenarios)
+    // Use requestAnimationFrame to ensure DOM is ready
+    requestAnimationFrame(() => {
+      this.checkVisibilityAndAnimate();
+    });
+  }
+
+  checkVisibilityAndAnimate() {
+    // First, check if element is already visible in viewport
+    const rect = this.getBoundingClientRect();
+    const isVisible = (
+      rect.top < window.innerHeight &&
+      rect.bottom > 0 &&
+      rect.left < window.innerWidth &&
+      rect.right > 0
+    );
+
+    if (isVisible && !this.hasAnimated) {
+      // Already visible - animate immediately
+      this.animate();
+      this.hasAnimated = true;
+    } else if (!this.hasAnimated) {
+      // Not visible yet - set up observer
+      this.setupObserver();
+    }
+  }
+
+  setupObserver() {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !this.hasAnimated) {
+            this.animate();
+            this.hasAnimated = true;
+            observer.disconnect();
+          }
+        });
+      },
+      { threshold: 0.1 } // Lower threshold for more reliable triggering
+    );
+
+    observer.observe(this);
   }
 
   get targetValue() {
@@ -46,22 +87,6 @@ class AnimatedCounter extends HTMLElement {
 
   get reducedMotion() {
     return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  }
-
-  setupObserver() {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting && !this.hasAnimated) {
-            this.animate();
-            this.hasAnimated = true;
-          }
-        });
-      },
-      { threshold: 0.5 }
-    );
-
-    observer.observe(this);
   }
 
   formatNumber(value) {
@@ -112,6 +137,9 @@ class AnimatedCounter extends HTMLElement {
   }
 }
 
-customElements.define('animated-counter', AnimatedCounter);
+// Only define if not already defined (for injection compatibility)
+if (!customElements.get('animated-counter')) {
+  customElements.define('animated-counter', AnimatedCounter);
+}
 
 export default AnimatedCounter;

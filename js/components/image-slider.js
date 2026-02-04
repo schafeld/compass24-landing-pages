@@ -443,4 +443,15 @@ class ImageSlider extends HTMLElement {
   }
 }
 
-customElements.define('image-slider', ImageSlider);
+// Only define if not already defined (for injection compatibility)
+if (!customElements.get('image-slider')) {
+  customElements.define('image-slider', ImageSlider);
+} else {
+  // If already defined, manually upgrade any uninitialized elements
+  document.querySelectorAll('image-slider:not([data-initialized])').forEach(el => {
+    if (el.shadowRoot) return; // Already initialized
+    // Force re-creation by replacing with clone
+    const clone = el.cloneNode(true);
+    el.parentNode.replaceChild(clone, el);
+  });
+}

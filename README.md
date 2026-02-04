@@ -27,11 +27,110 @@ git clone https://github.com/schafeld/compass24-landing-pages.git
 cd compass24-landing-pages
 ```
 
-2. Open the pages in your browser:
+2. Install dependencies:
+```bash
+npm install
+```
+
+3. Start the development server with hot-reloading:
+```bash
+npm run dev
+```
+
+4. Open the pages in your browser:
 - Open `ueber-uns.html` for the About Us page
 - Open `jobs.html` for the Jobs page
 
-No build process required! These are static HTML pages with vanilla CSS.
+## 🔨 Build & Deploy
+
+### Building for Production
+
+To compile pages into standalone, injection-ready files:
+
+```bash
+npm run build
+```
+
+This outputs to the `dist/` folder:
+- `ueber-uns.html` - Compiled HTML with all CSS/JS inlined
+- `ueber-uns.inject.js` - JavaScript injector for easy integration
+- `jobs.html` - Compiled HTML with all CSS/JS inlined
+- `jobs.inject.js` - JavaScript injector for easy integration
+
+### CSS Scoping
+
+All built CSS is scoped under the unique wrapper class `.compass24-landing-2026` to prevent style conflicts with the live site.
+
+## 💉 Injection into Production Site
+
+The built files are designed to be injected into the live compass24.de website. All content is wrapped in `.compass24-landing-2026` to prevent CSS conflicts.
+
+### Option 1: Auto-Inject with JavaScript File
+
+Upload the `.inject.js` file to your server and add to the page:
+
+```html
+<script src="https://your-cdn.com/ueber-uns.inject.js" data-auto-inject></script>
+```
+
+This will automatically inject the content into `.cms-page` on page load.
+
+### Option 2: Manual JavaScript Injection
+
+Include the injector script and call it manually:
+
+```html
+<script src="https://your-cdn.com/ueber-uns.inject.js"></script>
+<script>
+  // Inject into default .cms-page selector
+  injectCompass24LandingPage();
+  
+  // Or inject into a custom selector
+  injectCompass24LandingPage('#my-custom-container');
+</script>
+```
+
+### Option 3: Direct innerHTML Injection
+
+For CMS systems, copy the content from `dist/ueber-uns.html` (excluding the comment header) and inject directly:
+
+```javascript
+// In your CMS or page script
+document.querySelector('.cms-page').innerHTML = `
+  <style>/* ... scoped CSS ... */</style>
+  <div class="compass24-landing-2026">
+    <!-- ... page content ... -->
+  </div>
+  <script>/* ... JS ... */</script>
+`;
+```
+
+### Option 4: Server-Side Include
+
+For backend systems, read the built file and inject:
+
+```php
+<?php
+$content = file_get_contents('dist/ueber-uns.html');
+// Remove the comment header (first 17 lines)
+$content = preg_replace('/^<!--[\s\S]*?-->\s*/', '', $content);
+echo $content;
+?>
+```
+
+### Wrapper Class
+
+All styles use the unique scoped class `.compass24-landing-2026`:
+- Prevents CSS conflicts with existing site styles
+- All selectors are prefixed with this class
+- JavaScript queries are also scoped to this wrapper
+
+### Updating Content
+
+1. Edit the source files (`ueber-uns.html`, `jobs.html`, CSS, JS)
+2. Run `npm run build`
+3. Upload the new `dist/*.inject.js` or `dist/*.html` files
+4. Clear any CDN caches
 
 ## 📁 Project Structure
 
@@ -43,16 +142,37 @@ compass24-landing-pages/
 │   ├── design-tokens.css          # Design system variables
 │   ├── styles.css                 # Main stylesheet
 │   └── components/
+│       ├── accordion.css          # Accordion component
 │       └── timeline.css           # Timeline component styles
 ├── js/
-│   └── main.js                    # JavaScript (future)
-├── components/                    # Reusable components (future)
-├── images/                        # Image assets
-├── ueber-uns.html                 # About Us page
-├── jobs.html                      # Jobs page
+│   ├── main.js                    # Main JavaScript
+│   └── components/
+│       ├── image-slider.js        # Image slider web component
+│       └── animated-counter.js    # Counter animation component
+├── scripts/
+│   └── build.js                   # Build script for production
+├── dist/                          # Built files (gitignored)
+│   ├── ueber-uns.html             # Compiled page
+│   ├── ueber-uns.inject.js        # JS injector
+│   ├── jobs.html                  # Compiled page
+│   └── jobs.inject.js             # JS injector
+├── ueber-uns.html                 # About Us page (source)
+├── jobs.html                      # Jobs page (source)
+├── package.json                   # npm dependencies & scripts
 ├── CONTRIBUTING.md                # Contribution guidelines
 └── README.md                      # This file
 ```
+
+## 🔧 NPM Scripts
+
+| Script | Description |
+|--------|-------------|
+| `npm run dev` | Start development server with hot-reloading |
+| `npm run build` | Build pages for production (outputs to `dist/`) |
+| `npm run build:watch` | Build and watch for changes |
+| `npm run lint` | Run all linters (HTML, CSS, JS) |
+| `npm run lint:fix` | Auto-fix linting issues |
+| `npm run clean` | Remove `dist/` folder |
 
 ## 🎨 Design System
 

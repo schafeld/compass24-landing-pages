@@ -15,8 +15,14 @@ import './components/animated-counter.js';
 /**
  * Initialize scroll-triggered animations
  * Elements with [data-animate] will animate when visible
+ * 
+ * The .js-animate-ready class is added to enable CSS animations.
+ * Without this class, content remains visible (graceful degradation).
  */
 function initScrollAnimations() {
+  // Find the wrapper element
+  const wrapper = document.querySelector('.compass24-landing-2026');
+  
   // Respect reduced motion preferences
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     document.querySelectorAll('[data-animate]').forEach(el => {
@@ -24,6 +30,12 @@ function initScrollAnimations() {
       el.style.transform = 'none';
     });
     return;
+  }
+
+  // Add the ready class to enable CSS hiding of [data-animate] elements
+  // This ensures content is visible if JS fails to load
+  if (wrapper) {
+    wrapper.classList.add('js-animate-ready');
   }
 
   const observer = new IntersectionObserver(

@@ -1072,28 +1072,36 @@ a:focus {
    ANIMATIONS
    ============================================ */
 
+/* Animation elements are visible by default for graceful degradation.
+   JavaScript adds .js-animate-ready to hide them before triggering animations.
+   This ensures content is visible even if JS fails or during CMS injection. */
 [data-animate] {
-  opacity: 0;
-  transform: translateY(20px);
+  /* Visible by default - no opacity: 0 */
   transition: opacity 0.6s ease-out, transform 0.6s ease-out;
 }
 
-[data-animate="fade-left"] {
+/* Only hide elements when JS has initialized animations */
+.js-animate-ready [data-animate] {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.js-animate-ready [data-animate="fade-left"] {
   transform: translateX(-20px);
 }
 
-[data-animate="fade-right"] {
+.js-animate-ready [data-animate="fade-right"] {
   transform: translateX(20px);
 }
 
-[data-animate].is-visible,
-[data-animate]:not([data-animate]) {
+[data-animate].is-visible {
   opacity: 1;
   transform: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  [data-animate] {
+  [data-animate],
+  .js-animate-ready [data-animate] {
     opacity: 1;
     transform: none;
     transition: none;
