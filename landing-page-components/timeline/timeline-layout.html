@@ -10,7 +10,7 @@
 
 <style>
   /* ============================================
-     SCOPED DESIGN TOKENS
+     SCOPED DESIGN TOKENS & BASE STYLES
      ============================================ */
   .compass24-timeline-component {
     /* Colors */
@@ -62,12 +62,8 @@
     --c24-timeline-line-width: 4px;
     --c24-timeline-dot-size: 20px;
     --c24-timeline-dot-size-large: 28px;
-  }
 
-  /* ============================================
-     BASE STYLES
-     ============================================ */
-  .compass24-timeline-component {
+    /* Base Component Styles */
     font-family: var(--c24-font-family);
     font-size: var(--c24-font-size-base);
     line-height: 1.6;
@@ -75,345 +71,347 @@
     box-sizing: border-box;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-  }
 
-  .compass24-timeline-component *,
-  .compass24-timeline-component *::before,
-  .compass24-timeline-component *::after {
-    box-sizing: inherit;
-  }
-
-  /* ============================================
-     SECTION HEADER
-     ============================================ */
-  .compass24-timeline-component .timeline-section {
-    padding: var(--c24-space-12) var(--c24-space-4);
-    background-color: var(--c24-color-gray-50);
-  }
-
-  .compass24-timeline-component .timeline-header {
-    text-align: center;
-    max-width: 800px;
-    margin: 0 auto var(--c24-space-12);
-  }
-
-  .compass24-timeline-component .timeline-header__title {
-    font-size: var(--c24-font-size-3xl);
-    font-weight: 700;
-    color: var(--c24-color-primary);
-    margin: 0 0 var(--c24-space-4);
-  }
-
-  .compass24-timeline-component .timeline-header__intro {
-    font-size: var(--c24-font-size-lg);
-    color: var(--c24-color-gray-600);
-    margin: 0;
-    line-height: 1.7;
-  }
-
-  /* ============================================
-     TIMELINE CONTAINER
-     ============================================ */
-  .compass24-timeline-component .timeline {
-    position: relative;
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: var(--c24-space-8) 0;
-  }
-
-  /* Timeline vertical line */
-  .compass24-timeline-component .timeline::before {
-    content: '';
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    width: var(--c24-timeline-line-width);
-    height: 100%;
-    background: linear-gradient(
-      to bottom,
-      var(--c24-color-primary-light),
-      var(--c24-color-primary),
-      var(--c24-color-primary-dark)
-    );
-    border-radius: 9999px;
-  }
-
-  /* ============================================
-     TIMELINE ITEMS
-     ============================================ */
-  .compass24-timeline-component .timeline__item {
-    position: relative;
-    width: 100%;
-    margin-bottom: var(--c24-space-12);
-    display: flex;
-    justify-content: flex-end;
-    align-items: flex-start;
-  }
-
-  /* Alternate items to the left/right */
-  .compass24-timeline-component .timeline__item:nth-child(odd) {
-    justify-content: flex-start;
-  }
-
-  .compass24-timeline-component .timeline__item:nth-child(odd) .timeline__content {
-    margin-left: calc(50% + var(--c24-space-8));
-  }
-
-  .compass24-timeline-component .timeline__item:nth-child(even) .timeline__content {
-    margin-right: calc(50% + var(--c24-space-8));
-  }
-
-  /* ============================================
-     TIMELINE DOT
-     ============================================ */
-  .compass24-timeline-component .timeline__dot {
-    position: absolute;
-    left: 50%;
-    top: var(--c24-space-6);
-    transform: translateX(-50%);
-    width: var(--c24-timeline-dot-size);
-    height: var(--c24-timeline-dot-size);
-    background-color: var(--c24-color-primary);
-    border: 4px solid var(--c24-color-white);
-    border-radius: 50%;
-    box-shadow: var(--c24-shadow-md);
-    z-index: 1;
-    transition: all var(--c24-transition-base);
-  }
-
-  .compass24-timeline-component .timeline__item:hover .timeline__dot {
-    width: var(--c24-timeline-dot-size-large);
-    height: var(--c24-timeline-dot-size-large);
-    background-color: var(--c24-color-accent);
-  }
-
-  /* Milestone year dots */
-  .compass24-timeline-component .timeline__item--milestone .timeline__dot {
-    width: var(--c24-timeline-dot-size-large);
-    height: var(--c24-timeline-dot-size-large);
-    background-color: var(--c24-color-secondary);
-  }
-
-  .compass24-timeline-component .timeline__item--milestone:hover .timeline__dot {
-    background-color: var(--c24-color-accent);
-  }
-
-  /* ============================================
-     TIMELINE CONTENT CARD
-     ============================================ */
-  .compass24-timeline-component .timeline__content {
-    background-color: var(--c24-color-white);
-    padding: var(--c24-space-6);
-    border-radius: var(--c24-border-radius-xl);
-    box-shadow: var(--c24-shadow-md);
-    width: calc(50% - var(--c24-space-12));
-    transition: all var(--c24-transition-base);
-    position: relative;
-  }
-
-  .compass24-timeline-component .timeline__content:hover {
-    box-shadow: var(--c24-shadow-xl);
-    transform: translateY(-4px);
-  }
-
-  /* Arrow pointing to the timeline */
-  .compass24-timeline-component .timeline__content::before {
-    content: '';
-    position: absolute;
-    top: 28px;
-    width: 0;
-    height: 0;
-    border-style: solid;
-  }
-
-  /* Arrow for items on the right */
-  .compass24-timeline-component .timeline__item:nth-child(odd) .timeline__content::before {
-    left: -12px;
-    border-width: 12px 12px 12px 0;
-    border-color: transparent var(--c24-color-white) transparent transparent;
-  }
-
-  /* Arrow for items on the left */
-  .compass24-timeline-component .timeline__item:nth-child(even) .timeline__content::before {
-    right: -12px;
-    border-width: 12px 0 12px 12px;
-    border-color: transparent transparent transparent var(--c24-color-white);
-  }
-
-  /* ============================================
-     TIMELINE CONTENT ELEMENTS
-     ============================================ */
-  .compass24-timeline-component .timeline__year {
-    display: inline-block;
-    font-size: var(--c24-font-size-xl);
-    font-weight: 800;
-    color: var(--c24-color-white);
-    background: linear-gradient(135deg, var(--c24-color-primary-light), var(--c24-color-primary));
-    padding: var(--c24-space-2) var(--c24-space-4);
-    border-radius: var(--c24-border-radius-md);
-    margin-bottom: var(--c24-space-3);
-  }
-
-  .compass24-timeline-component .timeline__item--milestone .timeline__year {
-    background: linear-gradient(135deg, var(--c24-color-secondary), var(--c24-color-primary));
-  }
-
-  .compass24-timeline-component .timeline__title {
-    font-size: var(--c24-font-size-xl);
-    font-weight: 700;
-    color: var(--c24-color-primary);
-    margin: 0 0 var(--c24-space-3);
-    text-transform: uppercase;
-    letter-spacing: 0.025em;
-  }
-
-  .compass24-timeline-component .timeline__description {
-    font-size: var(--c24-font-size-base);
-    color: var(--c24-color-gray-600);
-    line-height: 1.7;
-    margin: 0 0 var(--c24-space-4);
-  }
-
-  /* ============================================
-     FACTS BOX
-     ============================================ */
-  .compass24-timeline-component .timeline__facts {
-    background: linear-gradient(135deg, var(--c24-color-gray-50), var(--c24-color-gray-100));
-    border-left: 4px solid var(--c24-color-secondary);
-    padding: var(--c24-space-4);
-    border-radius: 0 var(--c24-border-radius-md) var(--c24-border-radius-md) 0;
-    margin-top: var(--c24-space-4);
-  }
-
-  .compass24-timeline-component .timeline__facts-label {
-    display: inline-block;
-    font-size: var(--c24-font-size-sm);
-    font-weight: 700;
-    color: var(--c24-color-secondary);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    margin-bottom: var(--c24-space-2);
-  }
-
-  .compass24-timeline-component .timeline__facts-text {
-    font-size: var(--c24-font-size-sm);
-    color: var(--c24-color-gray-600);
-    line-height: 1.6;
-    margin: 0;
-  }
-
-  /* ============================================
-     MOBILE RESPONSIVE (< 768px)
-     ============================================ */
-  @media (max-width: 767px) {
-    .compass24-timeline-component .timeline-section {
-      padding: var(--c24-space-8) var(--c24-space-4);
+    /* ============================================
+       SECTION HEADER
+       ============================================ */
+    .timeline-section {
+      padding: var(--c24-space-12) var(--c24-space-4);
+      background-color: var(--c24-color-gray-50);
     }
 
-    .compass24-timeline-component .timeline-header__title {
-      font-size: var(--c24-font-size-2xl);
+    .timeline-header {
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto var(--c24-space-12);
+
+      &__title {
+        font-size: var(--c24-font-size-3xl);
+        font-weight: 700;
+        color: var(--c24-color-primary);
+        margin: 0 0 var(--c24-space-4);
+      }
+
+      &__intro {
+        font-size: var(--c24-font-size-lg);
+        color: var(--c24-color-gray-600);
+        margin: 0;
+        line-height: 1.7;
+      }
     }
 
-    .compass24-timeline-component .timeline-header__intro {
-      font-size: var(--c24-font-size-base);
+    /* ============================================
+       TIMELINE CONTAINER
+       ============================================ */
+    .timeline {
+      position: relative;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: var(--c24-space-8) 0;
+
+      /* Timeline vertical line */
+      &::before {
+        content: '';
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        width: var(--c24-timeline-line-width);
+        height: 100%;
+        background: linear-gradient(
+          to bottom,
+          var(--c24-color-primary-light),
+          var(--c24-color-primary),
+          var(--c24-color-primary-dark)
+        );
+        border-radius: 9999px;
+      }
     }
 
-    /* Single column layout on mobile */
-    .compass24-timeline-component .timeline::before {
-      left: var(--c24-space-4);
-      transform: none;
+    /* ============================================
+       TIMELINE ITEMS
+       ============================================ */
+    .timeline__item {
+      position: relative;
+      width: 100%;
+      margin-bottom: var(--c24-space-12);
+      display: flex;
+      justify-content: flex-end;
+      align-items: flex-start;
+      animation: compass24FadeInUp 0.6s ease-out both;
+
+      /* Alternate items to the left/right */
+      &:nth-child(odd) {
+        justify-content: flex-start;
+
+        .timeline__content {
+          margin-left: calc(50% + var(--c24-space-8));
+        }
+      }
+
+      &:nth-child(even) {
+        .timeline__content {
+          margin-right: calc(50% + var(--c24-space-8));
+        }
+      }
+
+      &:nth-child(1) { animation-delay: 0.1s; }
+      &:nth-child(2) { animation-delay: 0.2s; }
+      &:nth-child(3) { animation-delay: 0.3s; }
+      &:nth-child(4) { animation-delay: 0.4s; }
+      &:nth-child(5) { animation-delay: 0.5s; }
+      &:nth-child(6) { animation-delay: 0.6s; }
+      &:nth-child(7) { animation-delay: 0.7s; }
+      &:nth-child(8) { animation-delay: 0.8s; }
+
+      &:hover .timeline__dot {
+        width: var(--c24-timeline-dot-size-large);
+        height: var(--c24-timeline-dot-size-large);
+        background-color: var(--c24-color-accent);
+      }
+
+      /* Milestone year dots */
+      &--milestone .timeline__dot {
+        width: var(--c24-timeline-dot-size-large);
+        height: var(--c24-timeline-dot-size-large);
+        background-color: var(--c24-color-secondary);
+
+        @media (prefers-reduced-motion: reduce) {
+          & {
+            width: var(--c24-timeline-dot-size);
+            height: var(--c24-timeline-dot-size);
+          }
+        }
+      }
+
+      &--milestone:hover .timeline__dot {
+        background-color: var(--c24-color-accent);
+      }
     }
 
-    .compass24-timeline-component .timeline__item,
-    .compass24-timeline-component .timeline__item:nth-child(odd),
-    .compass24-timeline-component .timeline__item:nth-child(even) {
-      justify-content: flex-start;
-    }
-
-    .compass24-timeline-component .timeline__item:nth-child(odd) .timeline__content,
-    .compass24-timeline-component .timeline__item:nth-child(even) .timeline__content {
-      margin-left: calc(var(--c24-space-4) + var(--c24-space-8));
-      margin-right: 0;
-      width: calc(100% - var(--c24-space-4) - var(--c24-space-12));
-    }
-
-    .compass24-timeline-component .timeline__dot {
-      left: var(--c24-space-4);
-      transform: none;
-    }
-
-    /* Arrow adjustment for mobile */
-    .compass24-timeline-component .timeline__content::before {
-      left: -12px !important;
-      right: auto !important;
-      border-width: 12px 12px 12px 0 !important;
-      border-color: transparent var(--c24-color-white) transparent transparent !important;
-    }
-
-    .compass24-timeline-component .timeline__year {
-      font-size: var(--c24-font-size-lg);
-    }
-
-    .compass24-timeline-component .timeline__title {
-      font-size: var(--c24-font-size-lg);
-    }
-
-    .compass24-timeline-component .timeline__content {
-      padding: var(--c24-space-4);
-    }
-  }
-
-  /* ============================================
-     TABLET RESPONSIVE (768px - 1023px)
-     ============================================ */
-  @media (min-width: 768px) and (max-width: 1023px) {
-    .compass24-timeline-component .timeline__content {
-      width: calc(50% - var(--c24-space-8));
-    }
-  }
-
-  /* ============================================
-     ANIMATIONS
-     ============================================ */
-  @keyframes compass24FadeInUp {
-    from {
-      opacity: 0;
-      transform: translateY(30px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  .compass24-timeline-component .timeline__item {
-    animation: compass24FadeInUp 0.6s ease-out;
-    animation-fill-mode: both;
-  }
-
-  /* Stagger animation for timeline items */
-  .compass24-timeline-component .timeline__item:nth-child(1) { animation-delay: 0.1s; }
-  .compass24-timeline-component .timeline__item:nth-child(2) { animation-delay: 0.2s; }
-  .compass24-timeline-component .timeline__item:nth-child(3) { animation-delay: 0.3s; }
-  .compass24-timeline-component .timeline__item:nth-child(4) { animation-delay: 0.4s; }
-  .compass24-timeline-component .timeline__item:nth-child(5) { animation-delay: 0.5s; }
-  .compass24-timeline-component .timeline__item:nth-child(6) { animation-delay: 0.6s; }
-  .compass24-timeline-component .timeline__item:nth-child(7) { animation-delay: 0.7s; }
-  .compass24-timeline-component .timeline__item:nth-child(8) { animation-delay: 0.8s; }
-
-  /* Disable animations if user prefers reduced motion */
-  @media (prefers-reduced-motion: reduce) {
-    .compass24-timeline-component .timeline__item {
-      animation: none;
-    }
-
-    .compass24-timeline-component .timeline__content:hover {
-      transform: none;
-    }
-
-    .compass24-timeline-component .timeline__item:hover .timeline__dot {
+    /* ============================================
+       TIMELINE DOT
+       ============================================ */
+    .timeline__dot {
+      position: absolute;
+      left: 50%;
+      top: var(--c24-space-6);
+      transform: translateX(-50%);
       width: var(--c24-timeline-dot-size);
       height: var(--c24-timeline-dot-size);
+      background-color: var(--c24-color-primary);
+      border: 4px solid var(--c24-color-white);
+      border-radius: 50%;
+      box-shadow: var(--c24-shadow-md);
+      z-index: 1;
+      transition: all var(--c24-transition-base);
+    }
+
+    /* ============================================
+       TIMELINE CONTENT CARD
+       ============================================ */
+    .timeline__content {
+      background-color: var(--c24-color-white);
+      padding: var(--c24-space-6);
+      border-radius: var(--c24-border-radius-xl);
+      box-shadow: var(--c24-shadow-md);
+      width: calc(50% - var(--c24-space-12));
+      transition: all var(--c24-transition-base);
+      position: relative;
+
+      &:hover {
+        box-shadow: var(--c24-shadow-xl);
+        transform: translateY(-4px);
+
+        @media (prefers-reduced-motion: reduce) {
+          transform: none;
+        }
+      }
+
+      /* Arrow pointing to the timeline */
+      &::before {
+        content: '';
+        position: absolute;
+        top: 28px;
+        width: 0;
+        height: 0;
+        border-style: solid;
+      }
+
+      /* Arrow for items on the right (odd items) */
+      .timeline__item:nth-child(odd) &::before {
+        left: -12px;
+        border-width: 12px 12px 12px 0;
+        border-color: transparent var(--c24-color-white) transparent transparent;
+      }
+
+      /* Arrow for items on the left (even items) */
+      .timeline__item:nth-child(even) &::before {
+        right: -12px;
+        border-width: 12px 0 12px 12px;
+        border-color: transparent transparent transparent var(--c24-color-white);
+      }
+    }
+
+    /* ============================================
+       TIMELINE CONTENT ELEMENTS
+       ============================================ */
+    .timeline__year {
+      display: inline-block;
+      font-size: var(--c24-font-size-xl);
+      font-weight: 800;
+      color: var(--c24-color-white);
+      background: linear-gradient(135deg, var(--c24-color-primary-light), var(--c24-color-primary));
+      padding: var(--c24-space-2) var(--c24-space-4);
+      border-radius: var(--c24-border-radius-md);
+      margin-bottom: var(--c24-space-3);
+
+      .timeline__item--milestone & {
+        background: linear-gradient(135deg, var(--c24-color-secondary), var(--c24-color-primary));
+      }
+    }
+
+    .timeline__title {
+      font-size: var(--c24-font-size-xl);
+      font-weight: 700;
+      color: var(--c24-color-primary);
+      margin: 0 0 var(--c24-space-3);
+      text-transform: uppercase;
+      letter-spacing: 0.025em;
+    }
+
+    .timeline__description {
+      font-size: var(--c24-font-size-base);
+      color: var(--c24-color-gray-600);
+      line-height: 1.7;
+      margin: 0 0 var(--c24-space-4);
+    }
+
+    /* ============================================
+       FACTS BOX
+       ============================================ */
+    .timeline__facts {
+      background: linear-gradient(135deg, var(--c24-color-gray-50), var(--c24-color-gray-100));
+      border-left: 4px solid var(--c24-color-secondary);
+      padding: var(--c24-space-4);
+      border-radius: 0 var(--c24-border-radius-md) var(--c24-border-radius-md) 0;
+      margin-top: var(--c24-space-4);
+    }
+
+    .timeline__facts-label {
+      display: inline-block;
+      font-size: var(--c24-font-size-sm);
+      font-weight: 700;
+      color: var(--c24-color-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: var(--c24-space-2);
+    }
+
+    .timeline__facts-text {
+      font-size: var(--c24-font-size-sm);
+      color: var(--c24-color-gray-600);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    /* ============================================
+       UNIVERSAL BOX SIZING
+       ============================================ */
+    & *,
+    & *::before,
+    & *::after {
+      box-sizing: inherit;
+    }
+
+    /* ============================================
+       MOBILE RESPONSIVE (< 768px)
+       ============================================ */
+    @media (max-width: 767px) {
+      .timeline-section {
+        padding: var(--c24-space-8) var(--c24-space-4);
+      }
+
+      .timeline-header__title {
+        font-size: var(--c24-font-size-2xl);
+      }
+
+      .timeline-header__intro {
+        font-size: var(--c24-font-size-base);
+      }
+
+      /* Single column layout on mobile */
+      .timeline::before {
+        left: var(--c24-space-4);
+        transform: none;
+      }
+
+      .timeline__item,
+      .timeline__item:nth-child(odd),
+      .timeline__item:nth-child(even) {
+        justify-content: flex-start;
+      }
+
+      .timeline__item:nth-child(odd) .timeline__content,
+      .timeline__item:nth-child(even) .timeline__content {
+        margin-left: calc(var(--c24-space-4) + var(--c24-space-8));
+        margin-right: 0;
+        width: calc(100% - var(--c24-space-4) - var(--c24-space-12));
+      }
+
+      .timeline__dot {
+        left: var(--c24-space-4);
+        transform: none;
+      }
+
+      /* Arrow adjustment for mobile */
+      .timeline__content::before {
+        left: -12px !important;
+        right: auto !important;
+        border-width: 12px 12px 12px 0 !important;
+        border-color: transparent var(--c24-color-white) transparent transparent !important;
+      }
+
+      .timeline__year {
+        font-size: var(--c24-font-size-lg);
+      }
+
+      .timeline__title {
+        font-size: var(--c24-font-size-lg);
+      }
+
+      .timeline__content {
+        padding: var(--c24-space-4);
+      }
+    }
+
+    /* ============================================
+       TABLET RESPONSIVE (768px - 1023px)
+       ============================================ */
+    @media (min-width: 768px) and (max-width: 1023px) {
+      .timeline__content {
+        width: calc(50% - var(--c24-space-8));
+      }
+    }
+
+    /* ============================================
+       ANIMATIONS
+       ============================================ */
+    @keyframes compass24FadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Disable animations if user prefers reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      .timeline__item {
+        animation: none;
+      }
     }
   }
 </style>
