@@ -1,0 +1,662 @@
+# Compass24 timeline
+
+## Component for injection into the About Us page
+
+Location: https://www.compass24.de/ueber-uns
+
+### Code Snippets
+
+To inject HTML payload:
+
+```javascript
+// use const in production
+var PAYLOAD_HTML = `<div class="injected"> XXXXXX Injected XXXXX </div>`;
+
+// Make the pick very specific
+document.querySelector('.cms-section.pos-1 .cms-block.pos-0:not(.cms-block-moorl-twig)').insertAdjacentHTML('afterBegin', PAYLOAD_HTML);
+
+
+
+```
+
+### Full Code injection sample
+
+TODO: Find better integration into existing layout. Timeline is too long for placement beside text.
+
+```javascript
+
+var PAYLOAD_HTML = `<!--
+  Compass24 Timeline Layout Component
+  
+  A standalone, injectable timeline component displaying the Compass24 company history.
+  This file can be injected into existing CMS pages without affecting SEO or editability.
+  
+  Usage: Inject this HTML into any container on the Compass24 website.
+  All styles are scoped under .compass24-timeline-component to prevent conflicts.
+-->
+
+<style>
+/* adaptation for placement in https://www.compass24.de/ueber-uns */
+/* section.timeline-section { */
+
+@media (min-width: 768px) {
+    .compass24-timeline-component {
+        float: right;
+        display: inline-block;
+        width: 50%;
+    }
+}
+</style>
+
+
+<style>
+  /* ============================================
+     SCOPED DESIGN TOKENS
+     ============================================ */
+  .compass24-timeline-component {
+    /* Colors */
+    --c24-color-primary: #003366;
+    --c24-color-primary-light: #0066b3;
+    --c24-color-primary-dark: #002244;
+    --c24-color-secondary: #0099cc;
+    --c24-color-accent: #cc0000;
+    --c24-color-white: #ffffff;
+    --c24-color-gray-50: #f9fafb;
+    --c24-color-gray-100: #f3f4f6;
+    --c24-color-gray-200: #e5e7eb;
+    --c24-color-gray-500: #6b7280;
+    --c24-color-gray-600: #4b5563;
+    --c24-color-gray-900: #111827;
+    
+    /* Typography */
+    --c24-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 
+                       'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
+                       'Helvetica Neue', sans-serif;
+    --c24-font-size-sm: 0.875rem;
+    --c24-font-size-base: 1rem;
+    --c24-font-size-lg: 1.125rem;
+    --c24-font-size-xl: 1.25rem;
+    --c24-font-size-2xl: 1.5rem;
+    --c24-font-size-3xl: 1.875rem;
+    
+    /* Spacing */
+    --c24-space-2: 0.5rem;
+    --c24-space-3: 0.75rem;
+    --c24-space-4: 1rem;
+    --c24-space-6: 1.5rem;
+    --c24-space-8: 2rem;
+    --c24-space-12: 3rem;
+    --c24-space-16: 4rem;
+    
+    /* Borders & Shadows */
+    --c24-border-radius-md: 0.375rem;
+    --c24-border-radius-lg: 0.5rem;
+    --c24-border-radius-xl: 0.75rem;
+    --c24-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --c24-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --c24-shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    
+    /* Transitions */
+    --c24-transition-base: 250ms ease-in-out;
+    
+    /* Timeline Specific */
+    --c24-timeline-line-width: 4px;
+    --c24-timeline-dot-size: 20px;
+    --c24-timeline-dot-size-large: 28px;
+  }
+
+  /* ============================================
+     BASE STYLES
+     ============================================ */
+  .compass24-timeline-component {
+    font-family: var(--c24-font-family);
+    font-size: var(--c24-font-size-base);
+    line-height: 1.6;
+    color: var(--c24-color-gray-900);
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .compass24-timeline-component *,
+  .compass24-timeline-component *::before,
+  .compass24-timeline-component *::after {
+    box-sizing: inherit;
+  }
+
+  /* ============================================
+     SECTION HEADER
+     ============================================ */
+  .compass24-timeline-component .timeline-section {
+    padding: var(--c24-space-12) var(--c24-space-4);
+    background-color: var(--c24-color-gray-50);
+  }
+
+  .compass24-timeline-component .timeline-header {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto var(--c24-space-12);
+  }
+
+  .compass24-timeline-component .timeline-header__title {
+    font-size: var(--c24-font-size-3xl);
+    font-weight: 700;
+    color: var(--c24-color-primary);
+    margin: 0 0 var(--c24-space-4);
+  }
+
+  .compass24-timeline-component .timeline-header__intro {
+    font-size: var(--c24-font-size-lg);
+    color: var(--c24-color-gray-600);
+    margin: 0;
+    line-height: 1.7;
+  }
+
+  /* ============================================
+     TIMELINE CONTAINER
+     ============================================ */
+  .compass24-timeline-component .timeline {
+    position: relative;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: var(--c24-space-8) 0;
+  }
+
+  /* Timeline vertical line */
+  .compass24-timeline-component .timeline::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: var(--c24-timeline-line-width);
+    height: 100%;
+    background: linear-gradient(
+      to bottom,
+      var(--c24-color-primary-light),
+      var(--c24-color-primary),
+      var(--c24-color-primary-dark)
+    );
+    border-radius: 9999px;
+  }
+
+  /* ============================================
+     TIMELINE ITEMS
+     ============================================ */
+  .compass24-timeline-component .timeline__item {
+    position: relative;
+    width: 100%;
+    margin-bottom: var(--c24-space-12);
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+  }
+
+  /* Alternate items to the left/right */
+  .compass24-timeline-component .timeline__item:nth-child(odd) {
+    justify-content: flex-start;
+  }
+
+  .compass24-timeline-component .timeline__item:nth-child(odd) .timeline__content {
+    margin-left: calc(50% + var(--c24-space-8));
+  }
+
+  .compass24-timeline-component .timeline__item:nth-child(even) .timeline__content {
+    margin-right: calc(50% + var(--c24-space-8));
+  }
+
+  /* ============================================
+     TIMELINE DOT
+     ============================================ */
+  .compass24-timeline-component .timeline__dot {
+    position: absolute;
+    left: 50%;
+    top: var(--c24-space-6);
+    transform: translateX(-50%);
+    width: var(--c24-timeline-dot-size);
+    height: var(--c24-timeline-dot-size);
+    background-color: var(--c24-color-primary);
+    border: 4px solid var(--c24-color-white);
+    border-radius: 50%;
+    box-shadow: var(--c24-shadow-md);
+    z-index: 1;
+    transition: all var(--c24-transition-base);
+  }
+
+  .compass24-timeline-component .timeline__item:hover .timeline__dot {
+    width: var(--c24-timeline-dot-size-large);
+    height: var(--c24-timeline-dot-size-large);
+    background-color: var(--c24-color-accent);
+  }
+
+  /* Milestone year dots */
+  .compass24-timeline-component .timeline__item--milestone .timeline__dot {
+    width: var(--c24-timeline-dot-size-large);
+    height: var(--c24-timeline-dot-size-large);
+    background-color: var(--c24-color-secondary);
+  }
+
+  .compass24-timeline-component .timeline__item--milestone:hover .timeline__dot {
+    background-color: var(--c24-color-accent);
+  }
+
+  /* ============================================
+     TIMELINE CONTENT CARD
+     ============================================ */
+  .compass24-timeline-component .timeline__content {
+    background-color: var(--c24-color-white);
+    padding: var(--c24-space-6);
+    border-radius: var(--c24-border-radius-xl);
+    box-shadow: var(--c24-shadow-md);
+    width: calc(50% - var(--c24-space-12));
+    transition: all var(--c24-transition-base);
+    position: relative;
+  }
+
+  .compass24-timeline-component .timeline__content:hover {
+    box-shadow: var(--c24-shadow-xl);
+    transform: translateY(-4px);
+  }
+
+  /* Arrow pointing to the timeline */
+  .compass24-timeline-component .timeline__content::before {
+    content: '';
+    position: absolute;
+    top: 28px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+  }
+
+  /* Arrow for items on the right */
+  .compass24-timeline-component .timeline__item:nth-child(odd) .timeline__content::before {
+    left: -12px;
+    border-width: 12px 12px 12px 0;
+    border-color: transparent var(--c24-color-white) transparent transparent;
+  }
+
+  /* Arrow for items on the left */
+  .compass24-timeline-component .timeline__item:nth-child(even) .timeline__content::before {
+    right: -12px;
+    border-width: 12px 0 12px 12px;
+    border-color: transparent transparent transparent var(--c24-color-white);
+  }
+
+  /* ============================================
+     TIMELINE CONTENT ELEMENTS
+     ============================================ */
+  .compass24-timeline-component .timeline__year {
+    display: inline-block;
+    font-size: var(--c24-font-size-xl);
+    font-weight: 800;
+    color: var(--c24-color-white);
+    background: linear-gradient(135deg, var(--c24-color-primary-light), var(--c24-color-primary));
+    padding: var(--c24-space-2) var(--c24-space-4);
+    border-radius: var(--c24-border-radius-md);
+    margin-bottom: var(--c24-space-3);
+  }
+
+  .compass24-timeline-component .timeline__item--milestone .timeline__year {
+    background: linear-gradient(135deg, var(--c24-color-secondary), var(--c24-color-primary));
+  }
+
+  .compass24-timeline-component .timeline__title {
+    font-size: var(--c24-font-size-xl);
+    font-weight: 700;
+    color: var(--c24-color-primary);
+    margin: 0 0 var(--c24-space-3);
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+  }
+
+  .compass24-timeline-component .timeline__description {
+    font-size: var(--c24-font-size-base);
+    color: var(--c24-color-gray-600);
+    line-height: 1.7;
+    margin: 0 0 var(--c24-space-4);
+  }
+
+  /* ============================================
+     FACTS BOX
+     ============================================ */
+  .compass24-timeline-component .timeline__facts {
+    background: linear-gradient(135deg, var(--c24-color-gray-50), var(--c24-color-gray-100));
+    border-left: 4px solid var(--c24-color-secondary);
+    padding: var(--c24-space-4);
+    border-radius: 0 var(--c24-border-radius-md) var(--c24-border-radius-md) 0;
+    margin-top: var(--c24-space-4);
+  }
+
+  .compass24-timeline-component .timeline__facts-label {
+    display: inline-block;
+    font-size: var(--c24-font-size-sm);
+    font-weight: 700;
+    color: var(--c24-color-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: var(--c24-space-2);
+  }
+
+  .compass24-timeline-component .timeline__facts-text {
+    font-size: var(--c24-font-size-sm);
+    color: var(--c24-color-gray-600);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* ============================================
+     MOBILE RESPONSIVE (< 768px)
+     ============================================ */
+  @media (max-width: 767px) {
+    .compass24-timeline-component .timeline-section {
+      padding: var(--c24-space-8) var(--c24-space-4);
+    }
+
+    .compass24-timeline-component .timeline-header__title {
+      font-size: var(--c24-font-size-2xl);
+    }
+
+    .compass24-timeline-component .timeline-header__intro {
+      font-size: var(--c24-font-size-base);
+    }
+
+    /* Single column layout on mobile */
+    .compass24-timeline-component .timeline::before {
+      left: var(--c24-space-4);
+      transform: none;
+    }
+
+    .compass24-timeline-component .timeline__item,
+    .compass24-timeline-component .timeline__item:nth-child(odd),
+    .compass24-timeline-component .timeline__item:nth-child(even) {
+      justify-content: flex-start;
+    }
+
+    .compass24-timeline-component .timeline__item:nth-child(odd) .timeline__content,
+    .compass24-timeline-component .timeline__item:nth-child(even) .timeline__content {
+      margin-left: calc(var(--c24-space-4) + var(--c24-space-8));
+      margin-right: 0;
+      width: calc(100% - var(--c24-space-4) - var(--c24-space-12));
+    }
+
+    .compass24-timeline-component .timeline__dot {
+      left: var(--c24-space-4);
+      transform: none;
+    }
+
+    /* Arrow adjustment for mobile */
+    .compass24-timeline-component .timeline__content::before {
+      left: -12px !important;
+      right: auto !important;
+      border-width: 12px 12px 12px 0 !important;
+      border-color: transparent var(--c24-color-white) transparent transparent !important;
+    }
+
+    .compass24-timeline-component .timeline__year {
+      font-size: var(--c24-font-size-lg);
+    }
+
+    .compass24-timeline-component .timeline__title {
+      font-size: var(--c24-font-size-lg);
+    }
+
+    .compass24-timeline-component .timeline__content {
+      padding: var(--c24-space-4);
+    }
+  }
+
+  /* ============================================
+     TABLET RESPONSIVE (768px - 1023px)
+     ============================================ */
+  @media (min-width: 768px) and (max-width: 1023px) {
+    .compass24-timeline-component .timeline__content {
+      width: calc(50% - var(--c24-space-8));
+    }
+  }
+
+  /* ============================================
+     ANIMATIONS
+     ============================================ */
+  @keyframes compass24FadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .compass24-timeline-component .timeline__item {
+    animation: compass24FadeInUp 0.6s ease-out;
+    animation-fill-mode: both;
+  }
+
+  /* Stagger animation for timeline items */
+  .compass24-timeline-component .timeline__item:nth-child(1) { animation-delay: 0.1s; }
+  .compass24-timeline-component .timeline__item:nth-child(2) { animation-delay: 0.2s; }
+  .compass24-timeline-component .timeline__item:nth-child(3) { animation-delay: 0.3s; }
+  .compass24-timeline-component .timeline__item:nth-child(4) { animation-delay: 0.4s; }
+  .compass24-timeline-component .timeline__item:nth-child(5) { animation-delay: 0.5s; }
+  .compass24-timeline-component .timeline__item:nth-child(6) { animation-delay: 0.6s; }
+  .compass24-timeline-component .timeline__item:nth-child(7) { animation-delay: 0.7s; }
+  .compass24-timeline-component .timeline__item:nth-child(8) { animation-delay: 0.8s; }
+
+  /* Disable animations if user prefers reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .compass24-timeline-component .timeline__item {
+      animation: none;
+    }
+
+    .compass24-timeline-component .timeline__content:hover {
+      transform: none;
+    }
+
+    .compass24-timeline-component .timeline__item:hover .timeline__dot {
+      width: var(--c24-timeline-dot-size);
+      height: var(--c24-timeline-dot-size);
+    }
+  }
+</style>
+
+<div class="compass24-timeline-component">
+  <section class="timeline-section" aria-labelledby="compass24-timeline-title">
+    <header class="timeline-header">
+      <h2 id="compass24-timeline-title" class="timeline-header__title">Unsere Geschichte</h2>
+      <p class="timeline-header__intro">
+        Seit 1979 ist Compass® ein unabhängiges Familienunternehmen – vom kleinen Packraum in Ascheberg 
+        zu Europas größtem Versender für Wassersportausrüstung.
+      </p>
+    </header>
+
+    <div class="timeline" role="list" aria-label="Compass24 Unternehmensgeschichte">
+      
+      <!-- 1979 - Firmengründung -->
+      <article class="timeline__item timeline__item--milestone" role="listitem">
+        <div class="timeline__dot" aria-hidden="true"></div>
+        <div class="timeline__content">
+          <span class="timeline__year">1979</span>
+          <h3 class="timeline__title">Firmengründung</h3>
+          <p class="timeline__description">
+            Heinz Dehler gründet die Firma Compass® mit zwei Mitarbeitern und lediglich einem 
+            Packraum in Ascheberg, Westfalen. Der erste handgemachte Katalog umfasst 12 Seiten. 
+            Stolze 1.100 Aufträge werden im ersten Jahr erfasst.
+          </p>
+          <div class="timeline__facts">
+            <span class="timeline__facts-label">Facts</span>
+            <p class="timeline__facts-text">
+              Bis heute wurden bei Compass® 320.277 l Antifouling verkauft. Das ergäbe eine Fläche 
+              von 3.523.047 m². Damit könnte man die gesamte Altstadt Münsters in Westfalen gut 2× anstreichen.
+            </p>
+          </div>
+        </div>
+      </article>
+
+      <!-- 1980... - Innovation & Entwicklung -->
+      <article class="timeline__item" role="listitem">
+        <div class="timeline__dot" aria-hidden="true"></div>
+        <div class="timeline__content">
+          <span class="timeline__year">1980...</span>
+          <h3 class="timeline__title">Innovation & Entwicklung</h3>
+          <p class="timeline__description">
+            Auf- und Ausbau des Compass® Firmengebäudes. Maritim-Shop und Verwaltung werden bezogen. 
+            1. großer Hauptkatalog mit Sortiments-Erweiterung. Am 03.02.1984 Gründung von Compass® 
+            Schweiz – Geschäftsführerin ist Frau Petra Baettig, geborene Dehler.
+          </p>
+          <div class="timeline__facts">
+            <span class="timeline__facts-label">Facts</span>
+            <p class="timeline__facts-text">
+              Bis heute wurden bei Compass® 405.434 Fender verkauft. 116.000 Segelyachten könnten 
+              damit ausgestattet werden. Hintereinander gelegt ergibt das eine Strecke von 250 km – 
+              das entspricht einer Entfernung von Münster bis nach Braunschweig.
+            </p>
+          </div>
+        </div>
+      </article>
+
+      <!-- 1990... - Generationen-Wechsel -->
+      <article class="timeline__item" role="listitem">
+        <div class="timeline__dot" aria-hidden="true"></div>
+        <div class="timeline__content">
+          <span class="timeline__year">1990...</span>
+          <h3 class="timeline__title">Generationen-Wechsel</h3>
+          <p class="timeline__description">
+            Michael Dehler übernimmt zum 01.07.1991 die Geschäftsführung. Am 01.12.1995 wird die 
+            Geschäftsführung durch seine Frau Antje Dehler verstärkt. 1996 erscheint erstmals ein 
+            Herbst/Winter-Katalog mit maritimer Mode. 1997 erfolgt der erste große Umbau des Maritim-Shops.
+          </p>
+          <div class="timeline__facts">
+            <span class="timeline__facts-label">Facts</span>
+            <p class="timeline__facts-text">
+              Bis heute wurden bei Compass® 58.400 Bretonische Shirts verkauft. Jeder Einwohner 
+              Aschebergs wäre im Besitz von 4 Bretonischen Shirts.
+            </p>
+          </div>
+        </div>
+      </article>
+
+      <!-- 1999... - 20 Jahre Compass -->
+      <article class="timeline__item timeline__item--milestone" role="listitem">
+        <div class="timeline__dot" aria-hidden="true"></div>
+        <div class="timeline__content">
+          <span class="timeline__year">1999...</span>
+          <h3 class="timeline__title">20 Jahre Compass®</h3>
+          <p class="timeline__description">
+            Compass® feiert mit seinen Kunden das 20-jährige Betriebs-Jubiläum. Als Dankeschön an 
+            sich selbst wird die Verwaltung ausgebaut. Europaweite Expansion nach Österreich, 
+            Benelux, Großbritannien und Frankreich.
+          </p>
+          <div class="timeline__facts">
+            <span class="timeline__facts-label">Facts</span>
+            <p class="timeline__facts-text">
+              Bis heute wurde bei Compass® 15.000× das Compass® Offshore-Set verkauft. Damit kann 
+              man die gesamte Deutsche Marine ausstatten, Übungsbegleiter ausgenommen – oder jeden 
+              Bewohner von Ascheberg.
+            </p>
+          </div>
+        </div>
+      </article>
+
+      <!-- 2000... - Compass Goes Online -->
+      <article class="timeline__item timeline__item--milestone" role="listitem">
+        <div class="timeline__dot" aria-hidden="true"></div>
+        <div class="timeline__content">
+          <span class="timeline__year">2000...</span>
+          <h3 class="timeline__title">Compass® Goes Online</h3>
+          <p class="timeline__description">
+            www.compass24 geht 2000 an den Start. Damit steigt Europas größter Versender für 
+            Motorboot und Segelsport in den Online-Handel ein und erobert direkt die 
+            Internet-Marktführerschaft im Wassersport. 2001 sind erstmals über 14.000 Artikel 
+            im aktiven Sortiment und über 200.000 zufriedene Kunden erreichen ihren Compass® 
+            fast rund um die Uhr auch online.
+          </p>
+          <div class="timeline__facts">
+            <span class="timeline__facts-label">Facts</span>
+            <p class="timeline__facts-text">
+              Bis heute wurden bei Compass® 44.000 Profi-Bordhosen verkauft. Jeder Mann in 
+              Ascheberg besäße sogar 3 Bordhosen.
+            </p>
+          </div>
+        </div>
+      </article>
+
+      <!-- 2004... - 25 Jahre Compass -->
+      <article class="timeline__item timeline__item--milestone" role="listitem">
+        <div class="timeline__dot" aria-hidden="true"></div>
+        <div class="timeline__content">
+          <span class="timeline__year">2004...</span>
+          <h3 class="timeline__title">25 Jahre Compass®</h3>
+          <p class="timeline__description">
+            Auch nach 25 Jahren gibt es bei Compass® keine Flaute. Mit jugendlichem Schwung wird 
+            ein neues Logistik-Zentrum gebaut. Der Maritim-Shop Ascheberg wird modernisiert und 
+            Anfang 2009 mit vielen Sonderaktionen neu eröffnet.
+          </p>
+          <div class="timeline__facts">
+            <span class="timeline__facts-label">Facts</span>
+            <p class="timeline__facts-text">
+              Bis heute wurden bei Compass® 460.938 Automatik-Rettungswesten und 155.544 
+              Feststoffwesten, also insgesamt über eine halbe Million Rettungswesten verkauft. 
+              Alle Segelyachten Deutschlands wären mit mind. 4 Rettungswesten ausgerüstet.
+            </p>
+          </div>
+        </div>
+      </article>
+
+      <!-- 2010... - Expansion & Kundennähe -->
+      <article class="timeline__item" role="listitem">
+        <div class="timeline__dot" aria-hidden="true"></div>
+        <div class="timeline__content">
+          <span class="timeline__year">2010...</span>
+          <h3 class="timeline__title">Expansion & Kundennähe</h3>
+          <p class="timeline__description">
+            2011 wird der große Maritim-Shop in Hamburg eröffnet. 2014 stellt Compass® erstmals 
+            auf der Hanseboot aus, Blickfang ist die selbst restaurierte El Pocko. 
+            Zusammenarbeit mit vielen Stars des Segelsports.
+          </p>
+          <div class="timeline__facts">
+            <span class="timeline__facts-label">Facts</span>
+            <p class="timeline__facts-text">
+              Bis heute wurden bei Compass® 1.200.000 m Tauwerk verkauft. Das sind 1.200 km 
+              Tauwerk und reicht von Flensburg bis nach Mailand. Damit könnte man Ascheberg 
+              ca. 33× umspannen.
+            </p>
+          </div>
+        </div>
+      </article>
+
+      <!-- 2019... - 40 Jahre & In Zukunft -->
+      <article class="timeline__item timeline__item--milestone" role="listitem">
+        <div class="timeline__dot" aria-hidden="true"></div>
+        <div class="timeline__content">
+          <span class="timeline__year">2019...</span>
+          <h3 class="timeline__title">40 Jahre & In Zukunft</h3>
+          <p class="timeline__description">
+            Compass® als Familienunternehmen feiert 40-jähriges Bestehen – und unsere treuen 
+            Kunden feiern mit. Ein Feuerwerk an einzigartigen Jubi-Preisen, Sonderaktionen 
+            und Gratulationen aus dem Segelsportbereich. Die Compass®-Crew freut sich schon 
+            auf die nächsten 40 Jahre.
+          </p>
+          <div class="timeline__facts">
+            <span class="timeline__facts-label">Facts</span>
+            <p class="timeline__facts-text">
+              Bis heute wurden bei Compass® 3.247 Rettungsinseln verkauft. Kleinere Segelyachten 
+              haben zu über 95% keine Rettungsinseln. Bei den Segelyachten ab ca. 10 m haben 
+              lediglich 18% eine Rettungsinsel. Mit den verkauften Rettungsinseln könnten alle 
+              14.800 Einwohner Aschebergs gerettet werden.
+            </p>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+</div>
+`;
+
+
+
+
+document.querySelector('.cms-section.pos-1 .cms-block.pos-0:not(.cms-block-moorl-twig)').insertAdjacentHTML('afterBegin', PAYLOAD_HTML);
+
+```
+
