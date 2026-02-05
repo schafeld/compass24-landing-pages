@@ -4,6 +4,13 @@
   A standalone, injectable timeline component displaying the Compass24 company history.
   This file can be injected into existing CMS pages without affecting SEO or editability.
   
+  CSS Variables Strategy:
+  - Uses Bootstrap/Shopware CSS variables from compass24.de (--bs-*, --font-size-*)
+  - Includes fallback values for standalone preview (when Bootstrap is not loaded)
+  - Keeps timeline-specific custom properties (--c24-timeline-*)
+  
+  Example: var(--bs-primary, #003366) uses site's primary color or falls back to #003366
+  
   Usage: Inject this HTML into any container on the Compass24 website.
   All styles are scoped under .compass24-timeline-component to prevent conflicts.
 -->
@@ -11,34 +18,36 @@
 <style>
   /* ============================================
      SCOPED DESIGN TOKENS & BASE STYLES
+     Uses Bootstrap variables from compass24.de with fallbacks for standalone viewing
      ============================================ */
   .compass24-timeline-component {
-    /* Colors */
-    --c24-color-primary: #003366;
+    /* 
+     * Colors - Use Bootstrap variables when available, with fallbacks
+     * Site primary: --bs-primary (#002856), fallback to #003366 for standalone
+     */
+    --c24-color-primary: var(--bs-primary, #003366);
     --c24-color-primary-light: #0066b3;
     --c24-color-primary-dark: #002244;
     --c24-color-secondary: #0099cc;
-    --c24-color-accent: #cc0000;
-    --c24-color-white: #ffffff;
-    --c24-color-gray-50: #f9fafb;
-    --c24-color-gray-100: #f3f4f6;
+    --c24-color-accent: var(--bs-danger, #cc0000);
+    --c24-color-white: var(--bs-white, #ffffff);
+    --c24-color-gray-50: var(--bs-gray-100, #f9fafb);
+    --c24-color-gray-100: var(--bs-secondary-bg, #f3f4f6);
     --c24-color-gray-200: #e5e7eb;
-    --c24-color-gray-500: #6b7280;
-    --c24-color-gray-600: #4b5563;
-    --c24-color-gray-900: #111827;
+    --c24-color-gray-500: var(--bs-gray, #6b7280);
+    --c24-color-gray-600: var(--bs-secondary-color, #4b5563);
+    --c24-color-gray-900: var(--bs-body-color, #111827);
     
-    /* Typography */
-    --c24-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 
-                       'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
-                       'Helvetica Neue', sans-serif;
-    --c24-font-size-sm: 0.875rem;
-    --c24-font-size-base: 1rem;
-    --c24-font-size-lg: 1.125rem;
+    /* Typography - Use site fonts when available */
+    --c24-font-family: var(--bs-body-font-family, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif);
+    --c24-font-size-sm: var(--font-size-sm, 0.875rem);
+    --c24-font-size-base: var(--font-size-base, 1rem);
+    --c24-font-size-lg: var(--font-size-lg, 1.125rem);
     --c24-font-size-xl: 1.25rem;
     --c24-font-size-2xl: 1.5rem;
     --c24-font-size-3xl: 1.875rem;
     
-    /* Spacing */
+    /* Spacing - Keep custom values for precise timeline layout */
     --c24-space-2: 0.5rem;
     --c24-space-3: 0.75rem;
     --c24-space-4: 1rem;
@@ -47,18 +56,18 @@
     --c24-space-12: 3rem;
     --c24-space-16: 4rem;
     
-    /* Borders & Shadows */
+    /* Borders & Shadows - Keep custom values (site uses border-radius: 0) */
     --c24-border-radius-md: 0.375rem;
     --c24-border-radius-lg: 0.5rem;
     --c24-border-radius-xl: 0.75rem;
-    --c24-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --c24-shadow-md: var(--bs-box-shadow-sm, 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06));
     --c24-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-    --c24-shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    --c24-shadow-xl: var(--bs-box-shadow, 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04));
     
     /* Transitions */
     --c24-transition-base: 250ms ease-in-out;
     
-    /* Timeline Specific */
+    /* Timeline Specific - Component-only values */
     --c24-timeline-line-width: 4px;
     --c24-timeline-dot-size: 20px;
     --c24-timeline-dot-size-large: 28px;
@@ -66,7 +75,7 @@
     /* Base Component Styles */
     font-family: var(--c24-font-family);
     font-size: var(--c24-font-size-base);
-    line-height: 1.6;
+    line-height: var(--line-height-base, 1.6);
     color: var(--c24-color-gray-900);
     box-sizing: border-box;
     -webkit-font-smoothing: antialiased;
