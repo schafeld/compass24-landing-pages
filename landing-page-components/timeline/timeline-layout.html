@@ -157,6 +157,40 @@
       align-items: flex-start;
       animation: compass24FadeInUp 0.6s ease-out both;
 
+      /* Desktop: Reduce vertical spacing for compact, overlapping layout */
+      @media (min-width: 1024px) {
+        margin-bottom: 0;
+        margin-top: -20rem;
+        z-index: 1;
+
+        &:first-child {
+          margin-top: 0;
+        }
+
+        /* Higher z-index for later items so they appear on top */
+        &:nth-child(n+2) {
+          z-index: calc(1 + 1);
+        }
+        &:nth-child(n+3) {
+          z-index: calc(1 + 2);
+        }
+        &:nth-child(n+4) {
+          z-index: calc(1 + 3);
+        }
+        &:nth-child(n+5) {
+          z-index: calc(1 + 4);
+        }
+        &:nth-child(n+6) {
+          z-index: calc(1 + 5);
+        }
+        &:nth-child(n+7) {
+          z-index: calc(1 + 6);
+        }
+        &:nth-child(n+8) {
+          z-index: calc(1 + 7);
+        }
+      }
+
       /* Alternate items to the left/right */
       &:nth-child(odd) {
         justify-content: flex-start;
@@ -332,6 +366,23 @@
       margin: 0;
     }
 
+    .timeline__image {
+      margin-top: var(--c24-space-4);
+      border-radius: 0 var(--c24-border-radius-md) var(--c24-border-radius-md) 0;
+      overflow: hidden;
+      max-width: 100%;
+      height: auto;
+      display: block;
+
+      img {
+        width: 100%;
+        height: auto;
+        display: block;
+        aspect-ratio: 16 / 10;
+        object-fit: cover;
+      }
+    }
+
     /* ============================================
        UNIVERSAL BOX SIZING
        ============================================ */
@@ -463,6 +514,9 @@
               Bis heute wurden bei Compass® 320.277 l Antifouling verkauft. Das ergäbe eine Fläche 
               von 3.523.047 m². Damit könnte man die gesamte Altstadt Münsters in Westfalen gut 2× anstreichen.
             </p>
+            <div class="timeline__image">
+              <img src="https://placehold.co/600x400?text=Compass24+Firmengründung+1979" alt="Compass24 Firmengründung 1979" loading="lazy">
+            </div>
           </div>
         </div>
       </article>
@@ -485,6 +539,9 @@
               damit ausgestattet werden. Hintereinander gelegt ergibt das eine Strecke von 250 km – 
               das entspricht einer Entfernung von Münster bis nach Braunschweig.
             </p>
+            <div class="timeline__image">
+              <img src="https://placehold.co/600x400?text=Compass24+Innovation+und+Entwicklung+1980" alt="Compass24 Innovation und Entwicklung 1980" loading="lazy">
+            </div>
           </div>
         </div>
       </article>
@@ -506,6 +563,9 @@
               Bis heute wurden bei Compass® 58.400 Bretonische Shirts verkauft. Jeder Einwohner 
               Aschebergs wäre im Besitz von 4 Bretonischen Shirts.
             </p>
+            <div class="timeline__image">
+              <img src="https://placehold.co/600x400?text=Compass24+Generationen-Wechsel+1990" alt="Compass24 Generationen-Wechsel 1990" loading="lazy">
+            </div>
           </div>
         </div>
       </article>
@@ -528,6 +588,9 @@
               man die gesamte Deutsche Marine ausstatten, Übungsbegleiter ausgenommen – oder jeden 
               Bewohner von Ascheberg.
             </p>
+            <div class="timeline__image">
+              <img src="https://placehold.co/600x400?text=20+Jahre+Compass24+Jubiläum+1999" alt="20 Jahre Compass24 Jubiläum 1999" loading="lazy">
+            </div>
           </div>
         </div>
       </article>
@@ -551,6 +614,9 @@
               Bis heute wurden bei Compass® 44.000 Profi-Bordhosen verkauft. Jeder Mann in 
               Ascheberg besäße sogar 3 Bordhosen.
             </p>
+            <div class="timeline__image">
+              <img src="https://placehold.co/600x400?text=Compass24+Online+2000" alt="Compass24 Online 2000" loading="lazy">
+            </div>
           </div>
         </div>
       </article>
@@ -573,6 +639,9 @@
               Feststoffwesten, also insgesamt über eine halbe Million Rettungswesten verkauft. 
               Alle Segelyachten Deutschlands wären mit mind. 4 Rettungswesten ausgerüstet.
             </p>
+            <div class="timeline__image">
+              <img src="https://placehold.co/600x400?text=25+Jahre+Compass24+Jubiläum+2004" alt="25 Jahre Compass24 Jubiläum 2004" loading="lazy">
+            </div>
           </div>
         </div>
       </article>
@@ -595,6 +664,9 @@
               Tauwerk und reicht von Flensburg bis nach Mailand. Damit könnte man Ascheberg 
               ca. 33× umspannen.
             </p>
+            <div class="timeline__image">
+              <img src="https://placehold.co/600x400?text=Compass24+Expansion+2010" alt="Compass24 Expansion 2010" loading="lazy">
+            </div>
           </div>
         </div>
       </article>
@@ -619,6 +691,9 @@
               lediglich 18% eine Rettungsinsel. Mit den verkauften Rettungsinseln könnten alle 
               14.800 Einwohner Aschebergs gerettet werden.
             </p>
+            <div class="timeline__image">
+              <img src="https://placehold.co/600x400?text=Compass24+40+Jahre+Jubiläum+2019" alt="Compass24 40 Jahre Jubiläum 2019" loading="lazy">
+            </div>
           </div>
         </div>
       </article>
