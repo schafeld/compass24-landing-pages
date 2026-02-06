@@ -7,6 +7,27 @@
   </head>
   <!-- The HTML header above is for preview purposes (mobile emulator devtools) only. Do not copy to CMS content page. -->
 
+  <!-- Typical product image representation from Compass24 shop product detail page, 
+   included here as a reference for image styling and responsive behavior in the timeline content cards. 
+   This image is not part of the timeline component itself and should be replaced with relevant historical images for each timeline item:
+
+  <img src="https://compass24.b-cdn.net/media/0e/4c/e3/1770156072/0361911_s11_FS26_01.jpg?width=1920" 
+        data-src="https://compass24.b-cdn.net/media/0e/4c/e3/1770156072/0361911_s11_FS26_01.jpg?width=1920" 
+        data-srcset="https://compass24.b-cdn.net/media/0e/4c/e3/1770156072/0361911_s11_FS26_01.jpg?width=1920 401w, https://compass24.b-cdn.net/media/0e/4c/e3/1770156072/0361911_s11_FS26_01.jpg?width=400 400w, https://compass24.b-cdn.net/media/0e/4c/e3/1770156072/0361911_s11_FS26_01.jpg?width=280 280w" 
+        data-sizes="auto" 
+        data-aspectratio="1" 
+        data-parent-fit="contain" 
+        class="frosh-proc img-fluid gallery-slider-image image-is-wider magnifier-image js-magnifier-image lazyautosizes ls-is-cached lazyloaded" 
+        title="Lalizas Coastal Compact Rettungsinsel für 4 bis 6 Personen" alt="Lalizas Coastal Compact Rettungsinsel für 4 bis 6 Personen" 
+        data-full-image="https://compass24.b-cdn.net/media/0e/4c/e3/1770156072/0361911_s11_FS26_01.jpg?width=1920" 
+        tabindex="0" 
+        data-object-fit="contain" 
+        style="aspect-ratio: 1 / 1; cursor: default;" 
+        sizes="720px" 
+        srcset="https://compass24.b-cdn.net/media/0e/4c/e3/1770156072/0361911_s11_FS26_01.jpg?width=1920 401w, https://compass24.b-cdn.net/media/0e/4c/e3/1770156072/0361911_s11_FS26_01.jpg?width=400 400w, https://compass24.b-cdn.net/media/0e/4c/e3/1770156072/0361911_s11_FS26_01.jpg?width=280 280w"
+    >
+  -->
+
 
   <!--
     Compass24 Timeline Layout Component
@@ -38,6 +59,7 @@
     --c24-color-primary-light: #0066b3;
     --c24-color-primary-dark: #002244;
     --c24-color-secondary: #0099cc;
+    --c24-color-secondary-dark: #007399; /* Better contrast for links */
     --c24-color-accent: var(--bs-danger, #cc0000);
     --c24-color-white: var(--bs-white, #ffffff);
     --c24-color-gray-50: var(--bs-gray-100, #f9fafb);
@@ -46,6 +68,10 @@
     --c24-color-gray-500: var(--bs-gray, #6b7280);
     --c24-color-gray-600: var(--bs-secondary-color, #4b5563);
     --c24-color-gray-900: var(--bs-body-color, #111827);
+    
+    /* Focus styles for accessibility */
+    --c24-focus-color: var(--bs-primary, #003366);
+    --c24-focus-ring: 0 0 0 3px rgba(0, 51, 102, 0.3);
     
     /* Typography - Use site fonts when available */
     --c24-font-family: var(--bs-body-font-family, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif);
@@ -80,6 +106,7 @@
     --c24-timeline-line-width: 4px;
     --c24-timeline-dot-size: 20px;
     --c24-timeline-dot-size-large: 28px;
+    --c24-timeline-overlap: -20rem; /* Vertical overlap on desktop */
 
     /* Base Component Styles */
     font-family: var(--c24-font-family);
@@ -160,35 +187,25 @@
       /* Tablet & Desktop: Reduce vertical spacing for compact, overlapping layout */
       @media (min-width: 768px) {
         margin-bottom: 0;
-        margin-top: -20rem;
-        z-index: 1;
-
+        margin-top: var(--c24-timeline-overlap);
+        
         &:first-child {
           margin-top: 0;
         }
-
-        /* Higher z-index for later items so they appear on top */
-        &:nth-child(n+2) {
-          z-index: calc(1 + 1);
-        }
-        &:nth-child(n+3) {
-          z-index: calc(1 + 2);
-        }
-        &:nth-child(n+4) {
-          z-index: calc(1 + 3);
-        }
-        &:nth-child(n+5) {
-          z-index: calc(1 + 4);
-        }
-        &:nth-child(n+6) {
-          z-index: calc(1 + 5);
-        }
-        &:nth-child(n+7) {
-          z-index: calc(1 + 6);
-        }
-        &:nth-child(n+8) {
-          z-index: calc(1 + 7);
-        }
+        
+        /* Set z-index based on position (later items appear on top) */
+        &:nth-child(1) { z-index: 1; }
+        &:nth-child(2) { z-index: 2; }
+        &:nth-child(3) { z-index: 3; }
+        &:nth-child(4) { z-index: 4; }
+        &:nth-child(5) { z-index: 5; }
+        &:nth-child(6) { z-index: 6; }
+        &:nth-child(7) { z-index: 7; }
+        &:nth-child(8) { z-index: 8; }
+        &:nth-child(9) { z-index: 9; }
+        &:nth-child(10) { z-index: 10; }
+        &:nth-child(11) { z-index: 11; }
+        &:nth-child(12) { z-index: 12; }
       }
 
       /* Alternate items to the left/right */
@@ -215,10 +232,20 @@
       &:nth-child(7) { animation-delay: 0.7s; }
       &:nth-child(8) { animation-delay: 0.8s; }
 
-      &:hover .timeline__dot {
+      /* Interactive state for timeline items */
+      &:hover .timeline__dot,
+      &:focus-within .timeline__dot {
         width: var(--c24-timeline-dot-size-large);
         height: var(--c24-timeline-dot-size-large);
         background-color: var(--c24-color-accent);
+      }
+      
+      @media (prefers-reduced-motion: reduce) {
+        &:hover .timeline__dot,
+        &:focus-within .timeline__dot {
+          width: var(--c24-timeline-dot-size);
+          height: var(--c24-timeline-dot-size);
+        }
       }
 
       /* Milestone year dots */
@@ -235,7 +262,8 @@
         }
       }
 
-      &--milestone:hover .timeline__dot {
+      &--milestone:hover .timeline__dot,
+      &--milestone:focus-within .timeline__dot {
         background-color: var(--c24-color-accent);
       }
     }
@@ -349,12 +377,31 @@
       margin-top: var(--c24-space-4);
 
       a {
-        color: var(--c24-color-secondary);
-        text-decoration: none;
+        color: var(--c24-color-secondary-dark);
+        text-decoration: underline;
+        text-decoration-thickness: 1px;
+        text-underline-offset: 2px;
+        transition: color var(--c24-transition-base);
 
         &:hover {
           color: var(--c24-color-primary);
-            text-decoration: underline;
+          text-decoration-thickness: 2px;
+        }
+        
+        &:focus {
+          outline: 2px solid var(--c24-focus-color);
+          outline-offset: 2px;
+          border-radius: 2px;
+        }
+        
+        &:focus:not(:focus-visible) {
+          outline: none;
+        }
+        
+        &:focus-visible {
+          outline: 2px solid var(--c24-focus-color);
+          outline-offset: 2px;
+          border-radius: 2px;
         }
       }
     }
@@ -486,10 +533,18 @@
       }
     }
 
-    /* Disable animations if user prefers reduced motion */
+    /* Disable animations and transforms if user prefers reduced motion */
     @media (prefers-reduced-motion: reduce) {
       .timeline__item {
         animation: none;
+      }
+      
+      .timeline__content:hover {
+        transform: none;
+      }
+      
+      .timeline__dot {
+        transition: background-color var(--c24-transition-base);
       }
     }
   }
@@ -526,14 +581,21 @@
             </p>
           </div>
           <div class="timeline__image">
-            <img 
+            <!-- <img 
               src="https://placehold.co/600x375?text=Compass24+Firmengründung+1979" 
               srcset="https://placehold.co/400x250?text=Compass24+Firmengründung+1979 400w,
                       https://placehold.co/600x375?text=Compass24+Firmengründung+1979 600w,
                       https://placehold.co/800x500?text=Compass24+Firmengründung+1979 800w"
               sizes="(max-width: 767px) calc(100vw - 5rem), (max-width: 1023px) 40vw, 400px"
               alt="Compass24 Firmengründung 1979" 
-              loading="lazy">
+              loading="lazy"> -->
+              <img src="https://compass24.b-cdn.net/media/4d/d0/3f/1691738368/Ratgeber_Antifouling_Compass_3_675x450px-min.jpg?width=1920" 
+                   srcset="https://compass24.b-cdn.net/media/4d/d0/3f/1691738368/Ratgeber_Antifouling_Compass_3_675x450px-min.jpg?width=1920 600w, 
+                        https://compass24.b-cdn.net/media/4d/d0/3f/1691738368/Ratgeber_Antifouling_Compass_3_675x450px-min.jpg?width=400 400w, 
+                        https://compass24.b-cdn.net/media/4d/d0/3f/1691738368/Ratgeber_Antifouling_Compass_3_675x450px-min.jpg?width=280 280w"
+                    sizes="(max-width: 767px) calc(100vw - 5rem), (max-width: 1023px) 40vw, 400px"
+                    alt="Compass24 Antifouling Ratgeber"
+                    loading="lazy">
           </div>
         </div>
       </article>
