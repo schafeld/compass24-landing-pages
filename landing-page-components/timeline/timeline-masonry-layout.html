@@ -10,7 +10,7 @@
 
   <!--
     Compass24 Timeline Layout Component - Compact Horizontal Grid Layout
-    Version: 0.2 - February 2026
+    Version: 0.2.1 - February 2026
     
     A standalone, injectable timeline component displaying the Compass24 company history.
     This file can be injected into existing CMS pages without affecting SEO or editability.
@@ -212,6 +212,20 @@
       }
     }
 
+    /* Arrow-shaped year badge */
+    .timeline__year--arrow {
+      padding: 0.25rem 1rem 0.25rem 1.25rem;
+      clip-path: polygon(
+        0 0,                /* top-left corner */
+        calc(100% - 0.5rem) 0,     /* top-right before point */
+        100% 50%,           /* right point (arrow tip) */
+        calc(100% - 0.5rem) 100%,  /* bottom-right before point */
+        0 100%,             /* bottom-left corner */
+        0.5rem 50%          /* left indented point (notch) */
+      );
+      border-radius: 0;
+    }
+
     .timeline__title {
       font-size: var(--c24-font-size-base);
       font-weight: 700;
@@ -379,7 +393,7 @@
       <!-- 1979 - Firmengründung -->
       <article class="timeline__item timeline__item--milestone" role="listitem">
         <div class="timeline__content">
-          <span class="timeline__year">1979</span>
+          <span class="timeline__year timeline__year--arrow">1979</span>
           <h3 class="timeline__title">Firmengründung</h3>
           <p class="timeline__description">
             Heinz Dehler gründet die Firma Compass® mit zwei Mitarbeitern und lediglich einem 
@@ -416,7 +430,7 @@
       <!-- 1980... - Innovation & Entwicklung -->
       <article class="timeline__item timeline__item--milestone" role="listitem">
         <div class="timeline__content">
-          <span class="timeline__year">1980...</span>
+          <span class="timeline__year timeline__year--arrow">1980...</span>
           <h3 class="timeline__title">Innovation & Entwicklung</h3>
           <p class="timeline__description">
             Auf- und Ausbau des Compass® Firmengebäudes. Maritim-Shop und Verwaltung werden bezogen. 
@@ -455,7 +469,7 @@
       <!-- 1990... - Generationen-Wechsel -->
       <article class="timeline__item timeline__item--milestone" role="listitem">
         <div class="timeline__content">
-          <span class="timeline__year">1990...</span>
+          <span class="timeline__year timeline__year--arrow">1990...</span>
           <h3 class="timeline__title">Generationen-Wechsel</h3>
           <p class="timeline__description">
             Michael Dehler übernimmt zum 01.07.1991 die Geschäftsführung. Am 01.12.1995 wird die 
@@ -493,7 +507,7 @@
       <!-- 1999... - 20 Jahre Compass -->
       <article class="timeline__item timeline__item--milestone" role="listitem">
         <div class="timeline__content">
-          <span class="timeline__year">1999...</span>
+          <span class="timeline__year timeline__year--arrow">1999...</span>
           <h3 class="timeline__title">20 Jahre Compass®</h3>
           <p class="timeline__description">
             Compass® feiert mit seinen Kunden das 20-jährige Betriebs-Jubiläum. Als Dankeschön an 
@@ -532,7 +546,7 @@
       <!-- 2000... - Compass Goes Online -->
       <article class="timeline__item timeline__item--milestone" role="listitem">
         <div class="timeline__content">
-          <span class="timeline__year">2000...</span>
+          <span class="timeline__year timeline__year--arrow">2000...</span>
           <h3 class="timeline__title">Compass® Goes Online</h3>
           <p class="timeline__description">
             www.compass24 geht 2000 an den Start. Damit steigt Europas größter Versender für 
@@ -571,7 +585,7 @@
       <!-- 2004... - 25 Jahre Compass -->
       <article class="timeline__item timeline__item--milestone" role="listitem">
         <div class="timeline__content">
-          <span class="timeline__year">2004...</span>
+          <span class="timeline__year timeline__year--arrow">2004...</span>
           <h3 class="timeline__title">25 Jahre Compass®</h3>
           <p class="timeline__description">
             Auch nach 25 Jahren gibt es bei Compass® keine Flaute. Mit jugendlichem Schwung wird 
@@ -609,7 +623,7 @@
       <!-- 2010... - Expansion & Kundennähe -->
       <article class="timeline__item timeline__item--milestone" role="listitem">
         <div class="timeline__content">
-          <span class="timeline__year">2010...</span>
+          <span class="timeline__year timeline__year--arrow">2010...</span>
           <h3 class="timeline__title">Expansion & Kundennähe</h3>
           <p class="timeline__description">
             2011 wird der große Maritim-Shop in Hamburg eröffnet. 2014 stellt Compass® erstmals 
@@ -646,7 +660,7 @@
       <!-- 2019... - 40 Jahre & In Zukunft -->
       <article class="timeline__item timeline__item--milestone" role="listitem">
         <div class="timeline__content">
-          <span class="timeline__year">2019...</span>
+          <span class="timeline__year timeline__year--arrow">2019...</span>
           <h3 class="timeline__title">40 Jahre & In Zukunft</h3>
           <p class="timeline__description">
             Compass® als Familienunternehmen feiert 40-jähriges Bestehen – und unsere treuen 
