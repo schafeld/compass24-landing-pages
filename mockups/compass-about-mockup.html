@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Über Compass24 - Europas größtes Wassersport-Versandhaus</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, rgba(0,61,122,0.95) 0%, rgba(0,102,204,0.95) 100%),
+                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400"><rect fill="%23003d7a" width="1200" height="400"/></svg>');
+            color: white;
+            padding: 100px 20px 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '⚓';
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            font-size: 400px;
+            opacity: 0.05;
+        }
+        
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero h1 {
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.4em;
+            margin-bottom: 30px;
+            opacity: 0.95;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        /* Quick Nav */
+        .quick-nav {
+            background: white;
+            padding: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .quick-nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .quick-nav a {
+            color: #003d7a;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 8px 16px;
+            border-radius: 20px;
+            transition: all 0.3s;
+        }
+        
+        .quick-nav a:hover {
+            background: #e8f4ff;
+            color: #0066cc;
+        }
+        
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Section Styles */
+        section {
+            padding: 80px 20px;
+        }
+        
+        .section-title {
+            font-size: 2.8em;
+            color: #003d7a;
+            margin-bottom: 30px;
+            font-weight: 700;
+            text-align: center;
+        }
+        
+        .section-subtitle {
+            font-size: 1.2em;
+            color: #666;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 50px;
+            line-height: 1.8;
+        }
+        
+        /* Stats Bar */
+        .stats-bar {
+            background: linear-gradient(135deg, #003d7a 0%, #0066cc 100%);
+            color: white;
+            padding: 60px 20px;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            text-align: center;
+        }
+        
+        .stat-item {
+            padding: 20px;
+        }
+        
+        .stat-number {
+            font-size: 3.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+            line-height: 1;
+        }
+        
+        .stat-label {
+            font-size: 1.1em;
+            opacity: 0.95;
+        }
+        
+        /* Timeline */
+        .timeline-section {
+            background: white;
+        }
+        
+        .timeline {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 0;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, #0066cc, #003d7a);
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 60px;
+            width: 45%;
+        }
+        
+        .timeline-item:nth-child(odd) {
+            margin-left: 0;
+            text-align: right;
+        }
+        
+        .timeline-item:nth-child(even) {
+            margin-left: 55%;
+            text-align: left;
+        }
+        
+        .timeline-year {
+            display: inline-block;
+            background: #0066cc;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-size: 1.3em;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+        
+        .timeline-content {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+        
+        .timeline-content h3 {
+            color: #003d7a;
+            margin-bottom: 10px;
+            font-size: 1.4em;
+        }
+        
+        .timeline-content p {
+            color: #666;
+            line-height: 1.7;
+        }
+        
+        .timeline-dot {
+            position: absolute;
+            top: 0;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border: 4px solid #0066cc;
+            border-radius: 50%;
+            z-index: 10;
+        }
+        
+        .timeline-item:nth-child(odd) .timeline-dot {
+            right: -10%;
+        }
+        
+        .timeline-item:nth-child(even) .timeline-dot {
+            left: -10%;
+        }
+        
+        /* Values Section */
+        .values-section {
+            background: #f8f9fa;
+        }
+        
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        
+        .value-card {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-top: 4px solid #0066cc;
+        }
+        
+        .value-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,61,122,0.15);
+        }
+        
+        .value-icon {
+            font-size: 3.5em;
+            margin-bottom: 20px;
+        }
+        
+        .value-card h3 {
+            color: #003d7a;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        
+        .value-card p {
+            color: #666;
+            line-height: 1.7;
+        }
+        
+        /* Team Section */
+        .team-section {
+            background: white;
+        }
+        
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        
+        .team-member {
+            background: #f8f9fa;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s;
+        }
+        
+        .team-member:hover {
+            transform: translateY(-5px);
+        }
+        
+        .team-photo {
+            height: 280px;
+            background: linear-gradient(135deg, #e8f4ff 0%, #d4e9ff 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4em;
+        }
+        
+        .team-info {
+            padding: 25px;
+            text-align: center;
+        }
+        
+        .team-info h3 {
+            color: #003d7a;
+            margin-bottom: 5px;
+            font-size: 1.3em;
+        }
+        
+        .team-role {
+            color: #0066cc;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        .team-bio {
+            color: #666;
+            font-size: 0.95em;
+            line-height: 1.6;
+        }
+        
+        /* Location Section */
+        .location-section {
+            background: #f8f9fa;
+        }
+        
+        .location-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+            margin-top: 50px;
+        }
+        
+        .location-text h3 {
+            color: #003d7a;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+        }
+        
+        .location-text p {
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.8;
+        }
+        
+        .location-features {
+            list-style: none;
+            margin-top: 25px;
+        }
+        
+        .location-features li {
+            padding: 12px 0;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #555;
+        }
+        
+        .location-features li:last-child {
+            border-bottom: none;
+        }
+        
+        .location-image {
+            height: 400px;
+            background: linear-gradient(135deg, #e8f4ff 0%, #d4e9ff 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3em;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+        }
+        
+        /* Testimonials */
+        .testimonials-section {
+            background: white;
+        }
+        
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        
+        .testimonial {
+            background: #f8f9fa;
+            padding: 35px;
+            border-radius: 12px;
+            border-left: 4px solid #0066cc;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+        
+        .testimonial-text {
+            color: #555;
+            font-style: italic;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            font-size: 1.05em;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #0066cc, #003d7a);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5em;
+            font-weight: 700;
+        }
+        
+        .author-info h4 {
+            color: #003d7a;
+            margin-bottom: 3px;
+        }
+        
+        .author-info p {
+            color: #666;
+            font-size: 0.9em;
+        }
+        
+        /* Partners Section */
+        .partners-section {
+            background: #f8f9fa;
+            text-align: center;
+        }
+        
+        .partners-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+            align-items: center;
+        }
+        
+        .partner-logo {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            font-weight: 700;
+            color: #003d7a;
+            font-size: 1.1em;
+        }
+        
+        .partner-logo:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, #003d7a 0%, #0066cc 100%);
+            color: white;
+            text-align: center;
+            padding: 80px 20px;
+        }
+        
+        .cta-section h2 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+        
+        .cta-section p {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            opacity: 0.95;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .cta-btn {
+            display: inline-block;
+            padding: 15px 40px;
+            background: white;
+            color: #003d7a;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1em;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        
+        .cta-btn.secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.2em;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.1em;
+            }
+            
+            .section-title {
+                font-size: 2em;
+            }
+            
+            .quick-nav ul {
+                gap: 15px;
+            }
+            
+            .timeline::before {
+                left: 20px;
+            }
+            
+            .timeline-item {
+                width: 100%;
+                margin-left: 40px !important;
+                text-align: left !important;
+            }
+            
+            .timeline-item:nth-child(odd) .timeline-dot,
+            .timeline-item:nth-child(even) .timeline-dot {
+                left: -30px;
+            }
+            
+            .location-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .stat-number {
+                font-size: 2.5em;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Willkommen an Bord! ⚓</h1>
+            <p class="hero-subtitle">
+                Seit 1979 Europas größtes Versandhaus für Motorboot- und Segelsport. 
+                Ein Familienunternehmen mit Leidenschaft für den Wassersport.
+            </p>
+        </div>
+    </section>
+
+    <!-- Quick Navigation -->
+    <nav class="quick-nav">
+        <ul>
+            <li><a href="#geschichte">Geschichte</a></li>
+            <li><a href="#werte">Unsere Werte</a></li>
+            <li><a href="#team">Unser Team</a></li>
+            <li><a href="#standort">Standort</a></li>
+            <li><a href="#partner">Partner</a></li>
+        </ul>
+    </nav>
+
+    <!-- Stats Bar -->
+    <section class="stats-bar">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number">1979</div>
+                    <div class="stat-label">Gründungsjahr</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">42.000+</div>
+                    <div class="stat-label">Artikel im Sortiment</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">5.000</div>
+                    <div class="stat-label">Pakete täglich</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">11</div>
+                    <div class="stat-label">Länder weltweit</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">150+</div>
+                    <div class="stat-label">Mitarbeiter</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timeline Section -->
+    <section class="timeline-section" id="geschichte">
+        <div class="container">
+            <h2 class="section-title">Unsere Geschichte</h2>
+            <p class="section-subtitle">
+                Von der kleinen Gründung zum europäischen Marktführer – eine Erfolgsgeschichte mit Leidenschaft für den Wassersport.
+            </p>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-year">1979</div>
+                    <div class="timeline-content">
+                        <h3>Die Gründung</h3>
+                        <p>Compass wird als kleines Familienunternehmen gegründet. Die Vision: Hochwertige Bootszubehör für jeden Wassersportler zugänglich machen.</p>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-year">1990</div>
+                    <div class="timeline-content">
+                        <h3>Expansion & Wachstum</h3>
+                        <p>Der erste große Katalog erscheint. Compass etabliert sich als führender Versandhandel für Wassersportartikel in Deutschland.</p>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-year">2000</div>
+                    <div class="timeline-content">
+                        <h3>Zweite Generation</h3>
+                        <p>Michael Dehler übernimmt die Geschäftsführung. Als begeisterter Segler bringt er frische Ideen und erweitert das Sortiment erheblich.</p>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-year">2010</div>
+                    <div class="timeline-content">
+                        <h3>Digitale Revolution</h3>
+                        <p>Launch des mehrfach ausgezeichneten Online-Shops. Compass wird zum E-Commerce-Pionier in der Wassersportbranche.</p>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-year">2020</div>
+                    <div class="timeline-content">
+                        <h3>Europäischer Marktführer</h3>
+                        <p>Compass ist in 11 Ländern aktiv und verschickt täglich bis zu 5.000 Pakete. Über 42.000 Artikel im Sortiment.</p>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-year">2026</div>
+                    <div class="timeline-content">
+                        <h3>Heute</h3>
+                        <p>Europas größtes Wassersport-Versandhaus mit modernster Logistik, exklusiven Eigenmarken und einem leidenschaftlichen Team.</p>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Values Section -->
+    <section class="values-section" id="werte">
+        <div class="container">
+            <h2 class="section-title">Unsere Werte</h2>
+            <p class="section-subtitle">
+                Was uns antreibt und auszeichnet – die Prinzipien, nach denen wir jeden Tag arbeiten.
+            </p>
+            
+            <div class="values-grid">
+                <div class="value-card">
+                    <div class="value-icon">🎯</div>
+                    <h3>Qualität & Expertise</h3>
+                    <p>Jahrzehntelange Erfahrung und Fachwissen fließen in jedes Produkt. Viele unserer Mitarbeiter sind selbst aktive Wassersportler.</p>
+                </div>
+                
+                <div class="value-card">
+                    <div class="value-icon">💙</div>
+                    <h3>Kundenorientierung</h3>
+                    <p>Persönliche Beratung, schneller Service und individuelle Lösungen stehen bei uns an erster Stelle. Deine Zufriedenheit ist unser Erfolg.</p>
+                </div>
+                
+                <div class="value-card">
+                    <div class="value-icon">🚀</div>
+                    <h3>Innovation</h3>
+                    <p>Wir sind ständig auf der Suche nach den neuesten Produkten und Technologien, um unseren Kunden das Beste zu bieten.</p>
+                </div>
+                
+                <div class="value-card">
+                    <div class="value-icon">👨‍👩‍👧‍👦</div>
+                    <h3>Familienunternehmen</h3>
+                    <p>Seit über 45 Jahren in Familienhand. Kurze Entscheidungswege, persönliche Atmosphäre und langfristige Partnerschaften.</p>
+                </div>
+                
+                <div class="value-card">
+                    <div class="value-icon">🌊</div>
+                    <h3>Leidenschaft</h3>
+                    <p>Wassersport ist nicht nur unser Business – es ist unsere Passion. Diese Begeisterung spürt man in allem, was wir tun.</p>
+                </div>
+                
+                <div class="value-card">
+                    <div class="value-icon">🤝</div>
+                    <h3>Nachhaltigkeit</h3>
+                    <p>Soziales Engagement und verantwortungsvolles Handeln. Wir fördern Kinder und Jugendliche und schützen unsere Meere.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="team-section" id="team">
+        <div class="container">
+            <h2 class="section-title">Unser Team</h2>
+            <p class="section-subtitle">
+                Über 150 engagierte Mitarbeiter aus verschiedenen Bereichen arbeiten Hand in Hand. 
+                Lerne einige unserer Köpfe kennen.
+            </p>
+            
+            <div class="team-grid">
+                <div class="team-member">
+                    <div class="team-photo">👨‍💼</div>
+                    <div class="team-info">
+                        <h3>Michael Dehler</h3>
+                        <p class="team-role">Geschäftsführer</p>
+                        <p class="team-bio">Begeisterter Segler und Regattasegler. Führt das Unternehmen in zweiter Generation mit Leidenschaft und Weitblick.</p>
+                    </div>
+                </div>
+                
+                <div class="team-member">
+                    <div class="team-photo">👩‍💼</div>
+                    <div class="team-info">
+                        <h3>Antje Dehler</h3>
+                        <p class="team-role">Geschäftsführerin</p>
+                        <p class="team-bio">Verantwortlich für Administration und Personal. Sorgt für das familiäre Arbeitsklima bei Compass.</p>
+                    </div>
+                </div>
+                
+                <div class="team-member">
+                    <div class="team-photo">👨‍🔧</div>
+                    <div class="team-info">
+                        <h3>Stefan Müller</h3>
+                        <p class="team-role">Leiter Logistik</p>
+                        <p class="team-bio">Koordiniert den Versand von 5.000 Paketen täglich. Ehemaliger Seemann mit Blick fürs Detail.</p>
+                    </div>
+                </div>
+                
+                <div class="team-member">
+                    <div class="team-photo">👩‍💻</div>
+                    <div class="team-info">
+                        <h3>Julia Schmidt</h3>
+                        <p class="team-role">E-Commerce Managerin</p>
+                        <p class="team-bio">Verantwortlich für unseren mehrfach ausgezeichneten Online-Shop. Technikbegeistert und kundenorientiert.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Location Section -->
+    <section class="location-section" id="standort">
+        <div class="container">
+            <h2 class="section-title">Unser Standort in Ascheberg</h2>
+            
+            <div class="location-content">
+                <div class="location-text">
+                    <h3>Modern, maritim, mittendrin</h3>
+                    <p>
+                        Unser Hauptsitz in Ascheberg im Münsterland vereint modernste Lager- und Logistikeinrichtungen 
+                        mit einem einladenden Maritim-Shop auf über 5.000 m².
+                    </p>
+                    <p>
+                        Besuche uns vor Ort und erlebe unser umfangreiches Sortiment hautnah. Unser erfahrenes Team 
+                        berät dich gerne persönlich zu allen Fragen rund um Bootszubehör und Wassersport.
+                    </p>
+                    
+                    <ul class="location-features">
+                        <li>📍 Lüdinghauser Str. 34, 59387 Ascheberg</li>
+                        <li>🏢 5.000 m² Lager- und Verkaufsfläche</li>
+                        <li>🚚 Modernste Logistik & Express-Versand</li>
+                        <li>🛒 Großer Maritim-Shop zum Stöbern</li>
+                        <li>👥 Persönliche Fachberatung vor Ort</li>
+                        <li>🅿️ Kostenlose Parkplätze direkt am Haus</li>
+                    </ul>
+                </div>
+                
+                <div class="location-image">
+                    🏢<br>Hauptsitz Ascheberg
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials-section">
+        <div class="container">
+            <h2 class="section-title">Was unsere Kunden sagen</h2>
+            
+            <div class="testimonials-grid">
+                <div class="testimonial">
+                    <p class="testimonial-text">
+                        "Seit Jahren bestelle ich bei Compass. Die Beratung ist top, die Lieferung schnell und die Qualität immer einwandfrei. Ein echtes Familienunternehmen mit Herz!"
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">KM</div>

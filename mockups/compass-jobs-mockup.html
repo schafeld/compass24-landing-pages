@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Karriere bei Compass24 - Jobs & Ausbildung</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #003d7a 0%, #0066cc 100%);
+            color: white;
+            padding: 80px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"><path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" fill="rgba(255,255,255,0.1)"/></svg>') no-repeat bottom;
+            background-size: cover;
+            opacity: 0.3;
+        }
+        
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        
+        .hero p {
+            font-size: 1.3em;
+            margin-bottom: 30px;
+            opacity: 0.95;
+        }
+        
+        .hero-cta {
+            display: inline-block;
+            padding: 15px 40px;
+            background: white;
+            color: #003d7a;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1em;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .hero-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Benefits Section */
+        .benefits {
+            padding: 60px 20px;
+            background: white;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.5em;
+            color: #003d7a;
+            margin-bottom: 50px;
+            font-weight: 700;
+        }
+        
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .benefit-card {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 2px solid transparent;
+        }
+        
+        .benefit-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,61,122,0.15);
+            border-color: #0066cc;
+        }
+        
+        .benefit-icon {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+        
+        .benefit-card h3 {
+            color: #003d7a;
+            margin-bottom: 15px;
+            font-size: 1.4em;
+        }
+        
+        .benefit-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        /* Jobs Section */
+        .jobs-section {
+            padding: 60px 20px;
+            background: #f8f9fa;
+        }
+        
+        .filter-bar {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 40px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        
+        .filter-bar label {
+            font-weight: 600;
+            color: #003d7a;
+        }
+        
+        .filter-bar select {
+            padding: 10px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: border-color 0.3s;
+        }
+        
+        .filter-bar select:focus {
+            outline: none;
+            border-color: #0066cc;
+        }
+        
+        .jobs-grid {
+            display: grid;
+            gap: 25px;
+        }
+        
+        .job-card {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-left: 4px solid #0066cc;
+        }
+        
+        .job-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 20px rgba(0,61,122,0.15);
+        }
+        
+        .job-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .job-title {
+            font-size: 1.6em;
+            color: #003d7a;
+            font-weight: 700;
+        }
+        
+        .job-type {
+            display: inline-block;
+            padding: 6px 15px;
+            background: #e8f4ff;
+            color: #0066cc;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+        
+        .job-meta {
+            display: flex;
+            gap: 25px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #666;
+        }
+        
+        .meta-icon {
+            font-size: 1.2em;
+        }
+        
+        .job-description {
+            color: #555;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+        
+        .job-cta {
+            display: inline-block;
+            padding: 12px 30px;
+            background: #0066cc;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+        
+        .job-cta:hover {
+            background: #003d7a;
+        }
+        
+        /* Team Section */
+        .team-section {
+            padding: 60px 20px;
+            background: white;
+        }
+        
+        .team-intro {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 50px;
+            color: #555;
+            font-size: 1.1em;
+            line-height: 1.8;
+        }
+        
+        .team-image {
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+        }
+        
+        .team-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .team-placeholder {
+            background: linear-gradient(135deg, #e8f4ff 0%, #d4e9ff 100%);
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #0066cc;
+            font-size: 1.2em;
+        }
+        
+        /* Stats Section */
+        .stats-section {
+            padding: 60px 20px;
+            background: linear-gradient(135deg, #003d7a 0%, #0066cc 100%);
+            color: white;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            text-align: center;
+        }
+        
+        .stat-item {
+            padding: 20px;
+        }
+        
+        .stat-number {
+            font-size: 3.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+            line-height: 1;
+        }
+        
+        .stat-label {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        
+        /* Application Section */
+        .application-section {
+            padding: 60px 20px;
+            background: #f8f9fa;
+        }
+        
+        .application-container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: white;
+            padding: 50px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #003d7a;
+            font-weight: 600;
+        }
+        
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1em;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #0066cc;
+        }
+        
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .file-upload {
+            border: 2px dashed #0066cc;
+            padding: 30px;
+            text-align: center;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .file-upload:hover {
+            background: #f0f8ff;
+        }
+        
+        .file-upload input[type="file"] {
+            display: none;
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: #0066cc;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .submit-btn:hover {
+            background: #003d7a;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2em;
+            }
+            
+            .hero p {
+                font-size: 1.1em;
+            }
+            
+            .section-title {
+                font-size: 2em;
+            }
+            
+            .filter-bar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .filter-bar select {
+                width: 100%;
+            }
+            
+            .job-header {
+                flex-direction: column;
+            }
+            
+            .application-container {
+                padding: 30px 20px;
+            }
+            
+            .stat-number {
+                font-size: 2.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>🚢 Komm an Bord!</h1>
+            <p>Werde Teil von Europas größtem Wassersport-Versandhaus und gestalte die Zukunft des maritimen Handels mit.</p>
+            <a href="#jobs" class="hero-cta">Offene Stellen ansehen</a>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section class="benefits">
+        <div class="container">
+            <h2 class="section-title">Warum Compass?</h2>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon">👥</div>
+                    <h3>Familienunternehmen</h3>
+                    <p>Seit 1979 familiengeführt mit flachen Hierarchien und persönlicher Atmosphäre</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">🎯</div>
+                    <h3>Entwicklungschancen</h3>
+                    <p>Weiterbildungen, Schulungen und individuelle Karrierepfade für jeden</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">⚓</div>
+                    <h3>Wassersport-Passion</h3>
+                    <p>Arbeite mit dem, was du liebst - viele Kollegen sind selbst aktive Segler</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">🏖️</div>
+                    <h3>Work-Life-Balance</h3>
+                    <p>30 Tage Urlaub, flexible Arbeitszeiten und familienfreundliche Regelungen</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">💰</div>
+                    <h3>Attraktive Vergütung</h3>
+                    <p>Faire Bezahlung, Mitarbeiterrabatte und zusätzliche Benefits</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">🌱</div>
+                    <h3>Moderner Arbeitsplatz</h3>
+                    <p>Neueste Technik, moderne Büros und ein inspirierendes Arbeitsumfeld</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number">45+</div>
+                    <div class="stat-label">Jahre Erfahrung</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">150+</div>
+                    <div class="stat-label">Mitarbeiter</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">42.000+</div>
+                    <div class="stat-label">Produkte</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">5.000</div>
+                    <div class="stat-label">Pakete täglich</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Jobs Section -->
+    <section class="jobs-section" id="jobs">
+        <div class="container">
+            <h2 class="section-title">Aktuelle Stellenangebote</h2>
+            
+            <div class="filter-bar">
+                <label>Filtern nach:</label>
+                <select>
+                    <option>Alle Bereiche</option>
+                    <option>Vertrieb</option>
+                    <option>Lager & Logistik</option>
+                    <option>IT & E-Commerce</option>
+                    <option>Kundenservice</option>
+                    <option>Verwaltung</option>
+                </select>
+                <select>
+                    <option>Alle Beschäftigungsarten</option>
+                    <option>Vollzeit</option>
+                    <option>Teilzeit</option>
+                    <option>Ausbildung</option>
+                    <option>Praktikum</option>
+                </select>
+            </div>
+
+            <div class="jobs-grid">
+                <!-- Job Card 1 -->
+                <div class="job-card">
+                    <div class="job-header">
+                        <h3 class="job-title">Kaufmann/-frau im Einzelhandel (m/w/d)</h3>
+                        <span class="job-type">Ausbildung</span>
+                    </div>
+                    <div class="job-meta">
+                        <div class="meta-item">
+                            <span class="meta-icon">📍</span>
+                            <span>Ascheberg</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-icon">⏰</span>
+                            <span>Vollzeit</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-icon">📅</span>
+                            <span>Start: August 2026</span>
+                        </div>
+                    </div>
+                    <p class="job-description">
+                        Starte deine Karriere im maritimen Einzelhandel! Du lernst alles über Warenpräsentation, Kundenberatung und Verkauf. Wir bilden dich zum Experten für Bootszubehör und Wassersportartikel aus.
+                    </p>
+                    <a href="#bewerbung" class="job-cta">Jetzt bewerben</a>
+                </div>
+
+                <!-- Job Card 2 -->
+                <div class="job-card">
+                    <div class="job-header">
+                        <h3 class="job-title">Verkäufer/-in (m/w/d)</h3>
+                        <span class="job-type">Ausbildung</span>
+                    </div>
+                    <div class="job-meta">
+                        <div class="meta-item">
+                            <span class="meta-icon">📍</span>
+                            <span>Ascheberg</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-icon">⏰</span>
+                            <span>Vollzeit</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-icon">📅</span>
+                            <span>Start: August 2026</span>
+                        </div>
+                    </div>
+                    <p class="job-description">
+                        2-jährige Ausbildung mit Fokus auf Verkauf und Kundenservice. Perfekt für alle, die schnell ins Berufsleben einsteigen möchten und Freude am Umgang mit Menschen haben.
+                    </p>
+                    <a href="#bewerbung" class="job-cta">Jetzt bewerben</a>
+                </div>
+
+                <!-- Job Card 3 - Example Full-time Position -->
+                <div class="job-card">
+                    <div class="job-header">
+                        <h3 class="job-title">E-Commerce Manager (m/w/d)</h3>
+                        <span class="job-type">Vollzeit</span>
+                    </div>
+                    <div class="job-meta">
+                        <div class="meta-item">
+                            <span class="meta-icon">📍</span>
+                            <span>Ascheberg</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-icon">⏰</span>
+                            <span>Vollzeit</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-icon">💼</span>
+                            <span>IT & E-Commerce</span>
+                        </div>
+                    </div>
+                    <p class="job-description">
+                        Gestalte unseren mehrfach ausgezeichneten Online-Shop mit! Du optimierst User Experience, koordinierst Produktdaten und entwickelst Strategien zur Conversion-Steigerung.
+                    </p>
+                    <a href="#bewerbung" class="job-cta">Jetzt bewerben</a>
+                </div>
+
+                <!-- Job Card 4 - Example Logistics Position -->
+                <div class="job-card">
+                    <div class="job-header">
+                        <h3 class="job-title">Lagermitarbeiter (m/w/d)</h3>
+                        <span class="job-type">Vollzeit</span>
+                    </div>
+                    <div class="job-meta">
+                        <div class="meta-item">
+                            <span class="meta-icon">📍</span>
+                            <span>Ascheberg</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-icon">⏰</span>
+                            <span>Vollzeit / Teilzeit</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-icon">💼</span>
+                            <span>Lager & Logistik</span>
+                        </div>
+                    </div>
+                    <p class="job-description">
+                        Unterstütze unser Logistikteam beim Wareneingang, der Kommissionierung und dem Versand von bis zu 5.000 Paketen täglich. Moderne Lagertechnik und ein tolles Team warten auf dich!
+                    </p>
+                    <a href="#bewerbung" class="job-cta">Jetzt bewerben</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="team-section">
+        <div class="container">
+            <h2 class="section-title">Unser Team</h2>
+            <p class="team-intro">
+                Bei Compass arbeiten über 150 engagierte Mitarbeiter aus verschiedenen Bereichen Hand in Hand. 
+                Viele von uns sind selbst begeisterte Wassersportler und bringen ihre Leidenschaft täglich in die Arbeit ein. 
+                Das macht uns zu echten Experten für unsere Kunden und zu einem starken Team für dich!
+            </p>
+            <div class="team-image">
+                <div class="team-placeholder">
+                    📸 Hier kommt ein inspirierendes Teambild
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Application Section -->
+    <section class="application-section" id="bewerbung">
+        <div class="container">
+            <h2 class="section-title">Bewirb dich jetzt!</h2>
+            <div class="application-container">
+                <form>
+                    <div class="form-group">
+                        <label for="position">Stelle *</label>
+                        <select id="position" required>
+                            <option value="">Bitte wählen...</option>
+                            <option>Kaufmann/-frau im Einzelhandel</option>
+                            <option>Verkäufer/-in</option>
+                            <option>E-Commerce Manager</option>
+                            <option>Lagermitarbeiter</option>
+                            <option>Initiativbewerbung</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="name">Vor- und Nachname *</label>
+                        <input type="text" id="name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">E-Mail *</label>
+                        <input type="email" id="email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone">Telefon</label>
+                        <input type="tel" id="phone">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message">Anschreiben / Motivation</label>
+                        <textarea id="message" placeholder="Erzähl uns, warum du zu Compass möchtest..."></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Bewerbungsunterlagen (PDF, max. 5MB)</label>
+                        <div class="file-upload">
+                            <input type="file" id="file" accept=".pdf" multiple>
+                            <label for="file" style="cursor: pointer;">
+                                <div style="font-size: 2em; margin-bottom: 10px;">📎</div>
+                                <div>Klicke hier oder ziehe Dateien per Drag & Drop</div>
+                                <div style="font-size: 0.9em; color: #666; margin-top: 10px;">Lebenslauf, Zeugnisse, Zertifikate</div>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">Bewerbung absenden</button>
+                </form>
+                
+                <div style="margin-top: 30px; padding: 20px; background: #f0f8ff; border-radius: 8px; text-align: center;">
+                    <p style="margin-bottom: 15px; color: #003d7a; font-weight: 600;">Oder kontaktiere uns direkt:</p>
+                    <p style="color: #666;">
+                        📧 <a href="mailto:sekretariat@compass24.de" style="color: #0066cc; text-decoration: none;">sekretariat@compass24.de</a><br>
+                        📞 <a href="tel:+4925939150" style="color: #0066cc; text-decoration: none;">02593 - 915 0</a><br>
+                        <br>
+                        <strong>Frau Richter-Weiß</strong><br>
+                        Compass Yachtzubehör Handels-GmbH & Co. KG<br>
+                        Lüdinghauser Str. 34, 59387 Ascheberg
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
