@@ -10,6 +10,7 @@
 
   <!--
     Compass24 Timeline Layout Component - Compact Horizontal Grid Layout
+    Version: 0.2 - February 2026
     
     A standalone, injectable timeline component displaying the Compass24 company history.
     This file can be injected into existing CMS pages without affecting SEO or editability.
@@ -186,10 +187,10 @@
         }
       }
       
-      /* Milestone cards get a distinctive left border */
-      .timeline__item--milestone:hover & {
+      /* Milestone cards get a distinctive left border (causes text wrap inside panel) */
+      /* .timeline__item--milestone:hover & {
         border-left: 4px solid var(--c24-color-secondary);
-      }
+      } */
     }
 
     /* ============================================
