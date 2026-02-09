@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Compass24 Werte</title>
+</head>
+<!-- The HTML header above is for preview purposes (mobile emulator devtools) only. Do not copy to CMS content page. -->
+
+
+<!--
+  Compass24 Key Values Component - Compact Grid Layout
+  Version: 1.0.0 - February 2026
+  
+  A standalone, injectable values component displaying the Compass24 company values.
+  This file can be injected into existing CMS pages without affecting SEO or editability.
+  
+  Layout: Compact grid (1 column mobile, 2 tablet, 3 desktop).
+  Square panels with minimal spacing, uniform typography.
+  Design inspired by modern grid layouts with clean lines and efficient space usage.
+  
+  CSS Variables Strategy:
+  - Uses Bootstrap/Shopware CSS variables from compass24.de (--bs-*, --font-size-*)
+  - Includes fallback values for standalone preview (when Bootstrap is not loaded)
+  - Compact spacing and typography for maximum information density
+  
+  Example: var(--bs-primary, #003366) uses site's primary color or falls back to #003366
+  
+  Usage: Inject this HTML into any container on the Compass24 website.
+  All styles are scoped under .compass24-key-values-component to prevent conflicts.
+-->
+<style>
+/* ============================================
+   SCOPED DESIGN TOKENS & BASE STYLES
+   Uses Bootstrap variables from compass24.de with fallbacks for standalone viewing
+   ============================================ */
+.compass24-key-values-component {
+  /* 
+   * Colors - Use Bootstrap variables when available, with fallbacks
+   * Site primary: --bs-primary (#002856), fallback to #003366 for standalone
+   */
+  --c24-color-primary: var(--bs-primary, #003366);
+  --c24-color-primary-light: #0066b3;
+  --c24-color-primary-dark: #002244;
+  --c24-color-secondary: #0099cc;
+  --c24-color-secondary-dark: #007399;
+  --c24-color-accent: var(--bs-danger, #cc0000);
+  --c24-color-white: var(--bs-white, #ffffff);
+  --c24-color-gray-50: var(--bs-gray-100, #f9fafb);
+  --c24-color-gray-100: var(--bs-secondary-bg, #f3f4f6);
+  --c24-color-gray-200: #e5e7eb;
+  --c24-color-gray-500: var(--bs-gray, #6b7280);
+  --c24-color-gray-600: var(--bs-secondary-color, #4b5563);
+  --c24-color-gray-900: var(--bs-body-color, #111827);
+  
+  /* Focus styles for accessibility */
+  --c24-focus-color: var(--bs-primary, #003366);
+  --c24-focus-ring: 0 0 0 3px rgba(0, 51, 102, 0.3);
+  
+  /* Typography - Use site fonts when available */
+  --c24-font-family: var(--bs-body-font-family, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif);
+  --c24-font-size-xs: 0.75rem;
+  --c24-font-size-sm: var(--font-size-sm, 0.875rem);
+  --c24-font-size-base: var(--font-size-base, 0.9375rem);
+  --c24-font-size-lg: 1rem;
+  --c24-font-size-xl: 1.125rem;
+  --c24-font-size-2xl: 1.25rem;
+  
+  /* Spacing - Compact values for tight layout */
+  --c24-space-2: 0.5rem;
+  --c24-space-3: 0.75rem;
+  --c24-space-4: 1rem;
+  --c24-space-5: 1.25rem;
+  --c24-space-6: 1.5rem;
+  --c24-space-8: 2rem;
+  
+  /* Borders & Shadows - Square design like timeline */
+  --c24-border-radius: 0;
+  --c24-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --c24-shadow-md: var(--bs-box-shadow-sm, 0 2px 4px rgba(0, 0, 0, 0.08));
+  --c24-shadow-lg: 0 4px 8px rgba(0, 0, 0, 0.12);
+  
+  /* Transitions */
+  --c24-transition-base: 250ms ease-in-out;
+
+  /* Base Component Styles */
+  font-family: var(--c24-font-family);
+  font-size: var(--c24-font-size-base);
+  line-height: var(--line-height-base, 1.6);
+  color: var(--c24-color-gray-900);
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  /* ============================================
+     SECTION HEADER
+     ============================================ */
+  .values-section {
+    padding: var(--c24-space-8) var(--c24-space-4);
+    background-color: var(--c24-color-gray-50);
+  }
+
+  .values-header {
+    margin: 0 auto var(--c24-space-6);
+
+    &__title {
+      font-size: var(--c24-font-size-2xl);
+      font-weight: 700;
+      color: var(--c24-color-primary);
+      margin: 0 0 var(--c24-space-3);
+    }
+
+    &__intro {
+      font-size: var(--c24-font-size-base);
+      color: var(--c24-color-gray-600);
+      margin: 0;
+      line-height: 1.6;
+    }
+  }
+
+  /* ============================================
+     VALUES CONTAINER - HORIZONTAL GRID LAYOUT
+     ============================================ */
+  .values-grid {
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0;
+    
+    /* CSS Grid for horizontal reading order (left-to-right, top-to-bottom) */
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--c24-space-4);
+    
+    @media (min-width: 640px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    
+    @media (min-width: 1024px) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  /* ============================================
+     VALUE ITEMS - COMPACT GRID LAYOUT
+     ============================================ */
+  .values-grid__item {
+    position: relative;
+    animation: compass24FadeInUp 0.5s ease-out both;
+
+    &:nth-child(1) { animation-delay: 0.05s; }
+    &:nth-child(2) { animation-delay: 0.1s; }
+    &:nth-child(3) { animation-delay: 0.15s; }
+    &:nth-child(4) { animation-delay: 0.2s; }
+    &:nth-child(5) { animation-delay: 0.25s; }
+    &:nth-child(6) { animation-delay: 0.3s; }
+  }
+
+  /* ============================================
+     VALUE CONTENT CARD - COMPACT SQUARE DESIGN
+     ============================================ */
+  .value-card {
+    background-color: var(--c24-color-white);
+    padding: var(--c24-space-5);
+    border-radius: var(--c24-border-radius);
+    box-shadow: var(--c24-shadow-md);
+    width: 100%;
+    height: 100%;
+    transition: all var(--c24-transition-base);
+    position: relative;
+    border: 1px solid var(--c24-color-gray-200);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    &:hover {
+      box-shadow: var(--c24-shadow-lg);
+      transform: translateY(-2px);
+
+      @media (prefers-reduced-motion: reduce) {
+        transform: none;
+      }
+    }
+  }
+
+  /* ============================================
+     VALUE CONTENT ELEMENTS - COMPACT TYPOGRAPHY
+     ============================================ */
+  .value-card__icon {
+    font-size: 2.5rem;
+    margin-bottom: var(--c24-space-3);
+    line-height: 1;
+  }
+
+  .value-card__title {
+    font-size: var(--c24-font-size-lg);
+    font-weight: 700;
+    color: var(--c24-color-primary);
+    margin: 0 0 var(--c24-space-3);
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+    line-height: 1.3;
+  }
+
+  .value-card__description {
+    font-size: var(--c24-font-size-sm);
+    color: var(--c24-color-gray-600);
+    line-height: 1.6;
+    margin: 0;
+    text-align: center;
+  }
+
+  /* ============================================
+     UNIVERSAL BOX SIZING
+     ============================================ */
+  & *,
+  & *::before,
+  & *::after {
+    box-sizing: inherit;
+  }
+
+  /* ============================================
+     MOBILE RESPONSIVE (< 640px)
+     ============================================ */
+  @media (max-width: 639px) {
+    .values-section {
+      padding: var(--c24-space-6) var(--c24-space-3);
+    }
+
+    .values-header__title {
+      font-size: var(--c24-font-size-xl);
+    }
+
+    .values-header__intro {
+      font-size: var(--c24-font-size-sm);
+    }
+
+    .value-card {
+      padding: var(--c24-space-4);
+    }
+  }
+
+  /* ============================================
+     ANIMATIONS
+     ============================================ */
+  @keyframes compass24FadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Disable animations and transforms if user prefers reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .values-grid__item {
+      animation: none;
+    }
+    
+    .value-card:hover {
+      transform: none;
+    }
+  }
+}
+</style>
+
+<div class="compass24-key-values-component">
+  <section class="values-section" aria-labelledby="compass24-values-title">
+    <header class="values-header">
+      <h2 id="compass24-values-title" class="values-header__title">Unsere Werte</h2>
+      <p class="values-header__intro">
+        Was uns antreibt und auszeichnet – die Prinzipien, nach denen wir jeden Tag arbeiten.
+      </p>
+    </header>
+
+    <div class="values-grid" role="list" aria-label="Compass24 Unternehmenswerte">
+      
+      <!-- Value 1: Qualität & Expertise -->
+      <article class="values-grid__item" role="listitem">
+        <div class="value-card">
+          <div class="value-card__icon" aria-hidden="true">🎯</div>
+          <h3 class="value-card__title">Qualität & Expertise</h3>
+          <p class="value-card__description">
+            Jahrzehntelange Erfahrung und Fachwissen fließen in jedes Produkt. Viele unserer Mitarbeiter sind selbst aktive Wassersportler.
+          </p>
+        </div>
+      </article>
+
+      <!-- Value 2: Kundenorientierung -->
+      <article class="values-grid__item" role="listitem">
+        <div class="value-card">
+          <div class="value-card__icon" aria-hidden="true">💙</div>
+          <h3 class="value-card__title">Kundenorientierung</h3>
+          <p class="value-card__description">
+            Persönliche Beratung, schneller Service und individuelle Lösungen stehen bei uns an erster Stelle. Deine Zufriedenheit ist unser Erfolg.
+          </p>
+        </div>
+      </article>
+
+      <!-- Value 3: Innovation -->
+      <article class="values-grid__item" role="listitem">
+        <div class="value-card">
+          <div class="value-card__icon" aria-hidden="true">🚀</div>
+          <h3 class="value-card__title">Innovation</h3>
+          <p class="value-card__description">
+            Wir sind ständig auf der Suche nach den neuesten Produkten und Technologien, um unseren Kunden das Beste zu bieten.
+          </p>
+        </div>
+      </article>
+
+      <!-- Value 4: Familienunternehmen -->
+      <article class="values-grid__item" role="listitem">
+        <div class="value-card">
+          <div class="value-card__icon" aria-hidden="true">👨‍👩‍👧‍👦</div>
+          <h3 class="value-card__title">Familienunternehmen</h3>
+          <p class="value-card__description">
+            Seit über 45 Jahren in Familienhand. Kurze Entscheidungswege, persönliche Atmosphäre und langfristige Partnerschaften.
+          </p>
+        </div>
+      </article>
+
+      <!-- Value 5: Leidenschaft -->
+      <article class="values-grid__item" role="listitem">
+        <div class="value-card">
+          <div class="value-card__icon" aria-hidden="true">🌊</div>
+          <h3 class="value-card__title">Leidenschaft</h3>
+          <p class="value-card__description">
+            Wassersport ist nicht nur unser Business – es ist unsere Passion. Diese Begeisterung spürt man in allem, was wir tun.
+          </p>
+        </div>
+      </article>
+
+      <!-- Value 6: Nachhaltigkeit -->
+      <article class="values-grid__item" role="listitem">
+        <div class="value-card">
+          <div class="value-card__icon" aria-hidden="true">🤝</div>
+          <h3 class="value-card__title">Nachhaltigkeit</h3>
+          <p class="value-card__description">
+            Soziales Engagement und verantwortungsvolles Handeln. Wir fördern Kinder und Jugendliche und schützen unsere Meere.
+          </p>
+        </div>
+      </article>
+
+    </div>
+  </section>
+</div>
+
+
+<!-- The HTML "footer" below is for preview purposes (mobile emulator devtools) only. Do not copy to CMS content page. -->
+</body>
+</html>
