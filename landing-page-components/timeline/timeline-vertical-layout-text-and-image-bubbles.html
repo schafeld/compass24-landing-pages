@@ -414,7 +414,9 @@
     }
 
     .timeline__image-headline {
-      position: absolute;
+      display: none; /* Hidden by default, can be shown on hover or as an overlay if desired */
+      
+      /* position: absolute;
       top: 0;
       left: 0;
       right: 0;
@@ -425,10 +427,10 @@
       color: var(--c24-color-primary);
       text-align: center;
       backdrop-filter: blur(4px);
-      z-index: 1;
+      z-index: 1; */
 
       /* Arrow pointing to the timeline */
-      &::before {
+      /* &::before {
         content: '';
         position: absolute;
         top: 50%;
@@ -436,21 +438,21 @@
         width: 0;
         height: 0;
         border-style: solid;
-      }
+      } */
 
       /* Arrow for odd items - image on LEFT, arrow points right toward timeline */
-      .timeline__item:nth-child(odd) &::before {
+      /* .timeline__item:nth-child(odd) &::before {
         left: -12px;
         border-width: 12px 12px 12px 0;
         border-color: transparent var(--c24-color-white) transparent transparent;
-      }
+      } */
 
       /* Arrow for even items - image on RIGHT, arrow points left toward timeline */
-      .timeline__item:nth-child(even) &::before {
+      /* .timeline__item:nth-child(even) &::before {
         right: -12px;
         border-width: 12px 0 12px 12px;
         border-color: transparent transparent transparent var(--c24-color-white);
-      }
+      } */
     }
 
     /* ============================================
