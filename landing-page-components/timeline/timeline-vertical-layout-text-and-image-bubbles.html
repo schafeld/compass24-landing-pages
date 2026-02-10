@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Compass24 Timeline</title>
+  </head>
+  <!-- The HTML header above is for preview purposes (mobile emulator devtools) only. Do not copy to CMS content page. -->
+
+  <!-- Typical product image representation from Compass24 shop product detail page, 
+   included here as a reference for image styling and responsive behavior in the timeline content cards. 
+   This image is not part of the timeline component itself and should be replaced with relevant historical images for each timeline item:
+
+  <img src="https://compass24.b-cdn.net/media/0e/4c/e3/1770156072/0361911_s11_FS26_01.jpg?width=1920" 
+        data-src="https://compass24.b-cdn.net/media/0e/4c/e3/1770156072/0361911_s11_FS26_01.jpg?width=1920" 
+        data-srcset="https://compass24.b-cdn.net/media/0e/4c/e3/1770156072/0361911_s11_FS26_01.jpg?width=1920 401w, https://compass24.b-cdn.net/media/0e/4c/e3/1770156072/0361911_s11_FS26_01.jpg?width=400 400w, https://compass24.b-cdn.net/media/0e/4c/e3/1770156072/0361911_s11_FS26_01.jpg?width=280 280w" 
+        data-sizes="auto" 
+        data-aspectratio="1" 
+        data-parent-fit="contain" 
+        class="frosh-proc img-fluid gallery-slider-image image-is-wider magnifier-image js-magnifier-image lazyautosizes ls-is-cached lazyloaded" 
+        title="Lalizas Coastal Compact Rettungsinsel für 4 bis 6 Personen" alt="Lalizas Coastal Compact Rettungsinsel für 4 bis 6 Personen" 
+        data-full-image="https://compass24.b-cdn.net/media/0e/4c/e3/1770156072/0361911_s11_FS26_01.jpg?width=1920" 
+        tabindex="0" 
+        data-object-fit="contain" 
+        style="aspect-ratio: 1 / 1; cursor: default;" 
+        sizes="720px" 
+        srcset="https://compass24.b-cdn.net/media/0e/4c/e3/1770156072/0361911_s11_FS26_01.jpg?width=1920 401w, https://compass24.b-cdn.net/media/0e/4c/e3/1770156072/0361911_s11_FS26_01.jpg?width=400 400w, https://compass24.b-cdn.net/media/0e/4c/e3/1770156072/0361911_s11_FS26_01.jpg?width=280 280w"
+    >
+  -->
+
+
+  <!--
+    Compass24 Timeline Layout Component
+    
+    A standalone, injectable timeline component displaying the Compass24 company history.
+    This file can be injected into existing CMS pages without affecting SEO or editability.
+    
+    CSS Variables Strategy:
+    - Uses Bootstrap/Shopware CSS variables from compass24.de (--bs-*, --font-size-*)
+    - Includes fallback values for standalone preview (when Bootstrap is not loaded)
+    - Keeps timeline-specific custom properties (--c24-timeline-*)
+    
+    Example: var(--bs-primary, #003366) uses site's primary color or falls back to #003366
+    
+    Usage: Inject this HTML into any container on the Compass24 website.
+    All styles are scoped under .compass24-timeline-component to prevent conflicts.
+  -->
+  <style>
+  /* ============================================
+     SCOPED DESIGN TOKENS & BASE STYLES
+     Uses Bootstrap variables from compass24.de with fallbacks for standalone viewing
+     ============================================ */
+  .compass24-timeline-component {
+    /* 
+     * Colors - Use Bootstrap variables when available, with fallbacks
+     * Site primary: --bs-primary (#002856), fallback to #003366 for standalone
+     */
+    --c24-color-primary: var(--bs-primary, #003366);
+    --c24-color-primary-light: #0066b3;
+    --c24-color-primary-dark: #002244;
+    --c24-color-secondary: #0099cc;
+    --c24-color-secondary-dark: #007399; /* Better contrast for links */
+    --c24-color-accent: var(--bs-danger, #cc0000);
+    --c24-color-white: var(--bs-white, #ffffff);
+    --c24-color-gray-50: var(--bs-gray-100, #f9fafb);
+    --c24-color-gray-100: var(--bs-secondary-bg, #f3f4f6);
+    --c24-color-gray-200: #e5e7eb;
+    --c24-color-gray-500: var(--bs-gray, #6b7280);
+    --c24-color-gray-600: var(--bs-secondary-color, #4b5563);
+    --c24-color-gray-900: var(--bs-body-color, #111827);
+    
+    /* Focus styles for accessibility */
+    --c24-focus-color: var(--bs-primary, #003366);
+    --c24-focus-ring: 0 0 0 3px rgba(0, 51, 102, 0.3);
+    
+    /* Typography - Use site fonts when available */
+    --c24-font-family: var(--bs-body-font-family, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif);
+    --c24-font-size-sm: var(--font-size-sm, 0.875rem);
+    --c24-font-size-base: var(--font-size-base, 1rem);
+    --c24-font-size-lg: var(--font-size-lg, 1.125rem);
+    --c24-font-size-xl: 1.25rem;
+    --c24-font-size-2xl: 1.5rem;
+    --c24-font-size-3xl: 1.875rem;
+    
+    /* Spacing - Keep custom values for precise timeline layout */
+    --c24-space-2: 0.5rem;
+    --c24-space-3: 0.75rem;
+    --c24-space-4: 1rem;
+    --c24-space-6: 1.5rem;
+    --c24-space-8: 2rem;
+    --c24-space-12: 3rem;
+    --c24-space-16: 4rem;
+    
+    /* Borders & Shadows - Keep custom values (site uses border-radius: 0) */
+    --c24-border-radius-md: 0.375rem;
+    --c24-border-radius-lg: 0.5rem;
+    --c24-border-radius-xl: 0.75rem;
+    --c24-shadow-md: var(--bs-box-shadow-sm, 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06));
+    --c24-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --c24-shadow-xl: var(--bs-box-shadow, 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04));
+    
+    /* Transitions */
+    --c24-transition-base: 250ms ease-in-out;
+    
+    /* Timeline Specific - Component-only values */
+    --c24-timeline-line-width: 4px;
+    --c24-timeline-dot-size: 20px;
+    --c24-timeline-dot-size-large: 28px;
+    --c24-timeline-overlap: 2rem; /* use negative value for overlap */
+
+    /* Base Component Styles */
+    font-family: var(--c24-font-family);
+    font-size: var(--c24-font-size-base);
+    line-height: var(--line-height-base, 1.6);
+    color: var(--c24-color-gray-900);
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    /* ============================================
+       SECTION HEADER
+       ============================================ */
+    .timeline-section {
+      padding: var(--c24-space-12) var(--c24-space-4);
+      background-color: var(--c24-color-gray-50);
+    }
+
+    .timeline-header {
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto var(--c24-space-12);
+
+      &__title {
+        font-size: var(--c24-font-size-3xl);
+        font-weight: 700;
+        color: var(--c24-color-primary);
+        margin: 0 0 var(--c24-space-4);
+      }
+
+      &__intro {
+        font-size: var(--c24-font-size-lg);
+        color: var(--c24-color-gray-600);
+        margin: 0;
+        line-height: 1.7;
+      }
+    }
+
+    /* ============================================
+       TIMELINE CONTAINER
+       ============================================ */
+    .timeline {
+      position: relative;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: var(--c24-space-8) 0;
+
+      /* Timeline vertical line */
+      &::before {
+        content: '';
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        width: var(--c24-timeline-line-width);
+        height: 100%;
+        background: linear-gradient(
+          to bottom,
+          var(--c24-color-primary-light),
+          var(--c24-color-primary),
+          var(--c24-color-primary-dark)
+        );
+        border-radius: 9999px;
+      }
+    }
+
+    /* ============================================
+       TIMELINE ITEMS
+       ============================================ */
+    .timeline__item {
+      position: relative;
+      width: 100%;
+      margin-bottom: var(--c24-space-12);
+      display: flex;
+      justify-content: flex-end;
+      align-items: flex-start;
+      gap: var(--c24-space-4);
+      animation: compass24FadeInUp 0.6s ease-out both;
+
+      /* Tablet & Desktop: Reduce vertical spacing for compact, overlapping layout */
+      @media (min-width: 768px) {
+        margin-bottom: 0;
+        margin-top: var(--c24-timeline-overlap);
+        
+        &:first-child {
+          margin-top: 0;
+        }
+        
+        /* Set z-index based on position (later items appear on top) */
+        &:nth-child(1) { z-index: 1; }
+        &:nth-child(2) { z-index: 2; }
+        &:nth-child(3) { z-index: 3; }
+        &:nth-child(4) { z-index: 4; }
+        &:nth-child(5) { z-index: 5; }
+        &:nth-child(6) { z-index: 6; }
+        &:nth-child(7) { z-index: 7; }
+        &:nth-child(8) { z-index: 8; }
+        &:nth-child(9) { z-index: 9; }
+        &:nth-child(10) { z-index: 10; }
+        &:nth-child(11) { z-index: 11; }
+        &:nth-child(12) { z-index: 12; }
+      }
+
+      /* Alternate items to the left/right */
+      /* Odd items: IMAGE on LEFT, TEXT on RIGHT */
+      &:nth-child(odd) {
+        flex-direction: row-reverse;
+        justify-content: space-between;
+
+        /* .timeline__content {
+          margin-left: calc(50% + var(--c24-space-3));
+        } */
+
+        /* .timeline__image-bubble {
+          margin-right: calc(50% + var(--c24-space-3));
+        } */
+      }
+
+      /* Even items: TEXT on LEFT, IMAGE on RIGHT */
+      &:nth-child(even) {
+        flex-direction: row;
+        justify-content: space-between;
+
+        /* .timeline__content {
+          margin-right: calc(50% + var(--c24-space-3));
+        }
+
+        /* .timeline__image-bubble {
+          margin-left: calc(50% + var(--c24-space-3));
+        } */
+      }
+
+      &:nth-child(1) { animation-delay: 0.1s; }
+      &:nth-child(2) { animation-delay: 0.2s; }
+      &:nth-child(3) { animation-delay: 0.3s; }
+      &:nth-child(4) { animation-delay: 0.4s; }
+      &:nth-child(5) { animation-delay: 0.5s; }
+      &:nth-child(6) { animation-delay: 0.6s; }
+      &:nth-child(7) { animation-delay: 0.7s; }
+      &:nth-child(8) { animation-delay: 0.8s; }
+
+      /* Interactive state for timeline items */
+      &:hover .timeline__dot,
+      &:focus-within .timeline__dot {
+        width: var(--c24-timeline-dot-size-large);
+        height: var(--c24-timeline-dot-size-large);
+        background-color: var(--c24-color-accent);
+      }
+      
+      @media (prefers-reduced-motion: reduce) {
+        &:hover .timeline__dot,
+        &:focus-within .timeline__dot {
+          width: var(--c24-timeline-dot-size);
+          height: var(--c24-timeline-dot-size);
+        }
+      }
+
+      /* Milestone year dots */
+      &--milestone .timeline__dot {
+        width: var(--c24-timeline-dot-size-large);
+        height: var(--c24-timeline-dot-size-large);
+        background-color: var(--c24-color-secondary);
+
+        @media (prefers-reduced-motion: reduce) {
+          & {
+            width: var(--c24-timeline-dot-size);
+            height: var(--c24-timeline-dot-size);
+          }
+        }
+      }
+
+      &--milestone:hover .timeline__dot,
+      &--milestone:focus-within .timeline__dot {
+        background-color: var(--c24-color-accent);
+      }
+    }
+
+    /* ============================================
+       TIMELINE DOT
+       ============================================ */
+    .timeline__dot {
+      position: absolute;
+      left: 50%;
+      top: var(--c24-space-6);
+      transform: translateX(-50%);
+      width: var(--c24-timeline-dot-size);
+      height: var(--c24-timeline-dot-size);
+      background-color: var(--c24-color-primary);
+      border: 4px solid var(--c24-color-white);
+      border-radius: 50%;
+      box-shadow: var(--c24-shadow-md);
+      z-index: 1;
+      transition: all var(--c24-transition-base);
+    }
+
+    /* ============================================
+       TIMELINE CONTENT CARD
+       ============================================ */
+    .timeline__content {
+      background-color: var(--c24-color-white);
+      padding: var(--c24-space-6);
+      border-radius: var(--c24-border-radius-xl);
+      box-shadow: var(--c24-shadow-md);
+      width: calc(50% - var(--c24-space-8));
+      transition: all var(--c24-transition-base);
+      position: relative;
+      flex-shrink: 0;
+
+      &:hover {
+        box-shadow: var(--c24-shadow-xl);
+        transform: translateY(-4px);
+
+        @media (prefers-reduced-motion: reduce) {
+          transform: none;
+        }
+      }
+
+      /* Arrow pointing to the timeline */
+      &::before {
+        content: '';
+        position: absolute;
+        top: 22px;
+        width: 0;
+        height: 0;
+        border-style: solid;
+      }
+
+      /* Arrow for items on the right (odd items) */
+      .timeline__item:nth-child(odd) &::before {
+        left: -12px;
+        border-width: 12px 12px 12px 0;
+        border-color: transparent var(--c24-color-white) transparent transparent;
+      }
+
+      /* Arrow for items on the left (even items) */
+      .timeline__item:nth-child(even) &::before {
+        right: -12px;
+        border-width: 12px 0 12px 12px;
+        border-color: transparent transparent transparent var(--c24-color-white);
+      }
+    }
+
+    /* ============================================
+       TIMELINE CONTENT ELEMENTS
+       ============================================ */
+    .timeline__year {
+      display: inline-block;
+      font-size: var(--c24-font-size-xl);
+      font-weight: 800;
+      color: var(--c24-color-white);
+      background: linear-gradient(135deg, var(--c24-color-primary-light), var(--c24-color-primary));
+      padding: var(--c24-space-2) var(--c24-space-4);
+      border-radius: var(--c24-border-radius-md);
+      margin-bottom: var(--c24-space-3);
+
+      .timeline__item--milestone & {
+        background: linear-gradient(135deg, var(--c24-color-secondary), var(--c24-color-primary));
+      }
+    }
+
+    .timeline__title {
+      font-size: var(--c24-font-size-xl);
+      font-weight: 700;
+      color: var(--c24-color-primary);
+      margin: 0 0 var(--c24-space-3);
+      text-transform: uppercase;
+      letter-spacing: 0.025em;
+    }
+
+    .timeline__description {
+      font-size: var(--c24-font-size-base);
+      color: var(--c24-color-gray-600);
+      line-height: 1.7;
+      margin: 0 0 var(--c24-space-4);
+    }
+
+    /* ============================================
+       TIMELINE IMAGE BUBBLE
+       ============================================ */
+    .timeline__image-bubble {
+      background-color: var(--c24-color-white);
+      border-radius: var(--c24-border-radius-xl);
+      box-shadow: var(--c24-shadow-md);
+      width: calc(50% - var(--c24-space-8));
+      transition: all var(--c24-transition-base);
+      position: relative;
+      flex-shrink: 0;
+      overflow: hidden;
+
+      &:hover {
+        box-shadow: var(--c24-shadow-xl);
+        transform: translateY(-4px);
+
+        @media (prefers-reduced-motion: reduce) {
+          transform: none;
+        }
+      }
+
+      img {
+        width: 100%;
+        height: auto;
+        display: block;
+        aspect-ratio: 1 / 1;
+        object-fit: cover;
+      }
+    }
+
+    .timeline__image-headline {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      background-color: rgba(255, 255, 255, 0.9);
+      padding: var(--c24-space-3) var(--c24-space-4);
+      font-size: var(--c24-font-size-sm);
+      font-weight: 700;
+      color: var(--c24-color-primary);
+      text-align: center;
+      backdrop-filter: blur(4px);
+      z-index: 1;
+
+      /* Arrow pointing to the timeline */
+      &::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 0;
+        height: 0;
+        border-style: solid;
+      }
+
+      /* Arrow for odd items - image on LEFT, arrow points right toward timeline */
+      .timeline__item:nth-child(odd) &::before {
+        left: -12px;
+        border-width: 12px 12px 12px 0;
+        border-color: transparent var(--c24-color-white) transparent transparent;
+      }
+
+      /* Arrow for even items - image on RIGHT, arrow points left toward timeline */
+      .timeline__item:nth-child(even) &::before {
+        right: -12px;
+        border-width: 12px 0 12px 12px;
+        border-color: transparent transparent transparent var(--c24-color-white);
+      }
+    }
+
+    /* ============================================
+       FACTS BOX
+       ============================================ */
+    .timeline__facts {
+      background-color: var(--c24-color-gray-50);
+      padding: var(--c24-space-4);
+      border-radius: var(--c24-border-radius-md);
+      margin-top: var(--c24-space-4);
+
+      a {
+        color: var(--c24-color-secondary-dark);
+        text-decoration: underline;
+        text-decoration-thickness: 1px;
+        text-underline-offset: 2px;
+        transition: color var(--c24-transition-base);
+
+        &:hover {
+          color: var(--c24-color-primary);
+          text-decoration-thickness: 2px;
+        }
+        
+        &:focus {
+          outline: 2px solid var(--c24-focus-color);
+          outline-offset: 2px;
+          border-radius: 2px;
+        }
+        
+        &:focus:not(:focus-visible) {
+          outline: none;
+        }
+        
+        &:focus-visible {
+          outline: 2px solid var(--c24-focus-color);
+          outline-offset: 2px;
+          border-radius: 2px;
+        }
+      }
+    }
+
+    .timeline__facts-label {
+      display: inline-block;
+      font-size: var(--c24-font-size-sm);
+      font-weight: 700;
+      color: var(--c24-color-primary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: var(--c24-space-2);
+    }
+
+    .timeline__facts-text {
+      font-size: var(--c24-font-size-sm);
+      color: var(--c24-color-gray-600);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+
+
+    /* ============================================
+       UNIVERSAL BOX SIZING
+       ============================================ */
+    & *,
+    & *::before,
+    & *::after {
+      box-sizing: inherit;
+    }
+
+    /* ============================================
+       MOBILE RESPONSIVE (< 768px)
+       ============================================ */
+    @media (max-width: 767px) {
+      .timeline-section {
+        padding: var(--c24-space-8) var(--c24-space-4);
+      }
+
+      .timeline-header__title {
+        font-size: var(--c24-font-size-2xl);
+      }
+
+      .timeline-header__intro {
+        font-size: var(--c24-font-size-base);
+      }
+
+      /* Single column layout on mobile */
+      .timeline::before {
+        left: var(--c24-space-4);
+        transform: none;
+      }
+
+      .timeline__item,
+      .timeline__item:nth-child(odd),
+      .timeline__item:nth-child(even) {
+        justify-content: flex-start;
+        flex-direction: column;
+        gap: var(--c24-space-4);
+      }
+
+      .timeline__item:nth-child(odd) .timeline__content,
+      .timeline__item:nth-child(even) .timeline__content {
+        margin-left: calc(var(--c24-space-2) + var(--c24-space-8));
+        margin-right: 0;
+        width: calc(100% - var(--c24-space-4) - var(--c24-space-12));
+        order: 1;
+      }
+
+      .timeline__item:nth-child(odd) .timeline__image-bubble,
+      .timeline__item:nth-child(even) .timeline__image-bubble {
+        margin-left: calc(var(--c24-space-2) + var(--c24-space-8));
+        margin-right: 0;
+        width: calc(100% - var(--c24-space-4) - var(--c24-space-12));
+        order: 2;
+      }
+
+      .timeline__image-bubble {
+        img {
+          aspect-ratio: 16 / 10;
+        }
+      }
+
+      .timeline__dot {
+        left: var(--c24-space-2);
+        transform: none;
+      }
+
+      /* Arrow adjustment for mobile */
+      .timeline__content::before {
+        left: -12px !important;
+        right: auto !important;
+        border-width: 12px 12px 12px 0 !important;
+        border-color: transparent var(--c24-color-white) transparent transparent !important;
+      }
+
+      .timeline__image-bubble::before {
+        left: -12px !important;
+        right: auto !important;
+        top: 50% !important;
+        border-width: 12px 12px 12px 0 !important;
+        border-color: transparent var(--c24-color-white) transparent transparent !important;
+      }
+
+      .timeline__year {
+        font-size: var(--c24-font-size-lg);
+      }
+
+      .timeline__title {
+        font-size: var(--c24-font-size-lg);
+      }
+
+      .timeline__content {
+        padding: var(--c24-space-4);
+      }
+    }
+
+    /* ============================================
+       TABLET RESPONSIVE (768px - 1023px)
+       ============================================ */
+    @media (min-width: 768px) and (max-width: 1023px) {
+      .timeline__content {
+        width: calc(50% - var(--c24-space-6));
+      }
+
+      .timeline__image-bubble {
+        width: calc(50% - var(--c24-space-6));
+      }
+    }
+
+    /* ============================================
+       ANIMATIONS
+       ============================================ */
+    @keyframes compass24FadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Disable animations and transforms if user prefers reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      .timeline__item {
+        animation: none;
+      }
+      
+      .timeline__content:hover {
+        transform: none;
+      }
+      
+      .timeline__dot {
+        transition: background-color var(--c24-transition-base);
+      }
+    }
+  }
+</style>
+
+<div class="compass24-timeline-component">
+  <section class="timeline-section" aria-labelledby="compass24-timeline-title">
+    <header class="timeline-header">
+      <h2 id="compass24-timeline-title" class="timeline-header__title">Unsere Geschichte</h2>
+      <p class="timeline-header__intro">
+        Seit 1979 ist Compass® ein unabhängiges Familienunternehmen – vom kleinen Packraum in Ascheberg 
+        zu Europas größtem Versender für Wassersportausrüstung.
+      </p>
+    </header>
+
+    <div class="timeline" role="list" aria-label="Compass24 Unternehmensgeschichte">
+      
+      <!-- 1979 - Firmengründung -->
+      <article class="timeline__item timeline__item--milestone" role="listitem">
+        <div class="timeline__dot" aria-hidden="true"></div>
+        <div class="timeline__content">
+          <span class="timeline__year">1979</span>
+          <h3 class="timeline__title">Firmengründung</h3>
+          <p class="timeline__description">
+            Heinz Dehler gründet die Firma Compass® mit zwei Mitarbeitern und lediglich einem 
+            Packraum in Ascheberg, Westfalen. Der erste handgemachte Katalog umfasst 12 Seiten. 
+            Stolze 1.100 Aufträge werden im ersten Jahr erfasst.
+          </p>
+          <div class="timeline__facts">
+            <span class="timeline__facts-label">🎯 Fun Facts</span>
+            <p class="timeline__facts-text">
+              Bis heute wurden bei Compass® 320.277 l <a href="https://www.compass24.de/farbe-pflege/antifouling" title="Antifouling-Angebotsseite im Onlineshop">Antifouling</a> verkauft. Das ergäbe eine Fläche 
+              von 3.523.047 m². Damit könnte man die gesamte Altstadt Münsters in Westfalen gut 2× anstreichen.
+            </p>
+          </div>
+        </div>
+        <div class="timeline__image-bubble">
+          <div class="timeline__image-headline">Antifouling</div>
+          <img src="https://compass24.b-cdn.net/media/4d/d0/3f/1691738368/Ratgeber_Antifouling_Compass_3_675x450px-min.jpg?width=1920" 
+               srcset="https://compass24.b-cdn.net/media/4d/d0/3f/1691738368/Ratgeber_Antifouling_Compass_3_675x450px-min.jpg?width=1920 600w, 
+                    https://compass24.b-cdn.net/media/4d/d0/3f/1691738368/Ratgeber_Antifouling_Compass_3_675x450px-min.jpg?width=400 400w, 
+                    https://compass24.b-cdn.net/media/4d/d0/3f/1691738368/Ratgeber_Antifouling_Compass_3_675x450px-min.jpg?width=280 280w"
+                sizes="(max-width: 767px) calc(100vw - 5rem), (max-width: 1023px) 20vw, 200px"
+                alt="Compass24 Antifouling Ratgeber"
+                loading="lazy">
+        </div>
+      </article>
+
+      <!-- 1980... - Innovation & Entwicklung -->
+      <article class="timeline__item" role="listitem">
+        <div class="timeline__dot" aria-hidden="true"></div>
+        <div class="timeline__content">
+          <span class="timeline__year">1980...</span>
+          <h3 class="timeline__title">Innovation & Entwicklung</h3>
+          <p class="timeline__description">
+            Auf- und Ausbau des Compass® Firmengebäudes. Maritim-Shop und Verwaltung werden bezogen. 
+            1. großer Hauptkatalog mit Sortiments-Erweiterung. Am 03.02.1984 Gründung von Compass® 
+            Schweiz – Geschäftsführerin ist Frau Petra Baettig, geborene Dehler.
+          </p>
+          <div class="timeline__facts">
+            <span class="timeline__facts-label">🏗️ Fun Facts</span>
+            <p class="timeline__facts-text">
+              Bis heute wurden bei Compass® 405.434 <a href="https://www.compass24.de/ausruestung/fender" title="Fender-Angebotsseite im Onlineshop">Fender</a> verkauft. 116.000 Segelyachten könnten 
+              damit ausgestattet werden. Hintereinander gelegt ergibt das eine Strecke von 250 km – 
+              das entspricht einer Entfernung von Münster bis nach Braunschweig.
+            </p>
+          </div>
+        </div>
+        <div class="timeline__image-bubble">
+          <div class="timeline__image-headline">Fender Sortiment</div>
+          <img src="https://compass24.b-cdn.net/media/33/c4/f0/1747052327/com-akzent-fender.jpg?width=1920"
+                    srcset="https://compass24.b-cdn.net/media/33/c4/f0/1747052327/com-akzent-fender.jpg?width=1920 600w, 
+                            https://compass24.b-cdn.net/media/33/c4/f0/1747052327/com-akzent-fender.jpg?width=400 400w, 
+                            https://compass24.b-cdn.net/media/33/c4/f0/1747052327/com-akzent-fender.jpg?width=280 280w"
+                    sizes="(max-width: 767px) calc(100vw - 5rem), (max-width: 1023px) 20vw, 200px"
+                    alt="Compass24 Fender Sortiment"
+                    loading="lazy">
+        </div>
+      </article>
+
+      <!-- 1990... - Generationen-Wechsel -->
+      <article class="timeline__item" role="listitem">
+        <div class="timeline__dot" aria-hidden="true"></div>
+        <div class="timeline__content">
+          <span class="timeline__year">1990...</span>
+          <h3 class="timeline__title">Generationen-Wechsel</h3>
+          <p class="timeline__description">
+            Michael Dehler übernimmt zum 01.07.1991 die Geschäftsführung. Am 01.12.1995 wird die 
+            Geschäftsführung durch seine Frau Antje Dehler verstärkt. 1996 erscheint erstmals ein 
+            Herbst/Winter-Katalog mit maritimer Mode. 1997 erfolgt der erste große Umbau des Maritim-Shops.
+          </p>
+          <div class="timeline__facts">
+            <span class="timeline__facts-label">👔 Fun Facts</span>
+            <p class="timeline__facts-text">
+              Bis heute wurden bei Compass® 58.400 <a href="https://www.compass24.de/freizeitmode/herrenmode/shirts" title="Shirts Angebotsseite im Onlineshop">Bretonische Shirts</a> verkauft. Jeder Einwohner 
+              Aschebergs wäre im Besitz von 4 Bretonischen Shirts.
+            </p>
+          </div>
+        </div>
+        <div class="timeline__image-bubble">
+          <div class="timeline__image-headline">Bretonische Shirts</div>
+          <img src="https://compass24.b-cdn.net/media/fd/bf/5a/1759864925/0135554_a90_FS26_01.jpg?width=1280"
+                    srcset="https://compass24.b-cdn.net/media/fd/bf/5a/1759864925/0135554_a90_FS26_01.jpg?width=1280 600w, 
+                            https://compass24.b-cdn.net/media/fd/bf/5a/1759864925/0135554_a90_FS26_01.jpg?width=400 400w, 
+                            https://compass24.b-cdn.net/media/fd/bf/5a/1759864925/0135554_a90_FS26_01.jpg?width=280 280w"
+                    sizes="(max-width: 767px) calc(100vw - 5rem), (max-width: 1023px) 20vw, 200px"
+                    alt="Compass24 Bretonische Shirts Sortiment"
+                    style="object-position: top center;"
+                    loading="lazy">
+        </div>
+      </article>
+
+      <!-- 1999... - 20 Jahre Compass -->
+      <article class="timeline__item timeline__item--milestone" role="listitem">
+        <div class="timeline__dot" aria-hidden="true"></div>
+        <div class="timeline__content">
+          <span class="timeline__year">1999...</span>
+          <h3 class="timeline__title">20 Jahre Compass®</h3>
+          <p class="timeline__description">
+            Compass® feiert mit seinen Kunden das 20-jährige Betriebs-Jubiläum. Als Dankeschön an 
+            sich selbst wird die Verwaltung ausgebaut. Europaweite Expansion nach Österreich, 
+            Benelux, Großbritannien und Frankreich.
+          </p>
+          <div class="timeline__facts">
+            <span class="timeline__facts-label">🎉 Fun Facts</span>
+            <p class="timeline__facts-text">
+              Bis heute wurde bei Compass® 15.000× das <a href="https://www.compass24.de/compass-offshore-segeljacke-tech-305740/unisex-m-navy-rot" title="Compass® Offshore-Set Angebotsseite im Onlineshop">Compass® Offshore-Set</a> verkauft. Damit kann 
+              man die gesamte Deutsche Marine ausstatten, Übungsbegleiter ausgenommen – oder jeden 
+              Bewohner von Ascheberg.
+            </p>
+          </div>
+        </div>
+        <div class="timeline__image-bubble">
+          <div class="timeline__image-headline">Offshore-Segelbekleidung</div>
+          <img src="https://compass24.b-cdn.net/media/85/9a/22/1715920337/0305740_c4_FS16ix.jpg?width=776"
+                    srcset="https://compass24.b-cdn.net/media/85/9a/22/1715920337/0305740_c4_FS16ix.jpg?width=776 400w, 
+                            https://compass24.b-cdn.net/media/85/9a/22/1715920337/0305740_c4_FS16ix.jpg?width=600 600w, 
+                            https://compass24.b-cdn.net/media/85/9a/22/1715920337/0305740_c4_FS16ix.jpg?width=776 776w"
+                    sizes="(max-width: 767px) calc(100vw - 5rem), (max-width: 1023px) 20vw, 200px"
+                    alt="Compass24 Offshore-Set Sortiment"
+                    style="object-position: top center;"
+                    loading="lazy">
+        </div>
+      </article>
+
+      <!-- 2000... - Compass Goes Online -->
+      <article class="timeline__item timeline__item--milestone" role="listitem">
+        <div class="timeline__dot" aria-hidden="true"></div>
+        <div class="timeline__content">
+          <span class="timeline__year">2000...</span>
+          <h3 class="timeline__title">Compass® Goes Online</h3>
+          <p class="timeline__description">
+            www.compass24 geht 2000 an den Start. Damit steigt Europas größter Versender für 
+            Motorboot und Segelsport in den Online-Handel ein und erobert direkt die 
+            Internet-Marktführerschaft im Wassersport. 2001 sind erstmals über 14.000 Artikel 
+            im aktiven Sortiment und über 200.000 zufriedene Kunden erreichen ihren Compass® 
+            fast rund um die Uhr auch online.
+          </p>
+          <div class="timeline__facts">
+            <span class="timeline__facts-label">💻 Fun Facts</span>
+            <p class="timeline__facts-text">
+              Bis heute wurden bei Compass® 44.000 <a href="https://www.compass24.de/hosen/segelhosen-shorts-herren" title="Profi-Bordhosen Angebotsseite im Onlineshop">Profi-Bordhosen</a> verkauft. Jeder Mann in 
+              Ascheberg besäße sogar 3 Bordhosen.
+            </p>
+          </div>
+        </div>
+        <div class="timeline__image-bubble">
+          <div class="timeline__image-headline">Profi-Bordhosen</div>
+          <img src="https://compass24.b-cdn.net/media/c7/2e/80/1715919271/0354870_a1_FS18ix.jpg?width=662"
+                    srcset="https://compass24.b-cdn.net/media/c7/2e/80/1715919271/0354870_a1_FS18ix.jpg?width=662 400w, 
+                            https://compass24.b-cdn.net/media/c7/2e/80/1715919271/0354870_a1_FS18ix.jpg?width=600 600w, 
+                            https://compass24.b-cdn.net/media/c7/2e/80/1715919271/0354870_a1_FS18ix.jpg?width=662 662w"
+                    sizes="(max-width: 767px) calc(100vw - 5rem), (max-width: 1023px) 20vw, 200px"
+                    alt="Compass24 Online-Shop Screenshot"
+                    loading="lazy">
+        </div>
+      </article>
+
+      <!-- 2004... - 25 Jahre Compass -->
+      <article class="timeline__item timeline__item--milestone" role="listitem">
+        <div class="timeline__dot" aria-hidden="true"></div>
+        <div class="timeline__content">
+          <span class="timeline__year">2004...</span>
+          <h3 class="timeline__title">25 Jahre Compass®</h3>
+          <p class="timeline__description">
+            Auch nach 25 Jahren gibt es bei Compass® keine Flaute. Mit jugendlichem Schwung wird 
+            ein neues Logistik-Zentrum gebaut. Der Maritim-Shop Ascheberg wird modernisiert und 
+            Anfang 2009 mit vielen Sonderaktionen neu eröffnet.
+          </p>
+          <div class="timeline__facts">
+            <span class="timeline__facts-label">🎊 Fun Facts</span>
+            <p class="timeline__facts-text">
+              Bis heute wurden bei Compass® 460.938 <a href="https://www.compass24.de/sicherheit/rettungswesten/automatische-rettungswesten" title="Automatik-Rettungswesten Angebotsseite im Onlineshop">Automatik-Rettungswesten</a> und 155.544 
+              <a href="https://www.compass24.de/sicherheit/rettungswesten" title="Feststoffwesten Angebotsseite im Onlineshop">Feststoffwesten</a>, also insgesamt über eine halbe Million Rettungswesten verkauft. 
+              Alle Segelyachten Deutschlands wären mit mind. 4 Rettungswesten ausgerüstet.
+            </p>
+          </div>
+        </div>
+        <div class="timeline__image-bubble">
+          <div class="timeline__image-headline">Rettungswesten</div>
+          <img src="https://compass24.b-cdn.net/media/fa/53/b1/1714781272/0000303_s1_FS22ix.jpg?width=1497"
+                    srcset="https://compass24.b-cdn.net/media/fa/53/b1/1714781272/0000303_s1_FS22ix.jpg?width=1500 600w, 
+                            https://compass24.b-cdn.net/media/fa/53/b1/1714781272/0000303_s1_FS22ix.jpg?width=1000 1000w, 
+                            https://compass24.b-cdn.net/media/fa/53/b1/1714781272/0000303_s1_FS22ix.jpg?width=1500 1500w"
+                    sizes="(max-width: 767px) calc(100vw - 5rem), (max-width: 1023px) 20vw, 200px"
+                    alt="Compass24 Rettungswesten Sortiment"
+                    loading="lazy">
+        </div>
+      </article>
+
+      <!-- 2010... - Expansion & Kundennähe -->
+      <article class="timeline__item" role="listitem">
+        <div class="timeline__dot" aria-hidden="true"></div>
+        <div class="timeline__content">
+          <span class="timeline__year">2010...</span>
+          <h3 class="timeline__title">Expansion & Kundennähe</h3>
+          <p class="timeline__description">
+            2011 wird der große Maritim-Shop in Hamburg eröffnet. 2014 stellt Compass® erstmals 
+            auf der Hanseboot aus, Blickfang ist die selbst restaurierte El Pocko. 
+            Zusammenarbeit mit vielen Stars des Segelsports.
+          </p>
+          <div class="timeline__facts">
+            <span class="timeline__facts-label">🌍 Fun Facts</span>
+            <p class="timeline__facts-text">
+              Bis heute wurden bei Compass® 1.200.000 m <a href="https://www.compass24.de/ausruestung/tauwerk" title="Tauwerk Angebotsseite im Onlineshop">Tauwerk</a> verkauft. Das sind 1.200 km 
+              Tauwerk und reicht von Flensburg bis nach Mailand. Damit könnte man Ascheberg ca. 33× umspannen.
+            </p>
+          </div>
+        </div>
+        <div class="timeline__image-bubble">
+          <div class="timeline__image-headline">Tauwerk</div>
+          <img src="https://compass24.b-cdn.net/media/13/cb/f7/1714783325/0918875_r1_FS20ix.jpg?width=1515"
+                    srcset="https://compass24.b-cdn.net/media/13/cb/f7/1714783325/0918875_r1_FS20ix.jpg?width=1515 600w, 
+                            https://compass24.b-cdn.net/media/13/cb/f7/1714783325/0918875_r1_FS20ix.jpg?width=1000 1000w, 
+                            https://compass24.b-cdn.net/media/13/cb/f7/1714783325/0918875_r1_FS20ix.jpg?width=1515 1515w"
+                    sizes="(max-width: 767px) calc(100vw - 5rem), (max-width: 1023px) 20vw, 200px"
+                    alt="Compass24 Tauwerk Sortiment"
+                    loading="lazy">
+        </div>
+      </article>
+
+      <!-- 2019... - 40 Jahre & In Zukunft -->
+      <article class="timeline__item timeline__item--milestone" role="listitem">
+        <div class="timeline__dot" aria-hidden="true"></div>
+        <div class="timeline__content">
+          <span class="timeline__year">2019...</span>
+          <h3 class="timeline__title">40 Jahre & In Zukunft</h3>
+          <p class="timeline__description">
+            Compass® als Familienunternehmen feiert 40-jähriges Bestehen – und unsere treuen 
+            Kunden feiern mit. Ein Feuerwerk an einzigartigen Jubi-Preisen, Sonderaktionen 
+            und Gratulationen aus dem Segelsportbereich. Die Compass®-Crew freut sich schon 
+            auf die nächsten 40 Jahre.
+          </p>
+          <div class="timeline__facts">
+            <span class="timeline__facts-label">🎆 Fun Facts</span>
+            <p class="timeline__facts-text">
+              Bis heute wurden bei Compass® 3.247 <a href="https://www.compass24.de/sicherheit/rettungsinseln" title="Rettungsinseln Angebotsseite im Onlineshop">Rettungsinseln</a> verkauft. Kleinere Segelyachten 
+              haben zu über 95% keine Rettungsinseln. Bei den Segelyachten ab ca. 10 m haben 
+              lediglich 18% eine Rettungsinsel. Mit den verkauften Rettungsinseln könnten alle 
+              14.800 Einwohner Aschebergs gerettet werden.
+            </p>
+          </div>
+        </div>
+        <div class="timeline__image-bubble">
+          <div class="timeline__image-headline">Rettungsinseln</div>
+          <img 
+            src="https://placehold.co/600x600?text=Compass24+40+Jahre+Jubiläum+2019" 
+            srcset="https://placehold.co/400x400?text=Compass24+40+Jahre+Jubiläum+2019 400w,
+                    https://placehold.co/600x600?text=Compass24+40+Jahre+Jubiläum+2019 600w,
+                    https://placehold.co/800x800?text=Compass24+40+Jahre+Jubiläum+2019 800w"
+            sizes="(max-width: 767px) calc(100vw - 5rem), (max-width: 1023px) 20vw, 200px"
+            alt="Compass24 40 Jahre Jubiläum 2019" 
+            loading="lazy">
+        </div>
+      </article>
+
+    </div>
+  </section>
+</div>
+
+
+<!-- The HTML "footer" below is for preview purposes (mobile emulator devtools) only. Do not copy to CMS content page. -->
+</body>
+</html>
