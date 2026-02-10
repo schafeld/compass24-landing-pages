@@ -31,6 +31,10 @@
 
   <!--
     Compass24 Timeline Layout Component
+    Vertical timeline with alternating text and image bubbles.
+
+    Date: February 2026
+    Version: 1.0.2
     
     A standalone, injectable timeline component displaying the Compass24 company history.
     This file can be injected into existing CMS pages without affecting SEO or editability.
@@ -408,14 +412,14 @@
         width: 100%;
         height: auto;
         display: block;
-        aspect-ratio: 1 / 1;
-        object-fit: cover;
+        /* aspect-ratio: 1 / 1; */
+        object-fit: contain; /* cover; */
       }
     }
 
     .timeline__image-headline {
       display: none; /* Hidden by default, can be shown on hover or as an overlay if desired */
-      
+
       /* position: absolute;
       top: 0;
       left: 0;
@@ -502,6 +506,12 @@
       text-transform: uppercase;
       letter-spacing: 0.05em;
       margin-bottom: var(--c24-space-2);
+      line-height: 1.4;
+      
+      /* Make emojis slightly larger */
+      &::first-letter {
+        font-size: 1.25em;
+      }
     }
 
     .timeline__facts-text {
@@ -568,11 +578,11 @@
         order: 2;
       }
 
-      .timeline__image-bubble {
+      /* .timeline__image-bubble {
         img {
           aspect-ratio: 16 / 10;
         }
-      }
+      } */
 
       .timeline__dot {
         left: var(--c24-space-2);
@@ -684,13 +694,13 @@
           </div>
         </div>
         <div class="timeline__image-bubble">
-          <div class="timeline__image-headline">Antifouling</div>
-          <img src="https://compass24.b-cdn.net/media/4d/d0/3f/1691738368/Ratgeber_Antifouling_Compass_3_675x450px-min.jpg?width=1920" 
-               srcset="https://compass24.b-cdn.net/media/4d/d0/3f/1691738368/Ratgeber_Antifouling_Compass_3_675x450px-min.jpg?width=1920 600w, 
-                    https://compass24.b-cdn.net/media/4d/d0/3f/1691738368/Ratgeber_Antifouling_Compass_3_675x450px-min.jpg?width=400 400w, 
-                    https://compass24.b-cdn.net/media/4d/d0/3f/1691738368/Ratgeber_Antifouling_Compass_3_675x450px-min.jpg?width=280 280w"
+          <div class="timeline__image-headline">Firmengründung</div>
+          <img src="https://compass24.b-cdn.net/media/74/bb/f4/1770735480/Unternehmen_Gebaeude_79.jpg?width=1920" 
+               srcset="https://compass24.b-cdn.net/media/74/bb/f4/1770735480/Unternehmen_Gebaeude_79.jpg?width=1920 600w, 
+                    https://compass24.b-cdn.net/media/74/bb/f4/1770735480/Unternehmen_Gebaeude_79.jpg?width=400 400w, 
+                    https://compass24.b-cdn.net/media/74/bb/f4/1770735480/Unternehmen_Gebaeude_79.jpg?width=280 280w"
                 sizes="(max-width: 767px) calc(100vw - 5rem), (max-width: 1023px) 20vw, 200px"
-                alt="Compass24 Antifouling Ratgeber"
+                alt="Firmengebäude 1979 - Firmengründung Compass24"
                 loading="lazy">
         </div>
       </article>
@@ -716,13 +726,13 @@
           </div>
         </div>
         <div class="timeline__image-bubble">
-          <div class="timeline__image-headline">Fender Sortiment</div>
-          <img src="https://compass24.b-cdn.net/media/33/c4/f0/1747052327/com-akzent-fender.jpg?width=1920"
-                    srcset="https://compass24.b-cdn.net/media/33/c4/f0/1747052327/com-akzent-fender.jpg?width=1920 600w, 
-                            https://compass24.b-cdn.net/media/33/c4/f0/1747052327/com-akzent-fender.jpg?width=400 400w, 
-                            https://compass24.b-cdn.net/media/33/c4/f0/1747052327/com-akzent-fender.jpg?width=280 280w"
+          <div class="timeline__image-headline">Innovation & Entwicklung</div>
+          <img src="https://compass24.b-cdn.net/media/32/45/88/1770735480/Unternehmen_Gebaeude_HH.jpg?width=1920"
+                    srcset="https://compass24.b-cdn.net/media/32/45/88/1770735480/Unternehmen_Gebaeude_HH.jpg?width=1920 600w, 
+                            https://compass24.b-cdn.net/media/32/45/88/1770735480/Unternehmen_Gebaeude_HH.jpg?width=400 400w, 
+                            https://compass24.b-cdn.net/media/32/45/88/1770735480/Unternehmen_Gebaeude_HH.jpg?width=280 280w"
                     sizes="(max-width: 767px) calc(100vw - 5rem), (max-width: 1023px) 20vw, 200px"
-                    alt="Compass24 Fender Sortiment"
+                    alt="Innovation & Entwicklung - Ausbau des Gerschäfts"
                     loading="lazy">
         </div>
       </article>
@@ -747,14 +757,13 @@
           </div>
         </div>
         <div class="timeline__image-bubble">
-          <div class="timeline__image-headline">Bretonische Shirts</div>
-          <img src="https://compass24.b-cdn.net/media/fd/bf/5a/1759864925/0135554_a90_FS26_01.jpg?width=1280"
-                    srcset="https://compass24.b-cdn.net/media/fd/bf/5a/1759864925/0135554_a90_FS26_01.jpg?width=1280 600w, 
-                            https://compass24.b-cdn.net/media/fd/bf/5a/1759864925/0135554_a90_FS26_01.jpg?width=400 400w, 
-                            https://compass24.b-cdn.net/media/fd/bf/5a/1759864925/0135554_a90_FS26_01.jpg?width=280 280w"
+          <div class="timeline__image-headline">Generationen-Wechsel</div>
+          <img src="https://compass24.b-cdn.net/media/1e/bb/ca/1770735480/Unternehmen_Dehler.jpg?width=1920"
+                    srcset="https://compass24.b-cdn.net/media/1e/bb/ca/1770735480/Unternehmen_Dehler.jpg?width=1280 600w, 
+                            https://compass24.b-cdn.net/media/1e/bb/ca/1770735480/Unternehmen_Dehler.jpg?width=400 400w, 
+                            https://compass24.b-cdn.net/media/1e/bb/ca/1770735480/Unternehmen_Dehler.jpg?width=280 280w"
                     sizes="(max-width: 767px) calc(100vw - 5rem), (max-width: 1023px) 20vw, 200px"
-                    alt="Compass24 Bretonische Shirts Sortiment"
-                    style="object-position: top center;"
+                    alt="Generationen-Wechsel"
                     loading="lazy">
         </div>
       </article>
@@ -780,14 +789,13 @@
           </div>
         </div>
         <div class="timeline__image-bubble">
-          <div class="timeline__image-headline">Offshore-Segelbekleidung</div>
-          <img src="https://compass24.b-cdn.net/media/85/9a/22/1715920337/0305740_c4_FS16ix.jpg?width=776"
-                    srcset="https://compass24.b-cdn.net/media/85/9a/22/1715920337/0305740_c4_FS16ix.jpg?width=776 400w, 
-                            https://compass24.b-cdn.net/media/85/9a/22/1715920337/0305740_c4_FS16ix.jpg?width=600 600w, 
-                            https://compass24.b-cdn.net/media/85/9a/22/1715920337/0305740_c4_FS16ix.jpg?width=776 776w"
+          <div class="timeline__image-headline">20 Jahre Compass (Foto Firmengebäude 1998)</div>
+          <img src="https://compass24.b-cdn.net/media/a0/c7/63/1770735480/Unternehmen_Gebaeude_98.jpg?width=1920"
+                    srcset="https://compass24.b-cdn.net/media/a0/c7/63/1770735480/Unternehmen_Gebaeude_98.jpg?width=776 400w, 
+                            https://compass24.b-cdn.net/media/a0/c7/63/1770735480/Unternehmen_Gebaeude_98.jpg?width=1164 600w, 
+                            https://compass24.b-cdn.net/media/a0/c7/63/1770735480/Unternehmen_Gebaeude_98.jpg?width=1920 1920w"
                     sizes="(max-width: 767px) calc(100vw - 5rem), (max-width: 1023px) 20vw, 200px"
-                    alt="Compass24 Offshore-Set Sortiment"
-                    style="object-position: top center;"
+                    alt="20 Jahre Compass (Foto Firmengebäude 1998)"
                     loading="lazy">
         </div>
       </article>
@@ -815,12 +823,20 @@
         </div>
         <div class="timeline__image-bubble">
           <div class="timeline__image-headline">Profi-Bordhosen</div>
-          <img src="https://compass24.b-cdn.net/media/c7/2e/80/1715919271/0354870_a1_FS18ix.jpg?width=662"
+          <!-- <img src="https://compass24.b-cdn.net/media/c7/2e/80/1715919271/0354870_a1_FS18ix.jpg?width=662"
                     srcset="https://compass24.b-cdn.net/media/c7/2e/80/1715919271/0354870_a1_FS18ix.jpg?width=662 400w, 
                             https://compass24.b-cdn.net/media/c7/2e/80/1715919271/0354870_a1_FS18ix.jpg?width=600 600w, 
                             https://compass24.b-cdn.net/media/c7/2e/80/1715919271/0354870_a1_FS18ix.jpg?width=662 662w"
                     sizes="(max-width: 767px) calc(100vw - 5rem), (max-width: 1023px) 20vw, 200px"
                     alt="Compass24 Online-Shop Screenshot"
+                    loading="lazy"> -->
+          <!-- TODO: check if images used in right places. This here is a duplicate for lack of 8 pictures. -->
+          <img src="https://compass24.b-cdn.net/media/32/45/88/1770735480/Unternehmen_Gebaeude_HH.jpg?width=1920"
+                    srcset="https://compass24.b-cdn.net/media/32/45/88/1770735480/Unternehmen_Gebaeude_HH.jpg?width=1920 600w, 
+                            https://compass24.b-cdn.net/media/32/45/88/1770735480/Unternehmen_Gebaeude_HH.jpg?width=400 400w, 
+                            https://compass24.b-cdn.net/media/32/45/88/1770735480/Unternehmen_Gebaeude_HH.jpg?width=280 280w"
+                    sizes="(max-width: 767px) calc(100vw - 5rem), (max-width: 1023px) 20vw, 200px"
+                    alt="Innovation & Entwicklung - Ausbau des Gerschäfts"
                     loading="lazy">
         </div>
       </article>
@@ -846,13 +862,13 @@
           </div>
         </div>
         <div class="timeline__image-bubble">
-          <div class="timeline__image-headline">Rettungswesten</div>
-          <img src="https://compass24.b-cdn.net/media/fa/53/b1/1714781272/0000303_s1_FS22ix.jpg?width=1497"
-                    srcset="https://compass24.b-cdn.net/media/fa/53/b1/1714781272/0000303_s1_FS22ix.jpg?width=1500 600w, 
-                            https://compass24.b-cdn.net/media/fa/53/b1/1714781272/0000303_s1_FS22ix.jpg?width=1000 1000w, 
-                            https://compass24.b-cdn.net/media/fa/53/b1/1714781272/0000303_s1_FS22ix.jpg?width=1500 1500w"
+          <div class="timeline__image-headline">2004 – 25 Jahre compass</div>
+          <img src="https://compass24.b-cdn.net/media/07/53/14/1770735480/Unternehmen_Shop_AB_09.jpg?width=1920"
+                    srcset="https://compass24.b-cdn.net/media/07/53/14/1770735480/Unternehmen_Shop_AB_09.jpg?width=1500 600w, 
+                            https://compass24.b-cdn.net/media/07/53/14/1770735480/Unternehmen_Shop_AB_09.jpg?width=1000 1000w, 
+                            https://compass24.b-cdn.net/media/07/53/14/1770735480/Unternehmen_Shop_AB_09.jpg?width=1500 1500w"
                     sizes="(max-width: 767px) calc(100vw - 5rem), (max-width: 1023px) 20vw, 200px"
-                    alt="Compass24 Rettungswesten Sortiment"
+                    alt="2004 – 25 Jahre compass (Foto Maritim-Shop Ascheberg)"
                     loading="lazy">
         </div>
       </article>
@@ -878,10 +894,10 @@
         </div>
         <div class="timeline__image-bubble">
           <div class="timeline__image-headline">Tauwerk</div>
-          <img src="https://compass24.b-cdn.net/media/13/cb/f7/1714783325/0918875_r1_FS20ix.jpg?width=1515"
-                    srcset="https://compass24.b-cdn.net/media/13/cb/f7/1714783325/0918875_r1_FS20ix.jpg?width=1515 600w, 
-                            https://compass24.b-cdn.net/media/13/cb/f7/1714783325/0918875_r1_FS20ix.jpg?width=1000 1000w, 
-                            https://compass24.b-cdn.net/media/13/cb/f7/1714783325/0918875_r1_FS20ix.jpg?width=1515 1515w"
+          <img src="https://compass24.b-cdn.net/media/46/4a/0d/1770735480/Unternehmen_Elpocko_14.jpg?width=1920"
+                    srcset="https://compass24.b-cdn.net/media/46/4a/0d/1770735480/Unternehmen_Elpocko_14.jpg?width=1920 600w, 
+                            https://compass24.b-cdn.net/media/46/4a/0d/1770735480/Unternehmen_Elpocko_14.jpg?width=400 400w, 
+                            https://compass24.b-cdn.net/media/46/4a/0d/1770735480/Unternehmen_Elpocko_14.jpg?width=280 280w"
                     sizes="(max-width: 767px) calc(100vw - 5rem), (max-width: 1023px) 20vw, 200px"
                     alt="Compass24 Tauwerk Sortiment"
                     loading="lazy">
@@ -911,12 +927,12 @@
           </div>
         </div>
         <div class="timeline__image-bubble">
-          <div class="timeline__image-headline">Rettungsinseln</div>
+          <div class="timeline__image-headline">40 Jahre & in Zukunft</div>
           <img 
-            src="https://placehold.co/600x600?text=Compass24+40+Jahre+Jubiläum+2019" 
-            srcset="https://placehold.co/400x400?text=Compass24+40+Jahre+Jubiläum+2019 400w,
-                    https://placehold.co/600x600?text=Compass24+40+Jahre+Jubiläum+2019 600w,
-                    https://placehold.co/800x800?text=Compass24+40+Jahre+Jubiläum+2019 800w"
+            src="https://compass24.b-cdn.net/media/00/3b/b8/1770735480/Unternehmen_Gebaeude_07.jpg?width=1920" 
+            srcset="https://compass24.b-cdn.net/media/00/3b/b8/1770735480/Unternehmen_Gebaeude_07.jpg?width=1920 600w, 
+                    https://compass24.b-cdn.net/media/00/3b/b8/1770735480/Unternehmen_Gebaeude_07.jpg?width=400 400w, 
+                    https://compass24.b-cdn.net/media/00/3b/b8/1770735480/Unternehmen_Gebaeude_07.jpg?width=280 280w"
             sizes="(max-width: 767px) calc(100vw - 5rem), (max-width: 1023px) 20vw, 200px"
             alt="Compass24 40 Jahre Jubiläum 2019" 
             loading="lazy">
