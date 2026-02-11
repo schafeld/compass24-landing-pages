@@ -13,7 +13,10 @@ Template for displaying job details in an accordion format.
 Used in 'Jobs' page.
 
 Date: 2026-02-11
-Version: 0.0.1
+Version: 0.1.2
+
+Uses native HTML <details> and <summary> elements for accordion functionality.
+No JavaScript required - works in any CMS environment.
 
 TODO: When the final combination of components is established, consider merging common styles into a shared CSS file to reduce redundancy.
 Use only one in a layout container...
@@ -116,6 +119,7 @@ Use only one in a layout container...
     .accordion {
       max-width: 900px;
       margin: 0 auto;
+      --bs-accordion-border-color: unset !important;
     }
 
     /* ============================================
@@ -144,11 +148,21 @@ Use only one in a layout container...
     .accordion-item:nth-child(3) { animation-delay: 0.3s; }
     .accordion-item:nth-child(4) { animation-delay: 0.4s; }
 
+    /* Ensure border-radius on first and last items */
+    .accordion-item:first-of-type {
+      border-top-left-radius: var(--c24-border-radius-xl) !important;
+      border-top-right-radius: var(--c24-border-radius-xl) !important;
+    }
+
+    .accordion-item:last-of-type {
+      border-bottom-left-radius: var(--c24-border-radius-xl) !important;
+      border-bottom-right-radius: var(--c24-border-radius-xl) !important;
+    }
+
     /* ============================================
        ACCORDION TRIGGER (BUTTON)
        ============================================ */
     .accordion-trigger {
-      width: 100%;
       padding: var(--c24-space-6);
       background-color: transparent;
       border: none;
@@ -163,6 +177,8 @@ Use only one in a layout container...
       color: var(--c24-color-primary);
       text-align: left;
       transition: all var(--c24-transition-base);
+      list-style: none; /* Remove default summary marker */
+      outline: none !important; /* Remove focus outline */
 
       &:hover {
         background-color: var(--c24-color-gray-50);
@@ -170,6 +186,7 @@ Use only one in a layout container...
 
       &:focus {
         background-color: var(--c24-color-gray-100);
+        outline: none !important; /* Ensure no outline on focus */
       }
 
       @media (prefers-reduced-motion: reduce) {
@@ -194,18 +211,26 @@ Use only one in a layout container...
       font-size: var(--c24-font-size-lg);
       color: var(--c24-color-primary-dark);
       flex-shrink: 0;
-      transition: transform var(--c24-transition-base);
     }
 
-    /* Rotate icon when accordion is expanded */
-    .accordion-item[aria-expanded="true"] .accordion-trigger__icon {
-      transform: rotate(180deg);
+    .accordion-trigger__icon::after {
+      content: '▼';
     }
 
-    @media (prefers-reduced-motion: reduce) {
-      .accordion-trigger__icon {
-        transition: none;
-      }
+    /* Change icon to up triangle when accordion is expanded */
+    .accordion-item[open] .accordion-trigger__icon::after {
+      content: '▲';
+    }
+
+    /* Remove default details marker */
+    .accordion-trigger::-webkit-details-marker {
+      display: none;
+    }
+    
+    /* Additional browser support for hiding default marker */
+    .accordion-trigger::marker {
+      display: none;
+      content: '';
     }
 
     /* ============================================
@@ -214,11 +239,20 @@ Use only one in a layout container...
     .accordion-content {
       max-height: 0;
       overflow: hidden;
-      transition: max-height var(--c24-transition-base), padding var(--c24-transition-base);
+      transition: max-height var(--c24-transition-base);
+      opacity: 0;
     }
 
-    .accordion-item[aria-expanded="true"] .accordion-content {
+    .accordion-item[open] .accordion-content {
       max-height: 2000px; /* Generous max-height for various content lengths */
+      opacity: 1;
+      transition: max-height var(--c24-transition-base), opacity var(--c24-transition-base);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .accordion-content {
+        transition: none;
+      }
     }
 
     .accordion-content__inner {
@@ -304,17 +338,12 @@ Use only one in a layout container...
       font-weight: 600;
       text-decoration: none;
       cursor: pointer;
-      transition: all var(--c24-transition-base);
+      transition: box-shadow var(--c24-transition-base), background var(--c24-transition-base);
       box-shadow: var(--c24-shadow-md);
 
       &:hover {
         box-shadow: var(--c24-shadow-lg);
-        transform: translateY(-2px);
         background: linear-gradient(135deg, var(--c24-color-primary), var(--c24-color-primary-dark));
-
-        @media (prefers-reduced-motion: reduce) {
-          transform: none;
-        }
       }
 
       &:focus {
@@ -323,7 +352,7 @@ Use only one in a layout container...
       }
 
       &:active {
-        transform: translateY(0);
+        box-shadow: var(--c24-shadow-md);
       }
     }
 
@@ -410,13 +439,13 @@ Use only one in a layout container...
       <div class="accordion" role="region" aria-label="Jobangebote">
         
         <!-- Job Item 1 -->
-        <article class="accordion-item" role="button" tabindex="0" aria-expanded="false" aria-controls="job-1-content">
-          <button class="accordion-trigger" aria-label="Job Details anzeigen/verbergen">
+        <details class="accordion-item">
+          <summary class="accordion-trigger">
             <h3 class="accordion-trigger__title">Kaufmännischer Mitarbeiter (m/w/d)</h3>
-            <span class="accordion-trigger__icon" aria-hidden="true">▼</span>
-          </button>
+            <span class="accordion-trigger__icon" aria-hidden="true"></span>
+          </summary>
 
-          <div class="accordion-content" id="job-1-content" role="region">
+          <div class="accordion-content">
             <div class="accordion-content__inner">
               <div class="job-details-meta">
                 <div class="job-detail-item">
@@ -474,16 +503,16 @@ Use only one in a layout container...
               <a href="mailto:sekretariat@compass24.de?subject=Bewerbung: Kaufmännischer Mitarbeiter" class="job-cta">Jetzt bewerben</a>
             </div>
           </div>
-        </article>
+        </details>
 
         <!-- Job Item 2 -->
-        <article class="accordion-item" role="button" tabindex="0" aria-expanded="false" aria-controls="job-2-content">
-          <button class="accordion-trigger" aria-label="Job Details anzeigen/verbergen">
+        <details class="accordion-item">
+          <summary class="accordion-trigger">
             <h3 class="accordion-trigger__title">Lagerlogistiker (m/w/d)</h3>
-            <span class="accordion-trigger__icon" aria-hidden="true">▼</span>
-          </button>
+            <span class="accordion-trigger__icon" aria-hidden="true"></span>
+          </summary>
 
-          <div class="accordion-content" id="job-2-content" role="region">
+          <div class="accordion-content">
             <div class="accordion-content__inner">
               <div class="job-details-meta">
                 <div class="job-detail-item">
@@ -540,44 +569,11 @@ Use only one in a layout container...
               <a href="mailto:sekretariat@compass24.de?subject=Bewerbung: Lagerlogistiker" class="job-cta">Jetzt bewerben</a>
             </div>
           </div>
-        </article>
+        </details>
 
       </div>
     </section>
   </div>
-
-  <script>
-    /**
-     * Job Accordion Component JavaScript
-     * Handles accordion expand/collapse functionality
-     */
-    (function() {
-      const accordionItems = document.querySelectorAll('.accordion-item');
-
-      accordionItems.forEach(item => {
-        const trigger = item.querySelector('.accordion-trigger');
-
-        // Handle click events
-        trigger.addEventListener('click', (e) => {
-          e.preventDefault();
-          toggleAccordion(item);
-        });
-
-        // Handle keyboard events (Enter, Space)
-        item.addEventListener('keydown', (e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            toggleAccordion(item);
-          }
-        });
-      });
-
-      function toggleAccordion(item) {
-        const isExpanded = item.getAttribute('aria-expanded') === 'true';
-        item.setAttribute('aria-expanded', !isExpanded);
-      }
-    })();
-  </script>
 
 
 <!-- The HTML footer above is for preview purposes (DevTools mobile emulator). -->
