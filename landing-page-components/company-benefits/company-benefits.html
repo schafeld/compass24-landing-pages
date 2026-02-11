@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Compass24 - Warum Compass?</title>
+<!-- The HTML header above is for preview purposes (do not copy to CMS content page). -->
+
+
+<!--
+Compass24 Benefits Component
+Template for displaying company benefits.
+Used in 'Jobs' page.
+
+Date: 2026-02-11
+Version: 0.0.1
+
+TODO: When the final combination of components is established, consider merging common styles into a shared CSS file to reduce redundancy.
+-->
+
+  <style>
+    /* ============================================
+       SCOPED DESIGN TOKENS & BASE STYLES
+       Uses Bootstrap variables from compass24.de with fallbacks for standalone viewing
+       ============================================ */
+    .compass24-benefits-component {
+      /* 
+       * Colors - Use Bootstrap variables when available, with fallbacks
+       * Site primary: --bs-primary (#002856)
+       */
+      --c24-color-primary: var(--bs-primary, #003366);
+      --c24-color-primary-light: #0066b3;
+      --c24-color-primary-dark: #002244;
+      --c24-color-secondary: #0099cc;
+      --c24-color-white: var(--bs-white, #ffffff);
+      --c24-color-gray-50: var(--bs-gray-100, #f9fafb);
+      --c24-color-gray-100: var(--bs-secondary-bg, #f3f4f6);
+      --c24-color-gray-200: #e5e7eb;
+      --c24-color-gray-500: var(--bs-gray, #6b7280);
+      --c24-color-gray-600: var(--bs-secondary-color, #4b5563);
+      --c24-color-gray-900: var(--bs-body-color, #111827);
+      
+      /* Typography - Use site fonts when available */
+      --c24-font-family: var(--bs-body-font-family, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif);
+      --c24-font-size-sm: var(--font-size-sm, 0.875rem);
+      --c24-font-size-base: var(--font-size-base, 1rem);
+      --c24-font-size-lg: var(--font-size-lg, 1.125rem);
+      --c24-font-size-xl: 1.25rem;
+      --c24-font-size-2xl: 1.5rem;
+      --c24-font-size-3xl: 1.875rem;
+      
+      /* Spacing */
+      --c24-space-2: 0.5rem;
+      --c24-space-3: 0.75rem;
+      --c24-space-4: 1rem;
+      --c24-space-6: 1.5rem;
+      --c24-space-8: 2rem;
+      --c24-space-12: 3rem;
+      --c24-space-16: 4rem;
+      
+      /* Borders & Shadows */
+      --c24-border-radius-md: 0.375rem;
+      --c24-border-radius-lg: 0.5rem;
+      --c24-border-radius-xl: 0.75rem;
+      --c24-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      --c24-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      --c24-shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      
+      /* Transitions */
+      --c24-transition-base: 250ms ease-in-out;
+
+      /* Base Component Styles */
+      font-family: var(--c24-font-family);
+      font-size: var(--c24-font-size-base);
+      line-height: 1.6;
+      color: var(--c24-color-gray-900);
+      box-sizing: border-box;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Universal box-sizing */
+    .compass24-benefits-component *,
+    .compass24-benefits-component *::before,
+    .compass24-benefits-component *::after {
+      box-sizing: inherit;
+    }
+
+    /* ============================================
+       SECTION STYLING
+       ============================================ */
+    .benefits-section {
+      padding: var(--c24-space-12) var(--c24-space-4);
+      background-color: var(--c24-color-gray-50);
+    }
+
+    .benefits-header {
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto var(--c24-space-12);
+    }
+
+    .benefits-header__title {
+      font-size: var(--c24-font-size-3xl);
+      font-weight: 700;
+      color: var(--c24-color-primary);
+      margin: 0;
+    }
+
+    /* ============================================
+       BENEFITS GRID
+       ============================================ */
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--c24-space-6);
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* Tablet: 2 columns */
+    @media (min-width: 768px) {
+      .benefits-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--c24-space-8);
+      }
+    }
+
+    /* Desktop: 3 columns */
+    @media (min-width: 1024px) {
+      .benefits-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    /* ============================================
+       BENEFIT CARD
+       ============================================ */
+    .benefit-card {
+      background-color: var(--c24-color-white);
+      padding: var(--c24-space-6);
+      border-radius: var(--c24-border-radius-xl);
+      box-shadow: var(--c24-shadow-md);
+      text-align: center;
+      transition: all var(--c24-transition-base);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      &:hover {
+        box-shadow: var(--c24-shadow-xl);
+        transform: translateY(-4px);
+
+        @media (prefers-reduced-motion: reduce) {
+          transform: none;
+        }
+      }
+    }
+
+    .benefit-icon {
+      font-size: 3rem;
+      margin-bottom: var(--c24-space-4);
+      display: block;
+      line-height: 1;
+    }
+
+    .benefit-card h3 {
+      font-size: var(--c24-font-size-lg);
+      font-weight: 700;
+      color: var(--c24-color-primary);
+      margin: 0 0 var(--c24-space-3);
+    }
+
+    .benefit-card p {
+      font-size: var(--c24-font-size-base);
+      color: var(--c24-color-gray-600);
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* ============================================
+       ANIMATIONS
+       ============================================ */
+    @keyframes compass24FadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .benefit-card {
+      animation: compass24FadeInUp 0.6s ease-out both;
+
+      &:nth-child(1) { animation-delay: 0.1s; }
+      &:nth-child(2) { animation-delay: 0.2s; }
+      &:nth-child(3) { animation-delay: 0.3s; }
+      &:nth-child(4) { animation-delay: 0.4s; }
+      &:nth-child(5) { animation-delay: 0.5s; }
+      &:nth-child(6) { animation-delay: 0.6s; }
+    }
+
+    /* Disable animations if user prefers reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      .benefit-card {
+        animation: none;
+      }
+    }
+
+    /* ============================================
+       MOBILE RESPONSIVE
+       ============================================ */
+    @media (max-width: 767px) {
+      .benefits-section {
+        padding: var(--c24-space-8) var(--c24-space-4);
+      }
+
+      .benefits-header__title {
+        font-size: var(--c24-font-size-2xl);
+      }
+
+      .benefit-card {
+        padding: var(--c24-space-4);
+      }
+
+      .benefit-icon {
+        font-size: 2.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- The HTML header and footer are for preview purposes (DevTools mobile emulator). Do not copy to CMS content page. -->
+
+  <div class="compass24-benefits-component">
+    <section class="benefits-section" aria-labelledby="benefits-title">
+      <header class="benefits-header">
+        <h2 id="benefits-title" class="benefits-header__title">Warum Compass?</h2>
+      </header>
+
+      <div class="benefits-grid" role="list">
+        <article class="benefit-card" role="listitem">
+          <div class="benefit-icon" aria-hidden="true">👥</div>
+          <h3>Familienunternehmen</h3>
+          <p>Seit 1979 familiengeführt mit flachen Hierarchien und persönlicher Atmosphäre</p>
+        </article>
+        <article class="benefit-card" role="listitem">
+          <div class="benefit-icon" aria-hidden="true">🎯</div>
+          <h3>Entwicklungschancen</h3>
+          <p>Weiterbildungen, Schulungen und individuelle Karrierepfade für jeden</p>
+        </article>
+        <article class="benefit-card" role="listitem">
+          <div class="benefit-icon" aria-hidden="true">⚓</div>
+          <h3>Wassersport-Passion</h3>
+          <p>Arbeite mit dem, was du liebst - viele Kollegen sind selbst aktive Segler</p>
+        </article>
+        <article class="benefit-card" role="listitem">
+          <div class="benefit-icon" aria-hidden="true">🏖️</div>
+          <h3>Work-Life-Balance</h3>
+          <p>30 Tage Urlaub, flexible Arbeitszeiten und familienfreundliche Regelungen</p>
+        </article>
+        <article class="benefit-card" role="listitem">
+          <div class="benefit-icon" aria-hidden="true">💰</div>
+          <h3>Attraktive Vergütung</h3>
+          <p>Faire Bezahlung, Mitarbeiterrabatte und zusätzliche Benefits</p>
+        </article>
+        <article class="benefit-card" role="listitem">
+          <div class="benefit-icon" aria-hidden="true">🌱</div>
+          <h3>Moderner Arbeitsplatz</h3>
+          <p>Neueste Technik, moderne Büros und ein inspirierendes Arbeitsumfeld</p>
+        </article>
+      </div>
+    </section>
+  </div>
+
+
+<!-- The HTML footer below is for preview purposes (do not copy to CMS content page). -->
+</body>
+</html>
