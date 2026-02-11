@@ -222,17 +222,19 @@
       &:nth-child(7) { animation-delay: 0.7s; }
       &:nth-child(8) { animation-delay: 0.8s; }
 
-      /* Interactive state for timeline items */
-      &:hover .timeline__dot,
+      /* Interactive state for timeline items - only trigger on content/image hover */
+      &:has(.timeline__content:hover) .timeline__dot,
+      &:has(.timeline__image-bubble:hover) .timeline__dot,
       &:focus-within .timeline__dot {
         width: var(--c24-timeline-dot-size-large);
         height: var(--c24-timeline-dot-size-large);
         background-color: var(--c24-color-accent);
-        transform: translate(-50%, calc(-50% - 10px));
+        transform: translate(-50%, calc(-50% - 4px));
       }
       
       @media (prefers-reduced-motion: reduce) {
-        &:hover .timeline__dot,
+        &:has(.timeline__content:hover) .timeline__dot,
+        &:has(.timeline__image-bubble:hover) .timeline__dot,
         &:focus-within .timeline__dot {
           width: var(--c24-timeline-dot-size);
           height: var(--c24-timeline-dot-size);
