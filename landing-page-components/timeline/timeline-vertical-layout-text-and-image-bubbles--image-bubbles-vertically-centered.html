@@ -227,6 +227,7 @@
         width: var(--c24-timeline-dot-size-large);
         height: var(--c24-timeline-dot-size-large);
         background-color: var(--c24-color-accent);
+        transform: translateX(-50%) translateY(-10px);
       }
       
       @media (prefers-reduced-motion: reduce) {
@@ -234,6 +235,7 @@
         &:focus-within .timeline__dot {
           width: var(--c24-timeline-dot-size);
           height: var(--c24-timeline-dot-size);
+          transform: translateX(-50%);
         }
       }
 
