@@ -4,7 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Compass24 - Job Details Accordion</title>
-<!-- The HTML header above is for preview purposes (do not copy to CMS content page). -->
+</head>
+<body>
+  <!-- The HTML header and footer are for preview purposes (DevTools mobile emulator). Do not copy to CMS content page. -->
 
 
 <!--
@@ -13,7 +15,7 @@ Template for displaying job details in an accordion format.
 Used in 'Jobs' page.
 
 Date: 2026-02-11
-Version: 0.2.0
+Version: 0.2.1
 
 Uses native HTML <details> and <summary> elements for accordion functionality.
 No JavaScript required - works in any CMS environment.
@@ -21,13 +23,6 @@ No JavaScript required - works in any CMS environment.
 TODO: When the final combination of components is established, consider merging common styles into a shared CSS file to reduce redundancy.
 Use only one in a layout container...
 -->
-</head>
-<body>
-  <!-- The HTML header and footer are for preview purposes (DevTools mobile emulator). Do not copy to CMS content page. -->
-
-
-
-
   <style>
     /* ============================================
        SCOPED DESIGN TOKENS & BASE STYLES
@@ -432,18 +427,17 @@ Use only one in a layout container...
 
   <div class="compass24-job-accordion-component">
     <section class="accordion-section" aria-labelledby="accordion-title">
-        <!--
+
       <header class="accordion-header">
-        <h2 id="accordion-title" class="accordion-header__title">Offene Stellen</h2>
+        <h2 id="accordion-title" class="accordion-header__title">Wir bieten Ausbildungsplätze in den Bereichen</h2>
       </header>
-      -->
 
       <div class="accordion" role="region" aria-label="Jobangebote">
         
         <!-- Job Item 1 -->
         <details class="accordion-item">
           <summary class="accordion-trigger">
-            <h3 class="accordion-trigger__title">Kaufmännischer Mitarbeiter (m/w/d)</h3>
+            <h3 class="accordion-trigger__title">Kaufmann/-frau im Einzelhandel (m/w/d)</h3>
             <span class="accordion-trigger__icon" aria-hidden="true"></span>
           </summary>
 
@@ -508,10 +502,9 @@ Use only one in a layout container...
         </details>
 
         <!-- Job Item 2 -->
-         <!--
         <details class="accordion-item">
           <summary class="accordion-trigger">
-            <h3 class="accordion-trigger__title">Lagerlogistiker (m/w/d)</h3>
+            <h3 class="accordion-trigger__title">Verkäufer/-in (m/w/d)</h3>
             <span class="accordion-trigger__icon" aria-hidden="true"></span>
           </summary>
 
@@ -573,7 +566,6 @@ Use only one in a layout container...
             </div>
           </div>
         </details>
-        -->
 
       </div>
     </section>
