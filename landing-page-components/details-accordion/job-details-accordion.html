@@ -13,7 +13,7 @@ Template for displaying job details in an accordion format.
 Used in 'Jobs' page.
 
 Date: 2026-02-11
-Version: 0.1.2
+Version: 0.2.0
 
 Uses native HTML <details> and <summary> elements for accordion functionality.
 No JavaScript required - works in any CMS environment.
@@ -21,6 +21,9 @@ No JavaScript required - works in any CMS environment.
 TODO: When the final combination of components is established, consider merging common styles into a shared CSS file to reduce redundancy.
 Use only one in a layout container...
 -->
+</head>
+<body>
+  <!-- The HTML header and footer are for preview purposes (DevTools mobile emulator). Do not copy to CMS content page. -->
 
 
 
@@ -426,15 +429,14 @@ Use only one in a layout container...
       }
     }
   </style>
-</head>
-<body>
-  <!-- The HTML header and footer are for preview purposes (DevTools mobile emulator). Do not copy to CMS content page. -->
 
   <div class="compass24-job-accordion-component">
     <section class="accordion-section" aria-labelledby="accordion-title">
+        <!--
       <header class="accordion-header">
         <h2 id="accordion-title" class="accordion-header__title">Offene Stellen</h2>
       </header>
+      -->
 
       <div class="accordion" role="region" aria-label="Jobangebote">
         
@@ -506,6 +508,7 @@ Use only one in a layout container...
         </details>
 
         <!-- Job Item 2 -->
+         <!--
         <details class="accordion-item">
           <summary class="accordion-trigger">
             <h3 class="accordion-trigger__title">Lagerlogistiker (m/w/d)</h3>
@@ -570,6 +573,7 @@ Use only one in a layout container...
             </div>
           </div>
         </details>
+        -->
 
       </div>
     </section>
