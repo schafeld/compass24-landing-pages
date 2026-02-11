@@ -151,8 +151,6 @@
       }
 
       &:focus {
-        outline: 2px solid var(--c24-color-primary);
-        outline-offset: -2px;
         background-color: var(--c24-color-gray-100);
       }
 
@@ -175,11 +173,8 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 28px;
-      height: 28px;
-      background-color: var(--c24-color-primary);
-      color: var(--c24-color-white);
-      border-radius: var(--c24-border-radius-md);
+      font-size: var(--c24-font-size-lg);
+      color: var(--c24-color-primary-dark);
       flex-shrink: 0;
       transition: transform var(--c24-transition-base);
     }
@@ -211,6 +206,35 @@
     .accordion-content__inner {
       padding: 0 var(--c24-space-6) var(--c24-space-6);
       border-top: 1px solid var(--c24-color-gray-200);
+    }
+
+    /* ============================================
+       JOB DETAILS META (Employment type, location, start date)
+       ============================================ */
+    .job-details-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--c24-space-6);
+      padding: var(--c24-space-6) 0;
+      border-bottom: 1px solid var(--c24-color-gray-200);
+      margin-bottom: var(--c24-space-6);
+    }
+
+    .job-detail-item {
+      display: flex;
+      align-items: center;
+      gap: var(--c24-space-3);
+    }
+
+    .job-detail-icon {
+      font-size: 1.25rem;
+      line-height: 1;
+    }
+
+    .job-detail-label {
+      font-size: var(--c24-font-size-sm);
+      color: var(--c24-color-gray-600);
+      font-weight: 500;
     }
 
     .accordion-content__description {
@@ -335,6 +359,16 @@
         padding: 0 var(--c24-space-4) var(--c24-space-4);
       }
 
+      .job-details-meta {
+        gap: var(--c24-space-4);
+        padding: var(--c24-space-4) 0;
+        margin-bottom: var(--c24-space-4);
+      }
+
+      .job-detail-label {
+        font-size: var(--c24-font-size-sm);
+      }
+
       .accordion-content__description {
         font-size: var(--c24-font-size-sm);
         margin: var(--c24-space-4) 0;
@@ -366,6 +400,21 @@
 
           <div class="accordion-content" id="job-1-content" role="region">
             <div class="accordion-content__inner">
+              <div class="job-details-meta">
+                <div class="job-detail-item">
+                  <span class="job-detail-icon">⏰</span>
+                  <span class="job-detail-label">Vollzeit</span>
+                </div>
+                <div class="job-detail-item">
+                  <span class="job-detail-icon">📍</span>
+                  <span class="job-detail-label">Ascheberg</span>
+                </div>
+                <div class="job-detail-item">
+                  <span class="job-detail-icon">📅</span>
+                  <span class="job-detail-label">Ab sofort</span>
+                </div>
+              </div>
+
               <p class="accordion-content__description">
                 Wir suchen einen engagierten Kaufmännischen Mitarbeiter (m/w/d) für unser Team bei Compass24. 
                 In dieser vielseitigen Position unterstützt du uns bei administrativen und kaufmännischen Aufgaben 
@@ -418,6 +467,21 @@
 
           <div class="accordion-content" id="job-2-content" role="region">
             <div class="accordion-content__inner">
+              <div class="job-details-meta">
+                <div class="job-detail-item">
+                  <span class="job-detail-icon">⏰</span>
+                  <span class="job-detail-label">Vollzeit</span>
+                </div>
+                <div class="job-detail-item">
+                  <span class="job-detail-icon">📍</span>
+                  <span class="job-detail-label">Ascheberg</span>
+                </div>
+                <div class="job-detail-item">
+                  <span class="job-detail-icon">📅</span>
+                  <span class="job-detail-label">Ab sofort</span>
+                </div>
+              </div>
+
               <p class="accordion-content__description">
                 Compass24 sucht motivierte Lagerlogistiker (m/w/d) zur Unterstützung unseres Lagerbetriebs. 
                 Du packst gerne an und sorgst dafür, dass alle Produkte sicher gelagert und schnell versendet werden?
