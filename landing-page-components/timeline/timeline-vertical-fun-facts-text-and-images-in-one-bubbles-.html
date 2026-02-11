@@ -428,44 +428,6 @@
 
     .timeline__image-headline {
       display: none; /* Hidden by default, can be shown on hover or as an overlay if desired */
-
-      /* position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      background-color: rgba(255, 255, 255, 0.9);
-      padding: var(--c24-space-3) var(--c24-space-4);
-      font-size: var(--c24-font-size-sm);
-      font-weight: 700;
-      color: var(--c24-color-primary);
-      text-align: center;
-      backdrop-filter: blur(4px);
-      z-index: 1; */
-
-      /* Arrow pointing to the timeline */
-      /* &::before {
-        content: '';
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        width: 0;
-        height: 0;
-        border-style: solid;
-      } */
-
-      /* Arrow for odd items - image on LEFT, arrow points right toward timeline */
-      /* .timeline__item:nth-child(odd) &::before {
-        left: -12px;
-        border-width: 12px 12px 12px 0;
-        border-color: transparent var(--c24-color-white) transparent transparent;
-      } */
-
-      /* Arrow for even items - image on RIGHT, arrow points left toward timeline */
-      /* .timeline__item:nth-child(even) &::before {
-        right: -12px;
-        border-width: 12px 0 12px 12px;
-        border-color: transparent transparent transparent var(--c24-color-white);
-      } */
     }
 
     /* ============================================
@@ -568,7 +530,7 @@
       .timeline__item:nth-child(even) {
         justify-content: flex-start;
         flex-direction: column;
-        gap: var(--c24-space-4);
+        gap: 0;
       }
 
       .timeline__item:nth-child(odd) .timeline__content,
@@ -585,16 +547,21 @@
         margin-right: 0;
         width: calc(100% - var(--c24-space-4) - var(--c24-space-12));
         order: 2;
+        margin-top: -2px; /* slight overlap to connect with content bubble */
       }
-
-      /* .timeline__image-bubble {
-        img {
-          aspect-ratio: 16 / 10;
-        }
-      } */
 
       .timeline__dot {
         left: var(--c24-space-2);
+        top: 4rem;
+        transform: none;
+      }
+
+      /* Override hover state for dot in mobile - no size change, no movement */
+      .timeline__item:has(.timeline__content:hover) .timeline__dot,
+      .timeline__item:has(.timeline__image-bubble:hover) .timeline__dot,
+      .timeline__item:focus-within .timeline__dot {
+        width: var(--c24-timeline-dot-size);
+        height: var(--c24-timeline-dot-size);
         transform: none;
       }
 
@@ -602,16 +569,14 @@
       .timeline__content::before {
         left: -12px !important;
         right: auto !important;
+        top: 4rem !important;
+        transform: none !important;
         border-width: 12px 12px 12px 0 !important;
         border-color: transparent var(--c24-color-white) transparent transparent !important;
       }
 
       .timeline__image-bubble::before {
-        left: -12px !important;
-        right: auto !important;
-        top: 50% !important;
-        border-width: 12px 12px 12px 0 !important;
-        border-color: transparent var(--c24-color-white) transparent transparent !important;
+        display: none;
       }
 
       .timeline__year {
@@ -624,6 +589,17 @@
 
       .timeline__content {
         padding: var(--c24-space-4);
+        border-radius: var(--c24-border-radius-xl) var(--c24-border-radius-xl) 0 0;
+      }
+
+      .timeline__content:hover,
+      .timeline__image-bubble:hover {
+        transform: none;
+      }
+
+      .timeline__image-bubble {
+        border-radius: 0 0 var(--c24-border-radius-xl) var(--c24-border-radius-xl);
+        box-shadow: var(--c24-shadow-md);
       }
     }
 
