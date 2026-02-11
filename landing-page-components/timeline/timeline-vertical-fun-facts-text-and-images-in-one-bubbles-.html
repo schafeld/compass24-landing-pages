@@ -14,9 +14,10 @@
     Design variation: Year and text in one bubble, funfacts and image in adjacent bubble, both centered vertically.
 
     Date: 2026-02-11
-    Version: 1.1.1
+    Version: 1.1.2
 
     Bubble images centered vertically.
+    Panels for a single year combine in mobile for a more compact layout.
 
     TODO: When the final combination of components is established, consider merging common styles into a shared CSS file to reduce redundancy.
   -->
@@ -599,6 +600,10 @@
 
       .timeline__image-bubble {
         border-radius: 0 0 var(--c24-border-radius-xl) var(--c24-border-radius-xl);
+        box-shadow: var(--c24-shadow-md);
+      }
+
+      .timeline__image-bubble:hover {
         box-shadow: var(--c24-shadow-md);
       }
     }
