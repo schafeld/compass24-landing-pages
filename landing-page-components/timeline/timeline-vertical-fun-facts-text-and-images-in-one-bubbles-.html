@@ -13,8 +13,8 @@
     Vertical timeline with alternating text and image bubbles.
     Design variation: Year and text in one bubble, funfacts and image in adjacent bubble, both centered vertically.
 
-    Date: 2026-02-11
-    Version: 1.1.2
+    Date: 2026-02-12
+    Version: 1.2.0
 
     Bubble images centered vertically.
     Panels for a single year combine in mobile for a more compact layout.
@@ -519,6 +519,11 @@
       .timeline-header__intro {
         font-size: var(--c24-font-size-base);
       }
+      
+      .timeline__facts-label,
+      .timeline__facts-text {
+        font-size: var(--c24-font-size-m);
+      }
 
       /* Single column layout on mobile */
       .timeline::before {
@@ -548,7 +553,7 @@
         margin-right: 0;
         width: calc(100% - var(--c24-space-4) - var(--c24-space-12));
         order: 2;
-        margin-top: -2px; /* slight overlap to connect with content bubble */
+        margin-top: -20px; /* overlap to connect with content bubble */
       }
 
       .timeline__dot {
@@ -655,11 +660,13 @@
 <div class="compass24-timeline-component">
   <section class="timeline-section" aria-labelledby="compass24-timeline-title">
     <header class="timeline-header">
-      <h2 id="compass24-timeline-title" class="timeline-header__title">Unsere Geschichte</h2>
+      <h2 id="compass24-timeline-title" class="timeline-header__title">Unsere Firmengeschichte im Überblick</h2>
+      <!--
       <p class="timeline-header__intro">
         Seit 1979 ist Compass® ein unabhängiges Familienunternehmen – vom kleinen Packraum in Ascheberg 
         zu Europas größtem Versender für Wassersportausrüstung.
       </p>
+      -->
     </header>
 
     <div class="timeline" role="list" aria-label="Compass24 Unternehmensgeschichte">
