@@ -3,15 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Compass24 Key Metrics</title>
+  <title>Compass24 Key Metrics - Data Set 2</title>
 </head>
 <!-- The HTML header above is for preview purposes (mobile emulator devtools) only. Do not copy to CMS content page. -->
 
 <!--
   Compass24 Key Metrics Component - Full-Width Stats Banner
-  Version: 1.0.0
+  Topics: Mitarbeiter, Lagerfläche, Anzahl Kunden, Marken, Eigenprodukte
+
+  Version: 1.0.1
   Date: 2026-02-11
   
+  Hint: Make sure to keep this and the other key-metrics banner in synch in case of layout or style changes.
 -->
 
 <style>
@@ -42,6 +45,8 @@
   --c24-font-size-4xl: 2.25rem;
   
   /* Spacing */
+  --c24-space-2: 0.5rem;
+  --c24-space-3: 0.75rem;
   --c24-space-4: 1rem;
   --c24-space-6: 1.5rem;
   --c24-space-8: 2rem;
@@ -94,14 +99,14 @@
     max-width: 1400px;
     margin: 0 auto;
     display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--c24-space-8);
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--c24-space-4);
     z-index: 1;
     
     /* Tablet: 2 columns */
     @media (min-width: 480px) {
       grid-template-columns: repeat(2, 1fr);
-      gap: var(--c24-space-6);
+      gap: var(--c24-space-4);
     }
     
     /* Desktop: 5 columns (one line) - lower breakpoint */
@@ -121,8 +126,21 @@
      ============================================ */
   .metric-item {
     text-align: center;
-    padding: var(--c24-space-4);
+    padding: var(--c24-space-2) var(--c24-space-2);
     animation: compass24MetricFadeIn 0.6s ease-out both;
+    width: 100%;
+    
+    /* Tablet and up: normal padding */
+    @media (min-width: 768px) {
+      padding: var(--c24-space-4);
+    }
+    
+    /* Full-width last item on mobile (2-column layout) */
+    @media (max-width: 479px) {
+      &:last-child {
+        grid-column: 1 / -1;
+      }
+    }
     
     /* Stagger animation delays */
     &:nth-child(1) { animation-delay: 0.1s; }
@@ -148,15 +166,25 @@
      ============================================ */
   .metric-item__value {
     display: block;
-    font-size: var(--c24-font-size-2xl);
+    font-size: var(--c24-font-size-lg);
     font-weight: 800;
     color: var(--c24-color-white);
-    line-height: 1.2;
-    /* margin-bottom: var(--c24-space-4); */
+    line-height: 1;
+    white-space: nowrap;
+
+    sup {
+      line-height: 0;
+    }
     
-    /* Medium screens */
+    /* Tablet screens */
+    @media (min-width: 480px) {
+      font-size: var(--c24-font-size-xl);
+    }
+    
+    /* Medium screens and up */
     @media (min-width: 768px) {
       font-size: var(--c24-font-size-3xl);
+      line-height: 1.2;
     }
     
     /* Larger on wide desktop */
@@ -173,11 +201,19 @@
     font-size: var(--c24-font-size-sm);
     font-weight: 400;
     color: var(--c24-color-text-light);
-    line-height: 1.5;
+    line-height: 1.2;
+    margin-top: var(--c24-space-2);
     
-    /* Medium screens */
+    /* Tablet screens */
+    @media (min-width: 480px) {
+      margin-top: var(--c24-space-2);
+    }
+    
+    /* Medium screens and up */
     @media (min-width: 768px) {
       font-size: var(--c24-font-size-base);
+      line-height: 1.5;
+      margin-top: var(--c24-space-4);
     }
     
     /* Larger on wide desktop */
@@ -223,20 +259,12 @@
      MOBILE RESPONSIVE (< 480px)
      ============================================ */
   @media (max-width: 479px) {
-    .metrics-section {
-      padding: var(--c24-space-8) var(--c24-space-4);
-    }
+    /* .metrics-section {
+      padding: var(--c24-space-6) var(--c24-space-4);
+    } */
     
     .metrics-container {
-      gap: var(--c24-space-6);
-    }
-    
-    .metric-item__value {
-      font-size: var(--c24-font-size-2xl);
-    }
-    
-    .metric-item__label {
-      font-size: var(--c24-font-size-sm);
+      gap: var(--c24-space-3);
     }
   }
 
@@ -273,32 +301,32 @@
       
       <!-- Metric 1: Gründungsjahr -->
       <div class="metric-item" role="listitem">
-        <span class="metric-item__value" aria-label="Gründungsjahr 1979">1979</span>
-        <span class="metric-item__label">Gründungsjahr</span>
+        <span class="metric-item__value" aria-label="Gründungsjahr 1979">100+</span>
+        <span class="metric-item__label">Mitarbeiter</span>
       </div>
       
       <!-- Metric 2: Artikel -->
       <div class="metric-item" role="listitem">
-        <span class="metric-item__value" aria-label="Über 42.000 Artikel">42.000+</span>
+        <span class="metric-item__value" aria-label="Über 42.000 Artikel">15.000 m<sup>2</sup></span>
         <span class="metric-item__label">Artikel</span>
       </div>
       
       <!-- Metric 3: Katalog -->
       <div class="metric-item" role="listitem">
-        <span class="metric-item__value" aria-label="Katalog mit über 400 Seiten">400+</span>
-        <span class="metric-item__label">Seiten Katalog</span>
+        <span class="metric-item__value" aria-label="Katalog mit über 400 Seiten">800.000+</span>
+        <span class="metric-item__label">Anzahl Kunden</span>
       </div>
       
       <!-- Metric 4: Pakete täglich -->
       <div class="metric-item" role="listitem">
-        <span class="metric-item__value" aria-label="5.000 Pakete täglich im Versand">5.000</span>
-        <span class="metric-item__label">Pakete täglich</span>
+        <span class="metric-item__value" aria-label="5.000 Pakete täglich im Versand">150+</span>
+        <span class="metric-item__label">Marken</span>
       </div>
       
       <!-- Metric 5: Länder -->
       <div class="metric-item" role="listitem">
-        <span class="metric-item__value" aria-label="11 Länder weltweit">11</span>
-        <span class="metric-item__label">Länder weltweit</span>
+        <span class="metric-item__value" aria-label="11 Länder weltweit">2.000+</span>
+        <span class="metric-item__label">Eigenprodukte</span>
       </div>
       
     </div>
