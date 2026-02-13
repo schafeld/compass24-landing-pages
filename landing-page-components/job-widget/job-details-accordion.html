@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Compass24 - Job Details Accordion</title>
+</head>
+<body>
+  <!-- The HTML header and footer are for preview purposes (DevTools mobile emulator). Do not copy to CMS content page. -->
+
+
+<!--
+Compass24 Job Details Accordion Component
+Template for displaying job details in an accordion format.
+Used in 'Jobs' page.
+
+Date: 2026-02-11
+Version: 0.2.1
+
+Uses native HTML <details> and <summary> elements for accordion functionality.
+No JavaScript required - works in any CMS environment.
+
+TODO: When the final combination of components is established, consider merging common styles into a shared CSS file to reduce redundancy.
+Use only one in a layout container...
+-->
+  <style>
+    /* ============================================
+       SCOPED DESIGN TOKENS & BASE STYLES
+       Uses Bootstrap variables from compass24.de with fallbacks for standalone viewing
+       ============================================ */
+    .compass24-job-accordion-component {
+      /* 
+       * Colors - Use Bootstrap variables when available, with fallbacks
+       * Site primary: --bs-primary (#002856)
+       */
+      --c24-color-primary: var(--bs-primary, #003366);
+      --c24-color-primary-light: #0066b3;
+      --c24-color-primary-dark: #002244;
+      --c24-color-secondary: #0099cc;
+      --c24-color-accent: var(--bs-danger, #cc0000);
+      --c24-color-white: var(--bs-white, #ffffff);
+      --c24-color-gray-50: var(--bs-gray-100, #f9fafb);
+      --c24-color-gray-100: var(--bs-secondary-bg, #f3f4f6);
+      --c24-color-gray-200: #e5e7eb;
+      --c24-color-gray-500: var(--bs-gray, #6b7280);
+      --c24-color-gray-600: var(--bs-secondary-color, #4b5563);
+      --c24-color-gray-900: var(--bs-body-color, #111827);
+      
+      /* Typography - Use site fonts when available */
+      --c24-font-family: var(--bs-body-font-family, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif);
+      --c24-font-size-sm: var(--font-size-sm, 0.875rem);
+      --c24-font-size-base: var(--font-size-base, 1rem);
+      --c24-font-size-lg: var(--font-size-lg, 1.125rem);
+      --c24-font-size-xl: 1.25rem;
+      --c24-font-size-2xl: 1.5rem;
+      
+      /* Spacing */
+      --c24-space-2: 0.5rem;
+      --c24-space-3: 0.75rem;
+      --c24-space-4: 1rem;
+      --c24-space-6: 1.5rem;
+      --c24-space-8: 2rem;
+      --c24-space-12: 3rem;
+      
+      /* Borders & Shadows */
+      --c24-border-radius-md: 0.375rem;
+      --c24-border-radius-lg: 0.5rem;
+      --c24-border-radius-xl: 0.75rem;
+      --c24-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      --c24-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      --c24-shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      
+      /* Transitions */
+      --c24-transition-base: 250ms ease-in-out;
+
+      /* Base Component Styles */
+      font-family: var(--c24-font-family);
+      font-size: var(--c24-font-size-base);
+      line-height: 1.6;
+      color: var(--c24-color-gray-900);
+      box-sizing: border-box;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Universal box-sizing */
+    .compass24-job-accordion-component *,
+    .compass24-job-accordion-component *::before,
+    .compass24-job-accordion-component *::after {
+      box-sizing: inherit;
+    }
+
+    /* ============================================
+       ACCORDION SECTION
+       ============================================ */
+    .accordion-section {
+      padding: var(--c24-space-8) var(--c24-space-4);
+      background-color: var(--c24-color-gray-50);
+    }
+
+    .accordion-header {
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto var(--c24-space-8);
+    }
+
+    .accordion-header__title {
+      font-size: var(--c24-font-size-2xl);
+      font-weight: 700;
+      color: var(--c24-color-primary);
+      margin: 0;
+    }
+
+    /* ============================================
+       ACCORDION CONTAINER
+       ============================================ */
+    .accordion {
+      max-width: 900px;
+      margin: 0 auto;
+      --bs-accordion-border-color: unset !important;
+    }
+
+    /* ============================================
+       ACCORDION ITEM (SINGLE JOB)
+       ============================================ */
+    .accordion-item {
+      background-color: var(--c24-color-white);
+      border-radius: var(--c24-border-radius-xl);
+      box-shadow: var(--c24-shadow-md);
+      margin-bottom: var(--c24-space-6);
+      overflow: hidden;
+      transition: all var(--c24-transition-base);
+      animation: compass24FadeInUp 0.6s ease-out both;
+    }
+
+    .accordion-item:hover {
+      box-shadow: var(--c24-shadow-lg);
+
+      @media (prefers-reduced-motion: reduce) {
+        box-shadow: var(--c24-shadow-md);
+      }
+    }
+
+    .accordion-item:nth-child(1) { animation-delay: 0.1s; }
+    .accordion-item:nth-child(2) { animation-delay: 0.2s; }
+    .accordion-item:nth-child(3) { animation-delay: 0.3s; }
+    .accordion-item:nth-child(4) { animation-delay: 0.4s; }
+
+    /* Ensure border-radius on first and last items */
+    .accordion-item:first-of-type {
+      border-top-left-radius: var(--c24-border-radius-xl) !important;
+      border-top-right-radius: var(--c24-border-radius-xl) !important;
+    }
+
+    .accordion-item:last-of-type {
+      border-bottom-left-radius: var(--c24-border-radius-xl) !important;
+      border-bottom-right-radius: var(--c24-border-radius-xl) !important;
+    }
+
+    /* ============================================
+       ACCORDION TRIGGER (BUTTON)
+       ============================================ */
+    .accordion-trigger {
+      padding: var(--c24-space-6);
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--c24-space-4);
+      font-family: inherit;
+      font-size: var(--c24-font-size-lg);
+      font-weight: 600;
+      color: var(--c24-color-primary);
+      text-align: left;
+      transition: all var(--c24-transition-base);
+      list-style: none; /* Remove default summary marker */
+      outline: none !important; /* Remove focus outline */
+
+      &:hover {
+        background-color: var(--c24-color-gray-50);
+      }
+
+      &:focus {
+        background-color: var(--c24-color-gray-100);
+        outline: none !important; /* Ensure no outline on focus */
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        &:hover {
+          background-color: transparent;
+        }
+      }
+    }
+
+    .accordion-trigger__title {
+      margin: 0;
+      flex: 1;
+    }
+
+    /* ============================================
+       ACCORDION CARET/ICON
+       ============================================ */
+    .accordion-trigger__icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: var(--c24-font-size-lg);
+      color: var(--c24-color-primary-dark);
+      flex-shrink: 0;
+    }
+
+    .accordion-trigger__icon::after {
+      content: '▼';
+    }
+
+    /* Change icon to up triangle when accordion is expanded */
+    .accordion-item[open] .accordion-trigger__icon::after {
+      content: '▲';
+    }
+
+    /* Remove default details marker */
+    .accordion-trigger::-webkit-details-marker {
+      display: none;
+    }
+    
+    /* Additional browser support for hiding default marker */
+    .accordion-trigger::marker {
+      display: none;
+      content: '';
+    }
+
+    /* ============================================
+       ACCORDION CONTENT (DESCRIPTION)
+       ============================================ */
+    .accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height var(--c24-transition-base);
+      opacity: 0;
+    }
+
+    .accordion-item[open] .accordion-content {
+      max-height: 2000px; /* Generous max-height for various content lengths */
+      opacity: 1;
+      transition: max-height var(--c24-transition-base), opacity var(--c24-transition-base);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .accordion-content {
+        transition: none;
+      }
+    }
+
+    .accordion-content__inner {
+      padding: 0 var(--c24-space-6) var(--c24-space-6);
+      border-top: 1px solid var(--c24-color-gray-200);
+    }
+
+    /* ============================================
+       JOB DETAILS META (Employment type, location, start date)
+       ============================================ */
+    .job-details-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--c24-space-6);
+      padding: var(--c24-space-6) 0;
+      border-bottom: 1px solid var(--c24-color-gray-200);
+      margin-bottom: var(--c24-space-6);
+    }
+
+    .job-detail-item {
+      display: flex;
+      align-items: center;
+      gap: var(--c24-space-3);
+    }
+
+    .job-detail-icon {
+      font-size: 1.25rem;
+      line-height: 1;
+    }
+
+    .job-detail-label {
+      font-size: var(--c24-font-size-sm);
+      color: var(--c24-color-gray-600);
+      font-weight: 500;
+    }
+
+    .accordion-content__description {
+      font-size: var(--c24-font-size-base);
+      color: var(--c24-color-gray-600);
+      line-height: 1.8;
+      margin: var(--c24-space-6) 0;
+    }
+
+    /* Description lists for job details */
+    .accordion-content__list {
+      font-size: var(--c24-font-size-base);
+      color: var(--c24-color-gray-600);
+      line-height: 1.8;
+      margin: var(--c24-space-4) 0;
+    }
+
+    .accordion-content__list dt {
+      font-weight: 600;
+      color: var(--c24-color-primary);
+      margin-top: var(--c24-space-4);
+    }
+
+    .accordion-content__list dt:first-child {
+      margin-top: 0;
+    }
+
+    .accordion-content__list dd {
+      margin: 0 0 var(--c24-space-3) var(--c24-space-4);
+    }
+
+    .accordion-content__list li {
+      margin-bottom: var(--c24-space-2);
+    }
+
+    /* ============================================
+       CTA BUTTON (JETZT BEWERBEN)
+       ============================================ */
+    .job-cta {
+      display: inline-block;
+      margin-top: var(--c24-space-6);
+      padding: var(--c24-space-3) var(--c24-space-6);
+      background: linear-gradient(135deg, var(--c24-color-primary-light), var(--c24-color-primary));
+      color: var(--c24-color-white);
+      border: none;
+      border-radius: var(--c24-border-radius-lg);
+      font-family: inherit;
+      font-size: var(--c24-font-size-base);
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      transition: box-shadow var(--c24-transition-base), background var(--c24-transition-base);
+      box-shadow: var(--c24-shadow-md);
+
+      &:hover {
+        box-shadow: var(--c24-shadow-lg);
+        background: linear-gradient(135deg, var(--c24-color-primary), var(--c24-color-primary-dark));
+      }
+
+      &:focus {
+        outline: 2px solid var(--c24-color-primary);
+        outline-offset: 2px;
+      }
+
+      &:active {
+        box-shadow: var(--c24-shadow-md);
+      }
+    }
+
+    /* ============================================
+       ANIMATIONS
+       ============================================ */
+    @keyframes compass24FadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Disable animations if user prefers reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      .accordion-item {
+        animation: none;
+      }
+
+      .accordion-item:hover {
+        box-shadow: var(--c24-shadow-md);
+      }
+
+      .job-cta:hover {
+        box-shadow: var(--c24-shadow-md);
+      }
+    }
+
+    /* ============================================
+       RESPONSIVE DESIGN
+       ============================================ */
+    @media (max-width: 767px) {
+      .accordion-section {
+        padding: var(--c24-space-6) var(--c24-space-4);
+      }
+
+      .accordion-header__title {
+        font-size: var(--c24-font-size-xl);
+      }
+
+      .accordion-trigger {
+        padding: var(--c24-space-4);
+        font-size: var(--c24-font-size-base);
+      }
+
+      .accordion-content__inner {
+        padding: 0 var(--c24-space-4) var(--c24-space-4);
+      }
+
+      .job-details-meta {
+        gap: var(--c24-space-4);
+        padding: var(--c24-space-4) 0;
+        margin-bottom: var(--c24-space-4);
+      }
+
+      .job-detail-label {
+        font-size: var(--c24-font-size-sm);
+      }
+
+      .accordion-content__description {
+        font-size: var(--c24-font-size-sm);
+        margin: var(--c24-space-4) 0;
+      }
+
+      .accordion-item {
+        margin-bottom: var(--c24-space-4);
+      }
+    }
+  </style>
+
+  <div class="compass24-job-accordion-component">
+    <section class="accordion-section" aria-labelledby="accordion-title">
+
+      <header class="accordion-header">
+        <h2 id="accordion-title" class="accordion-header__title">Wir bieten Ausbildungsplätze in den Bereichen</h2>
+      </header>
+
+      <div class="accordion" role="region" aria-label="Jobangebote">
+        
+        <!-- Job Item 1 -->
+        <details class="accordion-item">
+          <summary class="accordion-trigger">
+            <h3 class="accordion-trigger__title">Kaufmann/-frau im Einzelhandel (m/w/d)</h3>
+            <span class="accordion-trigger__icon" aria-hidden="true"></span>
+          </summary>
+
+          <div class="accordion-content">
+            <div class="accordion-content__inner">
+              <div class="job-details-meta">
+                <div class="job-detail-item">
+                  <span class="job-detail-icon">⏰</span>
+                  <span class="job-detail-label">Vollzeit</span>
+                </div>
+                <div class="job-detail-item">
+                  <span class="job-detail-icon">📍</span>
+                  <span class="job-detail-label">Ascheberg</span>
+                </div>
+                <div class="job-detail-item">
+                  <span class="job-detail-icon">📅</span>
+                  <span class="job-detail-label">Ab sofort</span>
+                </div>
+              </div>
+
+              <p class="accordion-content__description">
+                Wir suchen einen engagierten Kaufmännischen Mitarbeiter (m/w/d) für unser Team bei Compass24. 
+                In dieser vielseitigen Position unterstützt du uns bei administrativen und kaufmännischen Aufgaben 
+                und trägst zum reibungslosen Ablauf unserer Geschäftsprozesse bei.
+              </p>
+
+              <dl class="accordion-content__list">
+                <dt>Deine Aufgaben:</dt>
+                <dd>
+                  <ul>
+                    <li>Verwaltung von Kundenaufträgen und Rechnungsbearbeitung</li>
+                    <li>Korrespondenz mit Geschäftspartnern</li>
+                    <li>Unterstützung im Rechnungswesen</li>
+                    <li>Allgemeine Verwaltungsaufgaben</li>
+                  </ul>
+                </dd>
+
+                <dt>Das bringst du mit:</dt>
+                <dd>
+                  <ul>
+                    <li>Kaufmännische Ausbildung oder vergleichbare Erfahrung</li>
+                    <li>Sicherer Umgang mit MS Office und Warenwirtschaftssystemen</li>
+                    <li>Gute Kommunikationsfähigkeiten und Organisationstalent</li>
+                    <li>Zuverlässigkeit und Genauigkeit</li>
+                  </ul>
+                </dd>
+
+                <dt>Wir bieten:</dt>
+                <dd>
+                  <ul>
+                    <li>Tarifgerechte Bezahlung</li>
+                    <li>30 Tage Urlaub pro Jahr</li>
+                    <li>Moderne Arbeitsumgebung</li>
+                    <li>Entwicklungsmöglichkeiten</li>
+                  </ul>
+                </dd>
+              </dl>
+
+              <a href="mailto:sekretariat@compass24.de?subject=Bewerbung: Kaufmännischer Mitarbeiter" class="job-cta">Jetzt bewerben</a>
+            </div>
+          </div>
+        </details>
+
+        <!-- Job Item 2 -->
+        <details class="accordion-item">
+          <summary class="accordion-trigger">
+            <h3 class="accordion-trigger__title">Verkäufer/-in (m/w/d)</h3>
+            <span class="accordion-trigger__icon" aria-hidden="true"></span>
+          </summary>
+
+          <div class="accordion-content">
+            <div class="accordion-content__inner">
+              <div class="job-details-meta">
+                <div class="job-detail-item">
+                  <span class="job-detail-icon">⏰</span>
+                  <span class="job-detail-label">Vollzeit</span>
+                </div>
+                <div class="job-detail-item">
+                  <span class="job-detail-icon">📍</span>
+                  <span class="job-detail-label">Ascheberg</span>
+                </div>
+                <div class="job-detail-item">
+                  <span class="job-detail-icon">📅</span>
+                  <span class="job-detail-label">Ab sofort</span>
+                </div>
+              </div>
+
+              <p class="accordion-content__description">
+                Compass24 sucht motivierte Lagerlogistiker (m/w/d) zur Unterstützung unseres Lagerbetriebs. 
+                Du packst gerne an und sorgst dafür, dass alle Produkte sicher gelagert und schnell versendet werden?
+              </p>
+
+              <dl class="accordion-content__list">
+                <dt>Deine Aufgaben:</dt>
+                <dd>
+                  <ul>
+                    <li>Wareneingangskontrolle und Einlagerung</li>
+                    <li>Kommissionierung und Verpackung von Bestellungen</li>
+                    <li>Wartung des Lagersystems und Bestandsverwaltung</li>
+                    <li>Sicherheit und Ordnung im Lager</li>
+                  </ul>
+                </dd>
+
+                <dt>Das bringst du mit:</dt>
+                <dd>
+                  <ul>
+                    <li>Berufserfahrung in Logistik oder Lagerwirtschaft</li>
+                    <li>Physische Belastbarkeit und Teamfähigkeit</li>
+                    <li>Zuverlässigkeit und Genauigkeit</li>
+                    <li>Gültige Fahrerlaubnis (Gabelstapler von Vorteil)</li>
+                  </ul>
+                </dd>
+
+                <dt>Wir bieten:</dt>
+                <dd>
+                  <ul>
+                    <li>Tarifgerechte Bezahlung</li>
+                    <li>30 Tage Urlaub pro Jahr</li>
+                    <li>Team mit Wassersport-Passion</li>
+                    <li>Moderne Einrichtungen</li>
+                  </ul>
+                </dd>
+              </dl>
+
+              <a href="mailto:sekretariat@compass24.de?subject=Bewerbung: Lagerlogistiker" class="job-cta">Jetzt bewerben</a>
+            </div>
+          </div>
+        </details>
+
+      </div>
+    </section>
+  </div>
+
+
+<!-- The HTML footer above is for preview purposes (DevTools mobile emulator). -->
+</body>
+</html>
