@@ -15,7 +15,7 @@ Interactive, filterable job listings using Petite Vue 0.4.1 (inlined, no externa
 Renders job accordions from embedded JSON data.
 
 Date: 2026-02-13
-Version: 1.2.0
+Version: 1.2.1
 
 Features:
 - Text search filter by job title
@@ -27,12 +27,16 @@ Features:
 
 Data: Structured JSON embedded in <script> tag below.
 
-Important: Shopware uses double curly braces for Twig templating, so we need to use double square brackets [[ ]] for Vue interpolation.
+Important: 
+- Shopware uses double curly braces for Twig templating, so we need to use double square brackets [[ ]] for Vue interpolation.
+- In PROD the script needs to be delivered in two HTML containers to avoid some "net::ERR_QUIC_PROTOCOL_ERROR". 
+  So just insert the CSS in the first, the rest in a second block. On stage it works in one block.
 
 TODO: When the final combination of components is established, consider merging common styles into a shared CSS file.
 -->
 
 
+<!-- Compass24 Job Widget Component – PROD: Block 1/2 -->
 <style>
   /* ============================================
      SCOPED DESIGN TOKENS & BASE STYLES
@@ -666,6 +670,8 @@ TODO: When the final combination of components is established, consider merging 
 </style>
 
 
+
+<!-- Compass24 Job Widget Component – PROD: Block 2/2 -->
 <div id="job-widget-app" v-scope class="compass24-job-widget-component">
   <section class="job-widget-section" aria-labelledby="job-widget-title">
 
