@@ -170,7 +170,7 @@ Das Widget ist eine **Single-File-Komponente** ohne Build-Step und ohne externe 
 │    Scoped Design Tokens & Komponentenstile  │
 │  </style>                                   │
 ├─────────────────────────────────────────────┤
-│  <div id="job-widget-app" v-scope>          │  ← Block 2/2 in PROD
+│  <div id="job-widget-app">                  │  ← Block 2/2 in PROD
 │    Petite Vue Template (HTML + Direktiven)  │
 │  </div>                                     │
 ├─────────────────────────────────────────────┤
@@ -178,7 +178,7 @@ Das Widget ist eine **Single-File-Komponente** ohne Build-Step und ohne externe 
 ├─────────────────────────────────────────────┤
 │  <script>                                   │
 │    jobsData = [...]                         │  (Stellendaten)
-│    initJobWidget()                          │  (Initialisierung)
+│    PetiteVue.createApp({...}).mount(...)    │  (App-Initialisierung)
 │  </script>                                  │
 └─────────────────────────────────────────────┘
 ```
@@ -187,15 +187,17 @@ Das Widget ist eine **Single-File-Komponente** ohne Build-Step und ohne externe 
 
 - Kein Virtual DOM – Petite Vue arbeitet direkt auf dem DOM
 - Kein SFC / `.vue`-Dateien – alles inline
-- `v-scope` statt `createApp().mount()` für den Root-Scope (wird hier aber kombiniert verwendet)
+- Dieses Widget verwendet die Standard-Initialisierung mit `PetiteVue.createApp().mount()` (das `v-scope`-Attribut wird im HTML nicht verwendet)
 - Computed Properties werden als `get`-Getter im App-Objekt definiert
 - Kein `ref()` / `computed()` – reaktive Daten werden direkt im Scope-Objekt gehalten
 - `$delimiters` wird über die App-Konfiguration gesetzt
 
 ### Komponentenlogik (`initJobWidget`)
 
-```
-PetiteVue.createApp({
+Die App wird mit `PetiteVue.createApp()` initialisiert und anschließend mit `.mount('#job-widget-app')` an das DOM-Element gebunden:
+
+```javascript
+const app = PetiteVue.createApp({
   $delimiters: ['[[', ']]'],       // Shopware/Twig-kompatibel
   jobs: jobsData,                   // Stellendaten-Array
   searchQuery: '',                  // Freitext-Suche
@@ -210,7 +212,9 @@ PetiteVue.createApp({
   get filteredJobs()    → gefiltertes Array
 
   resetFilters()        → setzt alle Filter zurück
-})
+});
+
+app.mount('#job-widget-app');
 ```
 
 Die Initialisierung prüft `document.readyState` und wartet ggf. auf `DOMContentLoaded`, um Race Conditions bei der DOM-Injektion durch Shopware zu vermeiden.
