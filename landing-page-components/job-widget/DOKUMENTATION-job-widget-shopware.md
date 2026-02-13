@@ -12,7 +12,7 @@ Das Job-Widget zeigt die aktuellen Stellenangebote und Ausbildungsplätze von Co
 
 ### Wo werden die Stellenangebote eingetragen?
 
-Die Stellenangebote stehen direkt im HTML-Code der Komponente – in einem JavaScript-Abschnitt, der mit `const jobsData = [` beginnt. Jede Stelle ist ein Datensatz in eckigen Klammern `{ ... }`, getrennt durch Kommas.
+Die Stellenangebote stehen direkt im HTML-Code der Komponente – in einem JavaScript-Abschnitt, der mit `const jobsData = [` beginnt. Jede Stelle ist ein Datensatz in geschweiften Klammern `{ ... }`, getrennt durch Kommas.
 
 ### Aufbau eines einzelnen Stellenangebots
 
@@ -174,7 +174,7 @@ Das Widget ist eine **Single-File-Komponente** ohne Build-Step und ohne externe 
 │    Petite Vue Template (HTML + Direktiven)  │
 │  </div>                                     │
 ├─────────────────────────────────────────────┤
-│  <script> Petite Vue 0.4.1 IIFE </script>  │  (inlined Library)
+│  <script> Petite Vue 0.4.1 IIFE </script>   │  (inlined Library)
 ├─────────────────────────────────────────────┤
 │  <script>                                   │
 │    jobsData = [...]                         │  (Stellendaten)
@@ -198,20 +198,20 @@ Die App wird mit `PetiteVue.createApp()` initialisiert und anschließend mit `.m
 
 ```javascript
 const app = PetiteVue.createApp({
-  $delimiters: ['[[', ']]'],       // Shopware/Twig-kompatibel
+  $delimiters: ['[[', ']]'],        // Shopware/Twig-kompatibel
   jobs: jobsData,                   // Stellendaten-Array
   searchQuery: '',                  // Freitext-Suche
   filterDepartment: '',             // Bereichs-Filter
   filterEmployment: '',             // Beschäftigungsart-Filter
   filterLocation: '',               // Standort-Filter
 
-  get departments()    → Set aus allen jobs.department-Werten
-  get employmentTypes() → Set aus allen jobs.employmentType-Werten
-  get locations()       → Set aus allen jobs.location-Werten
+  get departments()      → Set aus allen jobs.department-Werten
+  get employmentTypes()  → Set aus allen jobs.employmentType-Werten
+  get locations()        → Set aus allen jobs.location-Werten
   get hasActiveFilters() → Boolean
-  get filteredJobs()    → gefiltertes Array
+  get filteredJobs()     → gefiltertes Array
 
-  resetFilters()        → setzt alle Filter zurück
+  resetFilters()         → setzt alle Filter zurück
 });
 
 app.mount('#job-widget-app');
