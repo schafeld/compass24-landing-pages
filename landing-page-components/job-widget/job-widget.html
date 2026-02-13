@@ -1,0 +1,1294 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Compass24 - Stellenangebote</title>
+</head>
+<body>
+<!-- The HTML header above is for preview purposes (DevTools mobile emulator). Do not copy to CMS content page. -->
+
+
+<!--
+Compass24 Job Widget Component
+Interactive, filterable job listings using Vue.js 3 (CDN, no build step).
+Renders job accordions from embedded JSON data.
+
+Date: 2026-02-13
+Version: 1.0.0
+
+Features:
+- Text search filter by job title
+- Filter by department (Bereich), employment type, and location
+- Animated accordion expand/collapse using native <details>/<summary>
+- Responsive layout (mobile-first)
+- Accessible (ARIA labels, keyboard navigation)
+
+Data: Structured JSON embedded in <script> tag below.
+
+TODO: When the final combination of components is established, consider merging common styles into a shared CSS file.
+-->
+
+<style>
+  /* ============================================
+     SCOPED DESIGN TOKENS & BASE STYLES
+     Uses Bootstrap variables from compass24.de with fallbacks for standalone viewing
+     ============================================ */
+  .compass24-job-widget-component {
+    /*
+     * Colors - Use Bootstrap variables when available, with fallbacks
+     * Site primary: --bs-primary (#002856)
+     */
+    --c24-color-primary: var(--bs-primary, #003366);
+    --c24-color-primary-light: #0066b3;
+    --c24-color-primary-dark: #002244;
+    --c24-color-secondary: #0099cc;
+    --c24-color-accent: var(--bs-danger, #cc0000);
+    --c24-color-white: var(--bs-white, #ffffff);
+    --c24-color-gray-50: var(--bs-gray-100, #f9fafb);
+    --c24-color-gray-100: var(--bs-secondary-bg, #f3f4f6);
+    --c24-color-gray-200: #e5e7eb;
+    --c24-color-gray-500: var(--bs-gray, #6b7280);
+    --c24-color-gray-600: var(--bs-secondary-color, #4b5563);
+    --c24-color-gray-900: var(--bs-body-color, #111827);
+
+    /* Typography - Use site fonts when available */
+    --c24-font-family: var(--bs-body-font-family, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif);
+    --c24-font-size-xs: 0.75rem;
+    --c24-font-size-sm: var(--font-size-sm, 0.875rem);
+    --c24-font-size-base: var(--font-size-base, 1rem);
+    --c24-font-size-lg: var(--font-size-lg, 1.125rem);
+    --c24-font-size-xl: 1.25rem;
+    --c24-font-size-2xl: 1.5rem;
+
+    /* Spacing */
+    --c24-space-1: 0.25rem;
+    --c24-space-2: 0.5rem;
+    --c24-space-3: 0.75rem;
+    --c24-space-4: 1rem;
+    --c24-space-5: 1.25rem;
+    --c24-space-6: 1.5rem;
+    --c24-space-8: 2rem;
+    --c24-space-10: 2.5rem;
+    --c24-space-12: 3rem;
+
+    /* Borders & Shadows */
+    --c24-border-radius-sm: 0.25rem;
+    --c24-border-radius-md: 0.375rem;
+    --c24-border-radius-lg: 0.5rem;
+    --c24-border-radius-xl: 0.75rem;
+    --c24-border-radius-full: 9999px;
+    --c24-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --c24-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --c24-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --c24-shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+
+    /* Transitions */
+    --c24-transition-base: 250ms ease-in-out;
+
+    /* Base Component Styles */
+    font-family: var(--c24-font-family);
+    font-size: var(--c24-font-size-base);
+    line-height: 1.6;
+    color: var(--c24-color-gray-900);
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Universal box-sizing */
+  .compass24-job-widget-component *,
+  .compass24-job-widget-component *::before,
+  .compass24-job-widget-component *::after {
+    box-sizing: inherit;
+  }
+
+  /* ============================================
+     SECTION LAYOUT
+     ============================================ */
+  .job-widget-section {
+    padding: var(--c24-space-8) var(--c24-space-4);
+    background-color: var(--c24-color-gray-50);
+  }
+
+  .job-widget-header {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto var(--c24-space-8);
+  }
+
+  .job-widget-header__title {
+    font-size: var(--c24-font-size-2xl);
+    font-weight: 700;
+    color: var(--c24-color-primary);
+    margin: 0 0 var(--c24-space-2);
+  }
+
+  .job-widget-header__subtitle {
+    font-size: var(--c24-font-size-base);
+    color: var(--c24-color-gray-600);
+    margin: 0;
+  }
+
+  /* ============================================
+     FILTER BAR
+     ============================================ */
+  .job-filter-bar {
+    max-width: 900px;
+    margin: 0 auto var(--c24-space-8);
+    background-color: var(--c24-color-white);
+    border-radius: var(--c24-border-radius-xl);
+    padding: var(--c24-space-5);
+    box-shadow: var(--c24-shadow-md);
+  }
+
+  .job-filter-bar__search {
+    position: relative;
+    margin-bottom: var(--c24-space-4);
+  }
+
+  .job-filter-bar__search-icon {
+    position: absolute;
+    left: var(--c24-space-4);
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: var(--c24-font-size-lg);
+    color: var(--c24-color-gray-500);
+    pointer-events: none;
+    line-height: 1;
+  }
+
+  .job-filter-bar__search-input {
+    width: 100%;
+    padding: var(--c24-space-3) var(--c24-space-4) var(--c24-space-3) 2.75rem;
+    border: 2px solid var(--c24-color-gray-200);
+    border-radius: var(--c24-border-radius-lg);
+    font-family: inherit;
+    font-size: var(--c24-font-size-base);
+    color: var(--c24-color-gray-900);
+    transition: border-color var(--c24-transition-base);
+    outline: none;
+    background-color: var(--c24-color-white);
+  }
+
+  .job-filter-bar__search-input::placeholder {
+    color: var(--c24-color-gray-500);
+  }
+
+  .job-filter-bar__search-input:focus {
+    border-color: var(--c24-color-primary-light);
+  }
+
+  .job-filter-bar__selects {
+    display: flex;
+    gap: var(--c24-space-3);
+    flex-wrap: wrap;
+  }
+
+  .job-filter-bar__select {
+    flex: 1 1 180px;
+    padding: var(--c24-space-3) var(--c24-space-4);
+    border: 2px solid var(--c24-color-gray-200);
+    border-radius: var(--c24-border-radius-lg);
+    font-family: inherit;
+    font-size: var(--c24-font-size-sm);
+    color: var(--c24-color-gray-900);
+    cursor: pointer;
+    transition: border-color var(--c24-transition-base);
+    outline: none;
+    background-color: var(--c24-color-white);
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b7280' d='M6 8.825a.7.7 0 0 1-.5-.2L1.675 4.8a.7.7 0 0 1 0-1 .7.7 0 0 1 1 0L6 7.125l3.325-3.3a.7.7 0 0 1 1 0 .7.7 0 0 1 0 1L6.5 8.625a.7.7 0 0 1-.5.2Z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    padding-right: 2rem;
+  }
+
+  .job-filter-bar__select:focus {
+    border-color: var(--c24-color-primary-light);
+  }
+
+  .job-filter-bar__active-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--c24-space-2);
+    margin-top: var(--c24-space-4);
+    align-items: center;
+  }
+
+  .job-filter-bar__active-label {
+    font-size: var(--c24-font-size-sm);
+    color: var(--c24-color-gray-600);
+    font-weight: 500;
+  }
+
+  .job-filter-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--c24-space-1);
+    padding: var(--c24-space-1) var(--c24-space-3);
+    background-color: #e8f4ff;
+    color: var(--c24-color-primary);
+    border-radius: var(--c24-border-radius-full);
+    font-size: var(--c24-font-size-xs);
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    font-family: inherit;
+    transition: background-color var(--c24-transition-base);
+  }
+
+  .job-filter-tag:hover {
+    background-color: #d0e8ff;
+  }
+
+  .job-filter-tag__remove {
+    font-size: var(--c24-font-size-sm);
+    line-height: 1;
+    margin-left: var(--c24-space-1);
+  }
+
+  .job-filter-bar__reset {
+    font-size: var(--c24-font-size-xs);
+    color: var(--c24-color-gray-500);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    text-decoration: underline;
+    padding: var(--c24-space-1) var(--c24-space-2);
+    transition: color var(--c24-transition-base);
+  }
+
+  .job-filter-bar__reset:hover {
+    color: var(--c24-color-primary);
+  }
+
+  /* ============================================
+     RESULTS COUNT
+     ============================================ */
+  .job-widget-results {
+    max-width: 900px;
+    margin: 0 auto var(--c24-space-4);
+    font-size: var(--c24-font-size-sm);
+    color: var(--c24-color-gray-600);
+    padding: 0 var(--c24-space-1);
+  }
+
+  /* ============================================
+     ACCORDION CONTAINER
+     ============================================ */
+  .job-accordion {
+    max-width: 900px;
+    margin: 0 auto;
+    --bs-accordion-border-color: unset !important;
+  }
+
+  /* ============================================
+     ACCORDION ITEM (SINGLE JOB)
+     ============================================ */
+  .job-accordion-item {
+    background-color: var(--c24-color-white);
+    border-radius: var(--c24-border-radius-xl);
+    box-shadow: var(--c24-shadow-md);
+    margin-bottom: var(--c24-space-6);
+    overflow: hidden;
+    transition: all var(--c24-transition-base);
+    animation: compass24FadeInUp 0.6s ease-out both;
+  }
+
+  .job-accordion-item:hover {
+    box-shadow: var(--c24-shadow-lg);
+  }
+
+  .job-accordion-item:nth-child(1) { animation-delay: 0.05s; }
+  .job-accordion-item:nth-child(2) { animation-delay: 0.1s; }
+  .job-accordion-item:nth-child(3) { animation-delay: 0.15s; }
+  .job-accordion-item:nth-child(4) { animation-delay: 0.2s; }
+  .job-accordion-item:nth-child(5) { animation-delay: 0.25s; }
+  .job-accordion-item:nth-child(6) { animation-delay: 0.3s; }
+
+  /* Border-radius overrides */
+  .job-accordion-item:first-of-type {
+    border-top-left-radius: var(--c24-border-radius-xl) !important;
+    border-top-right-radius: var(--c24-border-radius-xl) !important;
+  }
+
+  .job-accordion-item:last-of-type {
+    border-bottom-left-radius: var(--c24-border-radius-xl) !important;
+    border-bottom-right-radius: var(--c24-border-radius-xl) !important;
+  }
+
+  /* ============================================
+     ACCORDION TRIGGER (SUMMARY)
+     ============================================ */
+  .job-accordion-trigger {
+    padding: var(--c24-space-6);
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--c24-space-4);
+    font-family: inherit;
+    font-size: var(--c24-font-size-lg);
+    font-weight: 600;
+    color: var(--c24-color-primary);
+    text-align: left;
+    transition: all var(--c24-transition-base);
+    list-style: none;
+    outline: none !important;
+  }
+
+  .job-accordion-trigger:hover {
+    background-color: var(--c24-color-gray-50);
+  }
+
+  .job-accordion-trigger:focus {
+    background-color: var(--c24-color-gray-100);
+    outline: none !important;
+  }
+
+  .job-accordion-trigger::-webkit-details-marker {
+    display: none;
+  }
+
+  .job-accordion-trigger::marker {
+    display: none;
+    content: '';
+  }
+
+  .job-accordion-trigger__info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .job-accordion-trigger__title {
+    margin: 0 0 var(--c24-space-2);
+    font-size: var(--c24-font-size-lg);
+    font-weight: 600;
+    color: var(--c24-color-primary);
+    line-height: 1.3;
+  }
+
+  .job-accordion-trigger__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--c24-space-2);
+  }
+
+  .job-tag {
+    display: inline-block;
+    padding: var(--c24-space-1) var(--c24-space-3);
+    border-radius: var(--c24-border-radius-full);
+    font-size: var(--c24-font-size-xs);
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  .job-tag--employment {
+    background-color: #e8f4ff;
+    color: var(--c24-color-primary-light);
+  }
+
+  .job-tag--department {
+    background-color: #eef9ee;
+    color: #2d7a2d;
+  }
+
+  .job-tag--location {
+    background-color: #fff3e0;
+    color: #b36b00;
+  }
+
+  .job-accordion-trigger__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--c24-font-size-lg);
+    color: var(--c24-color-primary-dark);
+    flex-shrink: 0;
+    margin-top: var(--c24-space-1);
+    transition: transform var(--c24-transition-base);
+  }
+
+  .job-accordion-trigger__icon::after {
+    content: '▼';
+  }
+
+  .job-accordion-item[open] .job-accordion-trigger__icon::after {
+    content: '▲';
+  }
+
+  /* ============================================
+     ACCORDION CONTENT
+     ============================================ */
+  .job-accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height var(--c24-transition-base);
+    opacity: 0;
+  }
+
+  .job-accordion-item[open] .job-accordion-content {
+    max-height: 3000px;
+    opacity: 1;
+    transition: max-height var(--c24-transition-base), opacity var(--c24-transition-base);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .job-accordion-content {
+      transition: none;
+    }
+  }
+
+  .job-accordion-content__inner {
+    padding: 0 var(--c24-space-6) var(--c24-space-6);
+    border-top: 1px solid var(--c24-color-gray-200);
+  }
+
+  /* ============================================
+     JOB DETAILS META
+     ============================================ */
+  .job-details-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--c24-space-6);
+    padding: var(--c24-space-6) 0;
+    border-bottom: 1px solid var(--c24-color-gray-200);
+    margin-bottom: var(--c24-space-6);
+  }
+
+  .job-detail-item {
+    display: flex;
+    align-items: center;
+    gap: var(--c24-space-3);
+  }
+
+  .job-detail-icon {
+    font-size: 1.25rem;
+    line-height: 1;
+  }
+
+  .job-detail-label {
+    font-size: var(--c24-font-size-sm);
+    color: var(--c24-color-gray-600);
+    font-weight: 500;
+  }
+
+  .job-accordion-content__description {
+    font-size: var(--c24-font-size-base);
+    color: var(--c24-color-gray-600);
+    line-height: 1.8;
+    margin: var(--c24-space-6) 0;
+  }
+
+  /* Description lists for job detail sections */
+  .job-accordion-content__list {
+    font-size: var(--c24-font-size-base);
+    color: var(--c24-color-gray-600);
+    line-height: 1.8;
+    margin: var(--c24-space-4) 0;
+  }
+
+  .job-accordion-content__list dt {
+    font-weight: 600;
+    color: var(--c24-color-primary);
+    margin-top: var(--c24-space-4);
+  }
+
+  .job-accordion-content__list dt:first-child {
+    margin-top: 0;
+  }
+
+  .job-accordion-content__list dd {
+    margin: 0 0 var(--c24-space-3) var(--c24-space-4);
+  }
+
+  .job-accordion-content__list li {
+    margin-bottom: var(--c24-space-2);
+  }
+
+  /* ============================================
+     CTA BUTTON
+     ============================================ */
+  .job-cta {
+    display: inline-block;
+    margin-top: var(--c24-space-6);
+    padding: var(--c24-space-3) var(--c24-space-6);
+    background: linear-gradient(135deg, var(--c24-color-primary-light), var(--c24-color-primary));
+    color: var(--c24-color-white);
+    border: none;
+    border-radius: var(--c24-border-radius-lg);
+    font-family: inherit;
+    font-size: var(--c24-font-size-base);
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: box-shadow var(--c24-transition-base), background var(--c24-transition-base);
+    box-shadow: var(--c24-shadow-md);
+  }
+
+  .job-cta:hover {
+    box-shadow: var(--c24-shadow-lg);
+    background: linear-gradient(135deg, var(--c24-color-primary), var(--c24-color-primary-dark));
+  }
+
+  .job-cta:focus {
+    outline: 2px solid var(--c24-color-primary);
+    outline-offset: 2px;
+  }
+
+  .job-cta:active {
+    box-shadow: var(--c24-shadow-md);
+  }
+
+  /* ============================================
+     EMPTY STATE
+     ============================================ */
+  .job-widget-empty {
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+    padding: var(--c24-space-12) var(--c24-space-4);
+    background-color: var(--c24-color-white);
+    border-radius: var(--c24-border-radius-xl);
+    box-shadow: var(--c24-shadow-md);
+  }
+
+  .job-widget-empty__icon {
+    font-size: 3rem;
+    margin-bottom: var(--c24-space-4);
+  }
+
+  .job-widget-empty__title {
+    font-size: var(--c24-font-size-lg);
+    font-weight: 600;
+    color: var(--c24-color-primary);
+    margin: 0 0 var(--c24-space-2);
+  }
+
+  .job-widget-empty__text {
+    font-size: var(--c24-font-size-sm);
+    color: var(--c24-color-gray-600);
+    margin: 0;
+  }
+
+  /* ============================================
+     ANIMATIONS
+     ============================================ */
+  @keyframes compass24FadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .job-accordion-item {
+      animation: none;
+    }
+
+    .job-accordion-item:hover {
+      box-shadow: var(--c24-shadow-md);
+    }
+
+    .job-cta:hover {
+      box-shadow: var(--c24-shadow-md);
+    }
+  }
+
+  /* ============================================
+     RESPONSIVE DESIGN
+     ============================================ */
+  @media (max-width: 767px) {
+    .job-widget-section {
+      padding: var(--c24-space-6) var(--c24-space-4);
+    }
+
+    .job-widget-header__title {
+      font-size: var(--c24-font-size-xl);
+    }
+
+    .job-filter-bar {
+      padding: var(--c24-space-4);
+    }
+
+    .job-filter-bar__selects {
+      flex-direction: column;
+    }
+
+    .job-filter-bar__select {
+      flex: 1 1 auto;
+    }
+
+    .job-accordion-trigger {
+      padding: var(--c24-space-4);
+      font-size: var(--c24-font-size-base);
+    }
+
+    .job-accordion-trigger__title {
+      font-size: var(--c24-font-size-base);
+    }
+
+    .job-accordion-content__inner {
+      padding: 0 var(--c24-space-4) var(--c24-space-4);
+    }
+
+    .job-details-meta {
+      gap: var(--c24-space-4);
+      padding: var(--c24-space-4) 0;
+      margin-bottom: var(--c24-space-4);
+    }
+
+    .job-detail-label {
+      font-size: var(--c24-font-size-sm);
+    }
+
+    .job-accordion-content__description {
+      font-size: var(--c24-font-size-sm);
+      margin: var(--c24-space-4) 0;
+    }
+
+    .job-accordion-item {
+      margin-bottom: var(--c24-space-4);
+    }
+  }
+</style>
+
+
+<div id="job-widget-app" class="compass24-job-widget-component">
+  <section class="job-widget-section" aria-labelledby="job-widget-title">
+
+    <header class="job-widget-header">
+      <h2 id="job-widget-title" class="job-widget-header__title">Aktuelle Stellenangebote</h2>
+      <p class="job-widget-header__subtitle">Finde deinen Platz im Compass24-Team – Festanstellungen und Ausbildungsplätze</p>
+    </header>
+
+    <!-- Filter Bar -->
+    <div class="job-filter-bar" role="search" aria-label="Stellenangebote filtern">
+      <div class="job-filter-bar__search">
+        <span class="job-filter-bar__search-icon" aria-hidden="true">🔍</span>
+        <input
+          v-model="searchQuery"
+          type="search"
+          class="job-filter-bar__search-input"
+          placeholder="Stellenbezeichnung suchen…"
+          aria-label="Stellenbezeichnung suchen"
+        >
+      </div>
+      <div class="job-filter-bar__selects">
+        <select
+          v-model="filterDepartment"
+          class="job-filter-bar__select"
+          aria-label="Bereich filtern"
+        >
+          <option value="">Alle Bereiche</option>
+          <option v-for="dept in departments" :key="dept" :value="dept">{{ dept }}</option>
+        </select>
+
+        <select
+          v-model="filterEmployment"
+          class="job-filter-bar__select"
+          aria-label="Beschäftigungsart filtern"
+        >
+          <option value="">Alle Beschäftigungsarten</option>
+          <option v-for="emp in employmentTypes" :key="emp" :value="emp">{{ emp }}</option>
+        </select>
+
+        <select
+          v-model="filterLocation"
+          class="job-filter-bar__select"
+          aria-label="Standort filtern"
+        >
+          <option value="">Alle Standorte</option>
+          <option v-for="loc in locations" :key="loc" :value="loc">{{ loc }}</option>
+        </select>
+      </div>
+
+      <!-- Active filters display -->
+      <div v-if="hasActiveFilters" class="job-filter-bar__active-filters">
+        <span class="job-filter-bar__active-label">Aktive Filter:</span>
+        <button
+          v-if="searchQuery"
+          class="job-filter-tag"
+          @click="searchQuery = ''"
+          :aria-label="'Filter entfernen: ' + searchQuery"
+        >
+          „{{ searchQuery }}"
+          <span class="job-filter-tag__remove" aria-hidden="true">&times;</span>
+        </button>
+        <button
+          v-if="filterDepartment"
+          class="job-filter-tag"
+          @click="filterDepartment = ''"
+          :aria-label="'Filter entfernen: ' + filterDepartment"
+        >
+          {{ filterDepartment }}
+          <span class="job-filter-tag__remove" aria-hidden="true">&times;</span>
+        </button>
+        <button
+          v-if="filterEmployment"
+          class="job-filter-tag"
+          @click="filterEmployment = ''"
+          :aria-label="'Filter entfernen: ' + filterEmployment"
+        >
+          {{ filterEmployment }}
+          <span class="job-filter-tag__remove" aria-hidden="true">&times;</span>
+        </button>
+        <button
+          v-if="filterLocation"
+          class="job-filter-tag"
+          @click="filterLocation = ''"
+          :aria-label="'Filter entfernen: ' + filterLocation"
+        >
+          {{ filterLocation }}
+          <span class="job-filter-tag__remove" aria-hidden="true">&times;</span>
+        </button>
+        <button class="job-filter-bar__reset" @click="resetFilters">Alle Filter zurücksetzen</button>
+      </div>
+    </div>
+
+    <!-- Results count -->
+    <div class="job-widget-results" aria-live="polite">
+      {{ filteredJobs.length }} {{ filteredJobs.length === 1 ? 'Stelle' : 'Stellen' }} gefunden
+    </div>
+
+    <!-- Job Accordions -->
+    <div class="job-accordion" role="region" aria-label="Stellenangebote">
+      <details
+        v-for="(job, index) in filteredJobs"
+        :key="job.id"
+        class="job-accordion-item"
+        :style="{ animationDelay: (index * 0.05 + 0.05) + 's' }"
+      >
+        <summary class="job-accordion-trigger">
+          <div class="job-accordion-trigger__info">
+            <h3 class="job-accordion-trigger__title">{{ job.title }}</h3>
+            <div class="job-accordion-trigger__tags">
+              <span class="job-tag job-tag--employment">{{ job.employmentType }}</span>
+              <span class="job-tag job-tag--department">{{ job.department }}</span>
+              <span class="job-tag job-tag--location">📍 {{ job.location }}</span>
+            </div>
+          </div>
+          <span class="job-accordion-trigger__icon" aria-hidden="true"></span>
+        </summary>
+
+        <div class="job-accordion-content">
+          <div class="job-accordion-content__inner">
+
+            <!-- Meta row -->
+            <div class="job-details-meta">
+              <div class="job-detail-item">
+                <span class="job-detail-icon" aria-hidden="true">⏰</span>
+                <span class="job-detail-label">{{ job.employmentType }}</span>
+              </div>
+              <div class="job-detail-item">
+                <span class="job-detail-icon" aria-hidden="true">📍</span>
+                <span class="job-detail-label">{{ job.location }}</span>
+              </div>
+              <div class="job-detail-item">
+                <span class="job-detail-icon" aria-hidden="true">📅</span>
+                <span class="job-detail-label">{{ job.startDate }}</span>
+              </div>
+              <div v-if="job.workModel" class="job-detail-item">
+                <span class="job-detail-icon" aria-hidden="true">🏠</span>
+                <span class="job-detail-label">{{ job.workModel }}</span>
+              </div>
+            </div>
+
+            <!-- Description -->
+            <p class="job-accordion-content__description">{{ job.description }}</p>
+
+            <!-- Sections (tasks, profile, benefits) -->
+            <dl class="job-accordion-content__list">
+              <template v-for="(section, sIdx) in job.sections" :key="sIdx">
+                <dt>{{ section.heading }}</dt>
+                <dd>
+                  <ul>
+                    <li v-for="(item, iIdx) in section.items" :key="iIdx">{{ item }}</li>
+                  </ul>
+                </dd>
+              </template>
+            </dl>
+
+            <a
+              :href="'mailto:sekretariat@compass24.de?subject=Bewerbung: ' + encodeURIComponent(job.title)"
+              class="job-cta"
+            >
+              Jetzt bewerben
+            </a>
+          </div>
+        </div>
+      </details>
+    </div>
+
+    <!-- Empty state -->
+    <div v-if="filteredJobs.length === 0" class="job-widget-empty">
+      <div class="job-widget-empty__icon" aria-hidden="true">🔎</div>
+      <h3 class="job-widget-empty__title">Keine passenden Stellen gefunden</h3>
+      <p class="job-widget-empty__text">
+        Versuche andere Suchbegriffe oder Filter. Du kannst dich auch
+        <a href="mailto:sekretariat@compass24.de?subject=Initiativbewerbung">initiativ bewerben</a>.
+      </p>
+    </div>
+
+  </section>
+</div>
+
+
+<!-- Vue.js 3 (LTS) via CDN – no build step required -->
+<script src="https://unpkg.com/vue@3.4/dist/vue.global.prod.js"></script>
+
+<script>
+/**
+ * Compass24 Job Widget
+ * Interactive, filterable job listings rendered from embedded JSON data.
+ */
+const jobsData = [
+  {
+    id: 1,
+    title: "Full Stack Entwickler Shopware 6 PHP JavaScript (m/w/d)",
+    department: "IT & E-Commerce",
+    employmentType: "Vollzeit",
+    location: "Ascheberg",
+    workModel: "Hybrid (3 Tage vor Ort, 2 Tage remote)",
+    startDate: "Ab sofort",
+    description: "Das inhabergeführte Familienunternehmen Compass Yachtzubehör ist seit über 40 Jahren im Versandhandel für Segel und Wassersport-Ausrüstung tätig. Mit dem Fashion-Katalog SEALAND bieten wir hochwertige und funktionale Mode für Best Ager im DACH-Raum. Wir suchen für unser Team einen Full Stack Entwickler Shopware 6 PHP JavaScript (m/w/d).",
+    sections: [
+      {
+        heading: "Deine Aufgaben:",
+        items: [
+          "Entwicklung und Weiterentwicklung unserer internationalen Webshops auf Basis von Shopware 6 im Frontend und Backend",
+          "Entwicklung und Anpassung von Shopware 6 Plugins in PHP inklusive Backend Logik, Events und Services",
+          "Arbeit mit Shopware APIs und externen REST APIs zur Anbindung von Drittsystemen",
+          "Umsetzung moderner, responsiver Oberflächen mit Twig, HTML, CSS und JavaScript",
+          "Analyse und Umsetzung von Anforderungen auf Datenbankebene inklusive SQL Abfragen und Datenstrukturen",
+          "Optimierung von Performance, Ladezeiten und technischer Qualität im gesamten Shop Stack",
+          "Unterstützung bei SEO, Tracking und Analytics Anforderungen wie GA4 und Google Tag Manager",
+          "Testing, Debugging und Qualitätssicherung über alle Schichten hinweg",
+          "Enge Zusammenarbeit mit Marketing, Produktmanagement und IT bei der Konzeption und Umsetzung neuer Features"
+        ]
+      },
+      {
+        heading: "Dein Profil:",
+        items: [
+          "Abgeschlossene Ausbildung oder Studium im IT Umfeld oder vergleichbare praktische Erfahrung in der Webentwicklung",
+          "Gute PHP Kenntnisse und Verständnis für objektorientierte Entwicklung",
+          "Gute Kenntnisse in HTML, CSS und JavaScript sowie Erfahrung mit responsiven Frontends",
+          "Erfahrung mit Shopware 6 ist Voraussetzung",
+          "Sicherer Umgang mit REST APIs sowie grundlegendes Verständnis von Datenbanken und SQL",
+          "Interesse daran, fachliche Anforderungen technisch ganzheitlich zu durchdringen und umzusetzen",
+          "Strukturierte, selbstständige Arbeitsweise und Freude daran, Verantwortung für eigene Features zu übernehmen",
+          "Sehr gute Deutschkenntnisse in Wort und Schrift sowie gute Englischkenntnisse"
+        ]
+      },
+      {
+        heading: "Deine Vorteile:",
+        items: [
+          "Arbeiten in flachen Hierarchien mit kurzen Entscheidungswegen und echter Gestaltungsmöglichkeit",
+          "Direkter Austausch und enge Zusammenarbeit mit der Geschäftsführung",
+          "Flexible Arbeitszeiten und die Möglichkeit, mobil zu arbeiten",
+          "30 Tage Urlaub für Erholung, neue Inspiration und persönliche Auszeiten",
+          "13. Gehalt als Anerkennung für deinen Einsatz",
+          "Sicherer Arbeitsplatz in einem inhabergeführten Familienunternehmen mit langfristiger Perspektive",
+          "Wertschätzendes, kollegiales Umfeld mit Raum für Kreativität und Eigenverantwortung",
+          "Moderne Arbeitsausstattung"
+        ]
+      }
+    ]
+  },
+  {
+    id: 2,
+    title: "Softwareentwickler PHP Node.js im eCommerce (m/w/d)",
+    department: "IT & E-Commerce",
+    employmentType: "Vollzeit",
+    location: "Ascheberg",
+    workModel: "Hybrid (3 Tage vor Ort, 2 Tage remote)",
+    startDate: "Ab sofort",
+    description: "Das inhabergeführte Familienunternehmen Compass Yachtzubehör ist seit über 40 Jahren im Versandhandel für Segel und Wassersport-Ausrüstung tätig. Wir suchen für unser Team einen Softwareentwickler PHP Node.js im eCommerce (m/w/d).",
+    sections: [
+      {
+        heading: "Deine Aufgaben:",
+        items: [
+          "Entwicklung und Weiterentwicklung unserer E-Commerce Plattformen und internen Anwendungen mit PHP und JavaScript/Node.js",
+          "Mitarbeit an der Backend und Plugin Entwicklung im Shopware Umfeld",
+          "Umsetzung und Erweiterung von Geschäftslogik in Services, Modulen und Schnittstellen",
+          "Anbindung externer Systeme über REST APIs sowie Pflege und Weiterentwicklung bestehender Integrationen",
+          "Unterstützung bei der Entwicklung und dem Ausbau eines internen Node.js Portals für interne Prozesse und Tools",
+          "Analyse von Anforderungen auf Datenbankebene inklusive SQL-Abfragen und Optimierungen",
+          "Mitarbeit an technischen Konzepten, Refactorings und Performance Optimierungen",
+          "Testing, Debugging und Sicherstellung der Code Qualität",
+          "Enge Zusammenarbeit mit E-Commerce, Marketing und IT bei der Umsetzung neuer Features und interner Tools"
+        ]
+      },
+      {
+        heading: "Dein Profil:",
+        items: [
+          "Abgeschlossene Ausbildung oder Studium im IT-Umfeld oder vergleichbare praktische Erfahrung als Softwareentwickler",
+          "Gute Kenntnisse in PHP sowie in JavaScript idealerweise mit Node.js",
+          "Erfahrung in der Backend Entwicklung und Interesse an ganzheitlichen technischen Zusammenhängen",
+          "Sicherer Umgang mit REST APIs und grundlegendes Verständnis von Datenbanken und SQL",
+          "Strukturierte und lösungsorientierte Arbeitsweise sowie Bereitschaft, sich in neue Themen einzuarbeiten",
+          "Freude daran, als Allrounder Verantwortung zu übernehmen und technische Themen aktiv mitzugestalten",
+          "Sehr gute Deutschkenntnisse in Wort und Schrift sowie gute Englischkenntnisse"
+        ]
+      },
+      {
+        heading: "Deine Vorteile:",
+        items: [
+          "Arbeiten in flachen Hierarchien mit kurzen Entscheidungswegen und echter Gestaltungsmöglichkeit",
+          "Direkter Austausch und enge Zusammenarbeit mit der Geschäftsführung",
+          "Flexible Arbeitszeiten und die Möglichkeit, mobil zu arbeiten",
+          "30 Tage Urlaub für Erholung, neue Inspiration und persönliche Auszeiten",
+          "13. Gehalt als Anerkennung für deinen Einsatz",
+          "Sicherer Arbeitsplatz in einem inhabergeführten Familienunternehmen mit langfristiger Perspektive",
+          "Wertschätzendes, kollegiales Umfeld mit Raum für Kreativität und Eigenverantwortung",
+          "Moderne Arbeitsausstattung"
+        ]
+      }
+    ]
+  },
+  {
+    id: 3,
+    title: "Grafiker Fashion / Textil (m/w/d)",
+    department: "Marketing",
+    employmentType: "Vollzeit",
+    location: "Ascheberg",
+    workModel: "Hybrid (3 Tage vor Ort, 2 Tage remote)",
+    startDate: "Ab sofort",
+    description: "Compass Yachtzubehör ist ein inhabergeführtes Familienunternehmen mit über 40 Jahren Leidenschaft für Wassersport. Für unsere Fashion-Marke SEALAND suchen wir dich als Grafiker Fashion / Textil (m/w/d) – mit kreativer Handschrift, ausgeprägtem Modeverständnis und professioneller grafischer Expertise.",
+    sections: [
+      {
+        heading: "Deine Aufgaben:",
+        items: [
+          "Grafische Begleitung der Kollektionen entlang des gesamten Entstehungsprozesses – von Sortiments- und Kollektionsbesprechungen über Farb- und Gestaltungskonzepte bis zur Produktionsfreigabe",
+          "Gestaltung, Aufbau und kontinuierliche Weiterentwicklung des Sealand-Katalogs (Layout, Bild-Text-Komposition, Dramaturgie)",
+          "Enge Zusammenarbeit mit Einkauf und Produktmanagement während Musterung und Umsetzung",
+          "Vorbereitung und Mitwirkung bei Fotoproduktionen",
+          "Konzeptionelle Gestaltung der Kollektionen sowie Erstellung begleitender grafischer Inhalte für Print und Online"
+        ]
+      },
+      {
+        heading: "Dein Profil:",
+        items: [
+          "Abgeschlossene Ausbildung oder Studium im Bereich Mode-, Textil- oder Grafikdesign",
+          "Mehrjährige Erfahrung in der Gestaltung von Textil-Printkatalogen",
+          "Hohes gestalterisches Qualitätsbewusstsein sowie sehr gutes Gespür für Layout, Farben und Bildwelten",
+          "Kreative, strukturierte und teamorientierte Arbeitsweise",
+          "Ausgeprägtes Trendbewusstsein und Begeisterung für Fashion und Lifestyle",
+          "Sehr gute Kenntnisse in Adobe InDesign und Photoshop",
+          "Sicherer Umgang mit der Microsoft-Office-Umgebung",
+          "Erste Erfahrungen mit Automatisierung und KI-Tools von Vorteil"
+        ]
+      },
+      {
+        heading: "Deine Vorteile:",
+        items: [
+          "Arbeiten in flachen Hierarchien mit kurzen Entscheidungswegen und echter Gestaltungsmöglichkeit",
+          "Direkter Austausch und enge Zusammenarbeit mit der Geschäftsführung",
+          "Flexible Arbeitszeiten und die Möglichkeit, mobil zu arbeiten",
+          "30 Tage Urlaub für Erholung, neue Inspiration und persönliche Auszeiten",
+          "13. Gehalt als Anerkennung für deinen Einsatz",
+          "Sicherer Arbeitsplatz in einem inhabergeführten Familienunternehmen mit langfristiger Perspektive",
+          "Wertschätzendes, kollegiales Umfeld mit Raum für Kreativität und Eigenverantwortung",
+          "Moderne Arbeitsausstattung"
+        ]
+      }
+    ]
+  },
+  {
+    id: 4,
+    title: "Kaufmann/-frau im Einzelhandel (m/w/d)",
+    department: "Vertrieb",
+    employmentType: "Ausbildungsplatz",
+    location: "Ascheberg",
+    workModel: null,
+    startDate: "August 2026",
+    description: "Starte deine Karriere im maritimen Einzelhandel! Du lernst alles über Warenpräsentation, Kundenberatung und Verkauf bei Europas größtem Wassersport-Versandhaus. Wir bilden dich zum Experten für Bootszubehör und Wassersportartikel aus.",
+    sections: [
+      {
+        heading: "Deine Aufgaben:",
+        items: [
+          "Kundenberatung und Verkauf im Bereich Bootszubehör und Wassersportartikel",
+          "Verwaltung von Kundenaufträgen und Rechnungsbearbeitung",
+          "Warenpräsentation und Sortimentspflege",
+          "Korrespondenz mit Geschäftspartnern und Lieferanten",
+          "Unterstützung im Rechnungswesen und allgemeine Verwaltungsaufgaben"
+        ]
+      },
+      {
+        heading: "Das bringst du mit:",
+        items: [
+          "Guter Schulabschluss (Realschule oder höher)",
+          "Interesse an Handel, Verkauf und Kundenberatung",
+          "Sorgfältige und zuverlässige Arbeitsweise",
+          "Teamfähigkeit und Freude am Umgang mit Menschen",
+          "Idealerweise Begeisterung für Wassersport und maritime Themen"
+        ]
+      },
+      {
+        heading: "Wir bieten:",
+        items: [
+          "Qualifizierte Ausbildung in einem modernen Unternehmen",
+          "Übernahmemöglichkeiten nach der Ausbildung",
+          "Attraktive Ausbildungsvergütung",
+          "30 Tage Urlaub pro Jahr",
+          "Tolle Kolleginnen und Kollegen mit Wassersport-Passion",
+          "Moderne Arbeitsumgebung"
+        ]
+      }
+    ]
+  },
+  {
+    id: 5,
+    title: "Verkäufer/-in (m/w/d)",
+    department: "Vertrieb",
+    employmentType: "Ausbildungsplatz",
+    location: "Ascheberg",
+    workModel: null,
+    startDate: "August 2026",
+    description: "2-jährige Ausbildung mit Fokus auf Verkauf und Kundenservice. Perfekt für alle, die schnell ins Berufsleben einsteigen möchten und Freude am Umgang mit Menschen haben. Bei uns lernst du den Einzelhandel mit maritimem Flair kennen.",
+    sections: [
+      {
+        heading: "Deine Aufgaben:",
+        items: [
+          "Aktive Kundenberatung und Verkauf",
+          "Wareneingangskontrolle und Warenpräsentation",
+          "Kassieren und Abwicklung von Zahlungsvorgängen",
+          "Lagerhaltung und Bestandskontrolle",
+          "Unterstützung bei Inventuren und Sonderaktionen"
+        ]
+      },
+      {
+        heading: "Das bringst du mit:",
+        items: [
+          "Mindestens Hauptschulabschluss",
+          "Freude am Umgang mit Kunden",
+          "Zuverlässigkeit und Pünktlichkeit",
+          "Teamgeist und Hilfsbereitschaft",
+          "Interesse an Wassersport oder Bootszubehör ist ein Plus"
+        ]
+      },
+      {
+        heading: "Wir bieten:",
+        items: [
+          "2-jährige Ausbildung mit Option zur Verlängerung zum Kaufmann/-frau im Einzelhandel",
+          "Praxisnahe Ausbildung in einem erfahrenen Team",
+          "Attraktive Ausbildungsvergütung",
+          "30 Tage Urlaub pro Jahr",
+          "Team mit Wassersport-Passion",
+          "Moderne Einrichtungen"
+        ]
+      }
+    ]
+  },
+  {
+    id: 6,
+    title: "Lagermitarbeiter (m/w/d)",
+    department: "Logistik",
+    employmentType: "Vollzeit",
+    location: "Ascheberg",
+    workModel: null,
+    startDate: "Ab sofort",
+    description: "Compass24 sucht motivierte Lagermitarbeiter (m/w/d) zur Unterstützung unseres Lagerbetriebs. Du packst gerne an und sorgst dafür, dass alle Produkte sicher gelagert und schnell versendet werden? Dann bist du bei uns genau richtig!",
+    sections: [
+      {
+        heading: "Deine Aufgaben:",
+        items: [
+          "Wareneingangskontrolle und Einlagerung",
+          "Kommissionierung und Verpackung von Bestellungen",
+          "Wartung des Lagersystems und Bestandsverwaltung",
+          "Sicherheit und Ordnung im Lager",
+          "Unterstützung beim Versand von bis zu 5.000 Paketen täglich"
+        ]
+      },
+      {
+        heading: "Das bringst du mit:",
+        items: [
+          "Berufserfahrung in Logistik oder Lagerwirtschaft",
+          "Physische Belastbarkeit und Teamfähigkeit",
+          "Zuverlässigkeit und Genauigkeit",
+          "Gültige Fahrerlaubnis (Gabelstapler von Vorteil)"
+        ]
+      },
+      {
+        heading: "Wir bieten:",
+        items: [
+          "Tarifgerechte Bezahlung",
+          "30 Tage Urlaub pro Jahr",
+          "Team mit Wassersport-Passion",
+          "Moderne Einrichtungen und Lagertechnik",
+          "Sicherer Arbeitsplatz in einem wachsenden Unternehmen"
+        ]
+      }
+    ]
+  },
+  {
+    id: 7,
+    title: "Kundenberater im Bereich Wassersport (m/w/d)",
+    department: "Kundenservice",
+    employmentType: "Vollzeit",
+    location: "Ascheberg",
+    workModel: "Hybrid (3 Tage vor Ort, 2 Tage remote)",
+    startDate: "Ab sofort",
+    description: "Du liebst Wassersport und hast Freude am Umgang mit Menschen? Als Kundenberater (m/w/d) bei Compass24 berätst du unsere Kunden telefonisch und per E-Mail zu unserem Sortiment mit über 42.000 Produkten rund um Bootszubehör und Segelbedarf.",
+    sections: [
+      {
+        heading: "Deine Aufgaben:",
+        items: [
+          "Telefonische und schriftliche Beratung unserer Kunden zu Produkten und Bestellungen",
+          "Bearbeitung von Anfragen, Reklamationen und Retouren",
+          "Pflege der Kundendaten im CRM-System",
+          "Enge Zusammenarbeit mit Vertrieb, Logistik und Einkauf",
+          "Mitwirkung an der Optimierung unserer Service-Prozesse"
+        ]
+      },
+      {
+        heading: "Das bringst du mit:",
+        items: [
+          "Kaufmännische Ausbildung oder vergleichbare Erfahrung",
+          "Erfahrung im Kundenservice oder Vertrieb",
+          "Gute Kommunikationsfähigkeiten und Serviceorientierung",
+          "Sicherer Umgang mit MS Office und idealerweise CRM-Systemen",
+          "Begeisterung für Wassersport ist ein großes Plus"
+        ]
+      },
+      {
+        heading: "Wir bieten:",
+        items: [
+          "Arbeiten in flachen Hierarchien mit kurzen Entscheidungswegen",
+          "Flexible Arbeitszeiten und Home-Office-Möglichkeiten",
+          "30 Tage Urlaub pro Jahr",
+          "13. Gehalt",
+          "Sicherer Arbeitsplatz in einem inhabergeführten Familienunternehmen",
+          "Kollegiales Umfeld mit echten Wassersport-Enthusiasten"
+        ]
+      }
+    ]
+  },
+  {
+    id: 8,
+    title: "Praktikum im Bereich E-Commerce / Online-Marketing (m/w/d)",
+    department: "IT & E-Commerce",
+    employmentType: "Praktikum",
+    location: "Ascheberg",
+    workModel: null,
+    startDate: "Nach Vereinbarung",
+    description: "Du studierst im Bereich E-Commerce, Marketing oder Wirtschaftsinformatik und möchtest praktische Erfahrung im Online-Handel sammeln? Bei Compass24 bekommst du Einblicke in den Betrieb eines der führenden Wassersport-Onlineshops in Europa.",
+    sections: [
+      {
+        heading: "Deine Aufgaben:",
+        items: [
+          "Unterstützung bei der Pflege und Optimierung des Online-Shops",
+          "Mitarbeit bei der Erstellung von Online-Marketing-Kampagnen",
+          "Auswertung von Performance-Daten und KPIs",
+          "Unterstützung bei SEO- und SEA-Maßnahmen",
+          "Recherche zu aktuellen E-Commerce-Trends"
+        ]
+      },
+      {
+        heading: "Das bringst du mit:",
+        items: [
+          "Eingeschriebener Student (m/w/d) im Bereich BWL, Marketing, E-Commerce o.ä.",
+          "Interesse an digitalem Handel und Online-Marketing",
+          "Gute analytische Fähigkeiten und sicherer Umgang mit Excel",
+          "Eigeninitiative und strukturierte Arbeitsweise",
+          "Gute Deutsch- und Englischkenntnisse"
+        ]
+      },
+      {
+        heading: "Wir bieten:",
+        items: [
+          "Praxisnahe Einblicke in ein erfolgreiches E-Commerce-Unternehmen",
+          "Betreuung durch erfahrene Kolleginnen und Kollegen",
+          "Flexible Arbeitszeiten, abgestimmt auf dein Studium",
+          "Angemessene Praktikumsvergütung",
+          "Möglichkeit zur Übernahme als Werkstudent oder Festanstellung"
+        ]
+      }
+    ]
+  }
+];
+
+const { createApp, ref, computed } = Vue;
+
+createApp({
+  setup() {
+    const jobs = ref(jobsData);
+    const searchQuery = ref('');
+    const filterDepartment = ref('');
+    const filterEmployment = ref('');
+    const filterLocation = ref('');
+
+    /** Unique departments derived from data */
+    const departments = computed(() => {
+      const set = new Set(jobs.value.map(j => j.department));
+      return [...set].sort();
+    });
+
+    /** Unique employment types derived from data */
+    const employmentTypes = computed(() => {
+      const set = new Set(jobs.value.map(j => j.employmentType));
+      return [...set].sort();
+    });
+
+    /** Unique locations derived from data */
+    const locations = computed(() => {
+      const set = new Set(jobs.value.map(j => j.location));
+      return [...set].sort();
+    });
+
+    /** Whether any filter is active */
+    const hasActiveFilters = computed(() => {
+      return searchQuery.value || filterDepartment.value || filterEmployment.value || filterLocation.value;
+    });
+
+    /**
+     * Returns jobs matching all active filters.
+     * Text search matches against the job title (case-insensitive).
+     */
+    const filteredJobs = computed(() => {
+      const query = searchQuery.value.toLowerCase().trim();
+      return jobs.value.filter(job => {
+        if (query && !job.title.toLowerCase().includes(query)) return false;
+        if (filterDepartment.value && job.department !== filterDepartment.value) return false;
+        if (filterEmployment.value && job.employmentType !== filterEmployment.value) return false;
+        if (filterLocation.value && job.location !== filterLocation.value) return false;
+        return true;
+      });
+    });
+
+    /** Reset all filters to their default (empty) state */
+    const resetFilters = () => {
+      searchQuery.value = '';
+      filterDepartment.value = '';
+      filterEmployment.value = '';
+      filterLocation.value = '';
+    };
+
+    return {
+      jobs,
+      searchQuery,
+      filterDepartment,
+      filterEmployment,
+      filterLocation,
+      departments,
+      employmentTypes,
+      locations,
+      hasActiveFilters,
+      filteredJobs,
+      resetFilters
+    };
+  }
+}).mount('#job-widget-app');
+</script>
+
+<!-- The HTML footer above is for preview purposes (DevTools mobile emulator). -->
+</body>
+</html>
