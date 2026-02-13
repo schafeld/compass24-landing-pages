@@ -1,0 +1,365 @@
+[
+  {
+    "id": 1,
+    "title": "Full Stack Entwickler Shopware 6 PHP JavaScript (m/w/d)",
+    "department": "IT & E-Commerce",
+    "employmentType": "Vollzeit",
+    "location": "Ascheberg",
+    "workModel": "Hybrid (3 Tage vor Ort, 2 Tage remote)",
+    "startDate": "Ab sofort",
+    "description": "Das inhabergeführte Familienunternehmen Compass Yachtzubehör ist seit über 40 Jahren im Versandhandel für Segel und Wassersport-Ausrüstung tätig. Mit dem Fashion-Katalog SEALAND bieten wir hochwertige und funktionale Mode für Best Ager im DACH-Raum. Wir suchen für unser Team einen Full Stack Entwickler Shopware 6 PHP JavaScript (m/w/d).",
+    "sections": [
+      {
+        "heading": "Deine Aufgaben:",
+        "items": [
+          "Entwicklung und Weiterentwicklung unserer internationalen Webshops auf Basis von Shopware 6 im Frontend und Backend",
+          "Entwicklung und Anpassung von Shopware 6 Plugins in PHP inklusive Backend Logik, Events und Services",
+          "Arbeit mit Shopware APIs und externen REST APIs zur Anbindung von Drittsystemen",
+          "Umsetzung moderner, responsiver Oberflächen mit Twig, HTML, CSS und JavaScript",
+          "Analyse und Umsetzung von Anforderungen auf Datenbankebene inklusive SQL Abfragen und Datenstrukturen",
+          "Optimierung von Performance, Ladezeiten und technischer Qualität im gesamten Shop Stack",
+          "Unterstützung bei SEO, Tracking und Analytics Anforderungen wie GA4 und Google Tag Manager",
+          "Testing, Debugging und Qualitätssicherung über alle Schichten hinweg",
+          "Enge Zusammenarbeit mit Marketing, Produktmanagement und IT bei der Konzeption und Umsetzung neuer Features"
+        ]
+      },
+      {
+        "heading": "Dein Profil:",
+        "items": [
+          "Abgeschlossene Ausbildung oder Studium im IT Umfeld oder vergleichbare praktische Erfahrung in der Webentwicklung",
+          "Gute PHP Kenntnisse und Verständnis für objektorientierte Entwicklung",
+          "Gute Kenntnisse in HTML, CSS und JavaScript sowie Erfahrung mit responsiven Frontends",
+          "Erfahrung mit Shopware 6 ist Voraussetzung",
+          "Sicherer Umgang mit REST APIs sowie grundlegendes Verständnis von Datenbanken und SQL",
+          "Interesse daran, fachliche Anforderungen technisch ganzheitlich zu durchdringen und umzusetzen",
+          "Strukturierte, selbstständige Arbeitsweise und Freude daran, Verantwortung für eigene Features zu übernehmen",
+          "Sehr gute Deutschkenntnisse in Wort und Schrift sowie gute Englischkenntnisse"
+        ]
+      },
+      {
+        "heading": "Deine Vorteile:",
+        "items": [
+          "Arbeiten in flachen Hierarchien mit kurzen Entscheidungswegen und echter Gestaltungsmöglichkeit",
+          "Direkter Austausch und enge Zusammenarbeit mit der Geschäftsführung",
+          "Flexible Arbeitszeiten und die Möglichkeit, mobil zu arbeiten",
+          "30 Tage Urlaub für Erholung, neue Inspiration und persönliche Auszeiten",
+          "13. Gehalt als Anerkennung für deinen Einsatz",
+          "Sicherer Arbeitsplatz in einem inhabergeführten Familienunternehmen mit langfristiger Perspektive",
+          "Wertschätzendes, kollegiales Umfeld mit Raum für Kreativität und Eigenverantwortung",
+          "Moderne Arbeitsausstattung"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "title": "Softwareentwickler PHP Node.js im eCommerce (m/w/d)",
+    "department": "IT & E-Commerce",
+    "employmentType": "Vollzeit",
+    "location": "Ascheberg",
+    "workModel": "Hybrid (3 Tage vor Ort, 2 Tage remote)",
+    "startDate": "Ab sofort",
+    "description": "Das inhabergeführte Familienunternehmen Compass Yachtzubehör ist seit über 40 Jahren im Versandhandel für Segel und Wassersport-Ausrüstung tätig. Wir suchen für unser Team einen Softwareentwickler PHP Node.js im eCommerce (m/w/d).",
+    "sections": [
+      {
+        "heading": "Deine Aufgaben:",
+        "items": [
+          "Entwicklung und Weiterentwicklung unserer E-Commerce Plattformen und internen Anwendungen mit PHP und JavaScript/Node.js",
+          "Mitarbeit an der Backend und Plugin Entwicklung im Shopware Umfeld",
+          "Umsetzung und Erweiterung von Geschäftslogik in Services, Modulen und Schnittstellen",
+          "Anbindung externer Systeme über REST APIs sowie Pflege und Weiterentwicklung bestehender Integrationen",
+          "Unterstützung bei der Entwicklung und dem Ausbau eines internen Node.js Portals für interne Prozesse und Tools",
+          "Analyse von Anforderungen auf Datenbankebene inklusive SQL-Abfragen und Optimierungen",
+          "Mitarbeit an technischen Konzepten, Refactorings und Performance Optimierungen",
+          "Testing, Debugging und Sicherstellung der Code Qualität",
+          "Enge Zusammenarbeit mit E-Commerce, Marketing und IT bei der Umsetzung neuer Features und interner Tools"
+        ]
+      },
+      {
+        "heading": "Dein Profil:",
+        "items": [
+          "Abgeschlossene Ausbildung oder Studium im IT-Umfeld oder vergleichbare praktische Erfahrung als Softwareentwickler",
+          "Gute Kenntnisse in PHP sowie in JavaScript idealerweise mit Node.js",
+          "Erfahrung in der Backend Entwicklung und Interesse an ganzheitlichen technischen Zusammenhängen",
+          "Sicherer Umgang mit REST APIs und grundlegendes Verständnis von Datenbanken und SQL",
+          "Strukturierte und lösungsorientierte Arbeitsweise sowie Bereitschaft, sich in neue Themen einzuarbeiten",
+          "Freude daran, als Allrounder Verantwortung zu übernehmen und technische Themen aktiv mitzugestalten",
+          "Sehr gute Deutschkenntnisse in Wort und Schrift sowie gute Englischkenntnisse"
+        ]
+      },
+      {
+        "heading": "Deine Vorteile:",
+        "items": [
+          "Arbeiten in flachen Hierarchien mit kurzen Entscheidungswegen und echter Gestaltungsmöglichkeit",
+          "Direkter Austausch und enge Zusammenarbeit mit der Geschäftsführung",
+          "Flexible Arbeitszeiten und die Möglichkeit, mobil zu arbeiten",
+          "30 Tage Urlaub für Erholung, neue Inspiration und persönliche Auszeiten",
+          "13. Gehalt als Anerkennung für deinen Einsatz",
+          "Sicherer Arbeitsplatz in einem inhabergeführten Familienunternehmen mit langfristiger Perspektive",
+          "Wertschätzendes, kollegiales Umfeld mit Raum für Kreativität und Eigenverantwortung",
+          "Moderne Arbeitsausstattung"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "title": "Grafiker Fashion / Textil (m/w/d)",
+    "department": "Marketing",
+    "employmentType": "Vollzeit",
+    "location": "Ascheberg",
+    "workModel": "Hybrid (3 Tage vor Ort, 2 Tage remote)",
+    "startDate": "Ab sofort",
+    "description": "Compass Yachtzubehör ist ein inhabergeführtes Familienunternehmen mit über 40 Jahren Leidenschaft für Wassersport. Für unsere Fashion-Marke SEALAND suchen wir dich als Grafiker Fashion / Textil (m/w/d) – mit kreativer Handschrift, ausgeprägtem Modeverständnis und professioneller grafischer Expertise.",
+    "sections": [
+      {
+        "heading": "Deine Aufgaben:",
+        "items": [
+          "Grafische Begleitung der Kollektionen entlang des gesamten Entstehungsprozesses – von Sortiments- und Kollektionsbesprechungen über Farb- und Gestaltungskonzepte bis zur Produktionsfreigabe",
+          "Gestaltung, Aufbau und kontinuierliche Weiterentwicklung des Sealand-Katalogs (Layout, Bild-Text-Komposition, Dramaturgie)",
+          "Enge Zusammenarbeit mit Einkauf und Produktmanagement während Musterung und Umsetzung",
+          "Vorbereitung und Mitwirkung bei Fotoproduktionen",
+          "Konzeptionelle Gestaltung der Kollektionen sowie Erstellung begleitender grafischer Inhalte für Print und Online"
+        ]
+      },
+      {
+        "heading": "Dein Profil:",
+        "items": [
+          "Abgeschlossene Ausbildung oder Studium im Bereich Mode-, Textil- oder Grafikdesign",
+          "Mehrjährige Erfahrung in der Gestaltung von Textil-Printkatalogen",
+          "Hohes gestalterisches Qualitätsbewusstsein sowie sehr gutes Gespür für Layout, Farben und Bildwelten",
+          "Kreative, strukturierte und teamorientierte Arbeitsweise",
+          "Ausgeprägtes Trendbewusstsein und Begeisterung für Fashion und Lifestyle",
+          "Sehr gute Kenntnisse in Adobe InDesign und Photoshop",
+          "Sicherer Umgang mit der Microsoft-Office-Umgebung",
+          "Erste Erfahrungen mit Automatisierung und KI-Tools von Vorteil"
+        ]
+      },
+      {
+        "heading": "Deine Vorteile:",
+        "items": [
+          "Arbeiten in flachen Hierarchien mit kurzen Entscheidungswegen und echter Gestaltungsmöglichkeit",
+          "Direkter Austausch und enge Zusammenarbeit mit der Geschäftsführung",
+          "Flexible Arbeitszeiten und die Möglichkeit, mobil zu arbeiten",
+          "30 Tage Urlaub für Erholung, neue Inspiration und persönliche Auszeiten",
+          "13. Gehalt als Anerkennung für deinen Einsatz",
+          "Sicherer Arbeitsplatz in einem inhabergeführten Familienunternehmen mit langfristiger Perspektive",
+          "Wertschätzendes, kollegiales Umfeld mit Raum für Kreativität und Eigenverantwortung",
+          "Moderne Arbeitsausstattung"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "title": "Kaufmann/-frau im Einzelhandel (m/w/d)",
+    "department": "Vertrieb",
+    "employmentType": "Ausbildungsplatz",
+    "location": "Ascheberg",
+    "workModel": null,
+    "startDate": "August 2026",
+    "description": "Starte deine Karriere im maritimen Einzelhandel! Du lernst alles über Warenpräsentation, Kundenberatung und Verkauf bei Europas größtem Wassersport-Versandhaus. Wir bilden dich zum Experten für Bootszubehör und Wassersportartikel aus.",
+    "sections": [
+      {
+        "heading": "Deine Aufgaben:",
+        "items": [
+          "Kundenberatung und Verkauf im Bereich Bootszubehör und Wassersportartikel",
+          "Verwaltung von Kundenaufträgen und Rechnungsbearbeitung",
+          "Warenpräsentation und Sortimentspflege",
+          "Korrespondenz mit Geschäftspartnern und Lieferanten",
+          "Unterstützung im Rechnungswesen und allgemeine Verwaltungsaufgaben"
+        ]
+      },
+      {
+        "heading": "Das bringst du mit:",
+        "items": [
+          "Guter Schulabschluss (Realschule oder höher)",
+          "Interesse an Handel, Verkauf und Kundenberatung",
+          "Sorgfältige und zuverlässige Arbeitsweise",
+          "Teamfähigkeit und Freude am Umgang mit Menschen",
+          "Idealerweise Begeisterung für Wassersport und maritime Themen"
+        ]
+      },
+      {
+        "heading": "Wir bieten:",
+        "items": [
+          "Qualifizierte Ausbildung in einem modernen Unternehmen",
+          "Übernahmemöglichkeiten nach der Ausbildung",
+          "Attraktive Ausbildungsvergütung",
+          "30 Tage Urlaub pro Jahr",
+          "Tolle Kolleginnen und Kollegen mit Wassersport-Passion",
+          "Moderne Arbeitsumgebung"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "title": "Verkäufer/-in (m/w/d)",
+    "department": "Vertrieb",
+    "employmentType": "Ausbildungsplatz",
+    "location": "Ascheberg",
+    "workModel": null,
+    "startDate": "August 2026",
+    "description": "2-jährige Ausbildung mit Fokus auf Verkauf und Kundenservice. Perfekt für alle, die schnell ins Berufsleben einsteigen möchten und Freude am Umgang mit Menschen haben. Bei uns lernst du den Einzelhandel mit maritimem Flair kennen.",
+    "sections": [
+      {
+        "heading": "Deine Aufgaben:",
+        "items": [
+          "Aktive Kundenberatung und Verkauf",
+          "Wareneingangskontrolle und Warenpräsentation",
+          "Kassieren und Abwicklung von Zahlungsvorgängen",
+          "Lagerhaltung und Bestandskontrolle",
+          "Unterstützung bei Inventuren und Sonderaktionen"
+        ]
+      },
+      {
+        "heading": "Das bringst du mit:",
+        "items": [
+          "Mindestens Hauptschulabschluss",
+          "Freude am Umgang mit Kunden",
+          "Zuverlässigkeit und Pünktlichkeit",
+          "Teamgeist und Hilfsbereitschaft",
+          "Interesse an Wassersport oder Bootszubehör ist ein Plus"
+        ]
+      },
+      {
+        "heading": "Wir bieten:",
+        "items": [
+          "2-jährige Ausbildung mit Option zur Verlängerung zum Kaufmann/-frau im Einzelhandel",
+          "Praxisnahe Ausbildung in einem erfahrenen Team",
+          "Attraktive Ausbildungsvergütung",
+          "30 Tage Urlaub pro Jahr",
+          "Team mit Wassersport-Passion",
+          "Moderne Einrichtungen"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "title": "Lagermitarbeiter (m/w/d)",
+    "department": "Logistik",
+    "employmentType": "Vollzeit",
+    "location": "Ascheberg",
+    "workModel": null,
+    "startDate": "Ab sofort",
+    "description": "Compass24 sucht motivierte Lagermitarbeiter (m/w/d) zur Unterstützung unseres Lagerbetriebs. Du packst gerne an und sorgst dafür, dass alle Produkte sicher gelagert und schnell versendet werden? Dann bist du bei uns genau richtig!",
+    "sections": [
+      {
+        "heading": "Deine Aufgaben:",
+        "items": [
+          "Wareneingangskontrolle und Einlagerung",
+          "Kommissionierung und Verpackung von Bestellungen",
+          "Wartung des Lagersystems und Bestandsverwaltung",
+          "Sicherheit und Ordnung im Lager",
+          "Unterstützung beim Versand von bis zu 5.000 Paketen täglich"
+        ]
+      },
+      {
+        "heading": "Das bringst du mit:",
+        "items": [
+          "Berufserfahrung in Logistik oder Lagerwirtschaft",
+          "Physische Belastbarkeit und Teamfähigkeit",
+          "Zuverlässigkeit und Genauigkeit",
+          "Gültige Fahrerlaubnis (Gabelstapler von Vorteil)"
+        ]
+      },
+      {
+        "heading": "Wir bieten:",
+        "items": [
+          "Tarifgerechte Bezahlung",
+          "30 Tage Urlaub pro Jahr",
+          "Team mit Wassersport-Passion",
+          "Moderne Einrichtungen und Lagertechnik",
+          "Sicherer Arbeitsplatz in einem wachsenden Unternehmen"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "title": "Kundenberater im Bereich Wassersport (m/w/d)",
+    "department": "Kundenservice",
+    "employmentType": "Vollzeit",
+    "location": "Ascheberg",
+    "workModel": "Hybrid (3 Tage vor Ort, 2 Tage remote)",
+    "startDate": "Ab sofort",
+    "description": "Du liebst Wassersport und hast Freude am Umgang mit Menschen? Als Kundenberater (m/w/d) bei Compass24 berätst du unsere Kunden telefonisch und per E-Mail zu unserem Sortiment mit über 42.000 Produkten rund um Bootszubehör und Segelbedarf.",
+    "sections": [
+      {
+        "heading": "Deine Aufgaben:",
+        "items": [
+          "Telefonische und schriftliche Beratung unserer Kunden zu Produkten und Bestellungen",
+          "Bearbeitung von Anfragen, Reklamationen und Retouren",
+          "Pflege der Kundendaten im CRM-System",
+          "Enge Zusammenarbeit mit Vertrieb, Logistik und Einkauf",
+          "Mitwirkung an der Optimierung unserer Service-Prozesse"
+        ]
+      },
+      {
+        "heading": "Das bringst du mit:",
+        "items": [
+          "Kaufmännische Ausbildung oder vergleichbare Erfahrung",
+          "Erfahrung im Kundenservice oder Vertrieb",
+          "Gute Kommunikationsfähigkeiten und Serviceorientierung",
+          "Sicherer Umgang mit MS Office und idealerweise CRM-Systemen",
+          "Begeisterung für Wassersport ist ein großes Plus"
+        ]
+      },
+      {
+        "heading": "Wir bieten:",
+        "items": [
+          "Arbeiten in flachen Hierarchien mit kurzen Entscheidungswegen",
+          "Flexible Arbeitszeiten und Home-Office-Möglichkeiten",
+          "30 Tage Urlaub pro Jahr",
+          "13. Gehalt",
+          "Sicherer Arbeitsplatz in einem inhabergeführten Familienunternehmen",
+          "Kollegiales Umfeld mit echten Wassersport-Enthusiasten"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "title": "Praktikum im Bereich E-Commerce / Online-Marketing (m/w/d)",
+    "department": "IT & E-Commerce",
+    "employmentType": "Praktikum",
+    "location": "Ascheberg",
+    "workModel": null,
+    "startDate": "Nach Vereinbarung",
+    "description": "Du studierst im Bereich E-Commerce, Marketing oder Wirtschaftsinformatik und möchtest praktische Erfahrung im Online-Handel sammeln? Bei Compass24 bekommst du Einblicke in den Betrieb eines der führenden Wassersport-Onlineshops in Europa.",
+    "sections": [
+      {
+        "heading": "Deine Aufgaben:",
+        "items": [
+          "Unterstützung bei der Pflege und Optimierung des Online-Shops",
+          "Mitarbeit bei der Erstellung von Online-Marketing-Kampagnen",
+          "Auswertung von Performance-Daten und KPIs",
+          "Unterstützung bei SEO- und SEA-Maßnahmen",
+          "Recherche zu aktuellen E-Commerce-Trends"
+        ]
+      },
+      {
+        "heading": "Das bringst du mit:",
+        "items": [
+          "Eingeschriebener Student (m/w/d) im Bereich BWL, Marketing, E-Commerce o.ä.",
+          "Interesse an digitalem Handel und Online-Marketing",
+          "Gute analytische Fähigkeiten und sicherer Umgang mit Excel",
+          "Eigeninitiative und strukturierte Arbeitsweise",
+          "Gute Deutsch- und Englischkenntnisse"
+        ]
+      },
+      {
+        "heading": "Wir bieten:",
+        "items": [
+          "Praxisnahe Einblicke in ein erfolgreiches E-Commerce-Unternehmen",
+          "Betreuung durch erfahrene Kolleginnen und Kollegen",
+          "Flexible Arbeitszeiten, abgestimmt auf dein Studium",
+          "Angemessene Praktikumsvergütung",
+          "Möglichkeit zur Übernahme als Werkstudent oder Festanstellung"
+        ]
+      }
+    ]
+  }
+]
