@@ -4,8 +4,7 @@
 
 See [DOKUMENTATION-job-widget-shopware](./DOKUMENTATION-job-widget-shopware.md) to learn how to edit or deploy the widget.
 
-!img
-[Screenshot](./assets/screenshot-job-widget.png)
+![Screenshot of the Compass24 job widget](./assets/screenshot-job-widget.png)
 
 Initial Prompt:
 
