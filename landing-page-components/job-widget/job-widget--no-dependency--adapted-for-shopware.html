@@ -15,7 +15,7 @@ Interactive, filterable job listings using Petite Vue 0.4.1 (inlined, no externa
 Renders job accordions from embedded JSON data.
 
 Date: 2026-02-13
-Version: 1.2.1
+Version: 1.2.4
 
 Features:
 - Text search filter by job title
@@ -659,12 +659,16 @@ TODO: When the final combination of components is established, consider merging 
     }
 
     .job-accordion-content__description {
-      font-size: var(--c24-font-size-sm);
+      font-size: var(--c24-font-size-m);
       margin: var(--c24-space-4) 0;
     }
 
     .job-accordion-item {
       margin-bottom: var(--c24-space-4);
+    }
+
+    .compass24-job-widget-component .job-accordion-item ul {
+      padding-left: 0;
     }
   }
 </style>
