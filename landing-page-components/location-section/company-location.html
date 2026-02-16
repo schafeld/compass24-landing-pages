@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Compass24 Standort - Ascheberg</title>
+</head>
+<body>
+<!-- The HTML header above is for preview purposes (mobile emulator devtools) only. Do not copy to CMS content page. -->
+
+
+<!--
+  Compass24 Company Location Component
+  Version: 1.0.1 - February 2026
+  
+  A standalone, injectable location component displaying the Compass24 Ascheberg headquarters.
+  This file can be injected into existing CMS pages without affecting SEO or editability.
+  
+  Layout: Two-column grid (stacked on mobile) with location info and embedded Google Map.
+  
+  CSS Variables Strategy:
+  - Uses Bootstrap/Shopware CSS variables from compass24.de (--bs-*, --font-size-*)
+  - Includes fallback values for standalone preview (when Bootstrap is not loaded)
+  
+  Example: var(--bs-primary, #003366) uses site's primary color or falls back to #003366
+  
+  Usage: Inject this HTML into any container on the Compass24 website.
+  All styles are scoped under .compass24-location-component to prevent conflicts.
+-->
+<style>
+/* ============================================
+   SCOPED DESIGN TOKENS & BASE STYLES
+   Uses Bootstrap variables from compass24.de with fallbacks for standalone viewing
+   ============================================ */
+.compass24-location-component {
+  /* 
+   * Colors - Use Bootstrap variables when available, with fallbacks
+   * Site primary: --bs-primary (#002856), fallback to #003366 for standalone
+   */
+  --c24-color-primary: var(--bs-primary, #003366);
+  --c24-color-primary-light: #0066b3;
+  --c24-color-primary-dark: #002244;
+  --c24-color-secondary: #0099cc;
+  --c24-color-white: var(--bs-white, #ffffff);
+  --c24-color-gray-50: var(--bs-gray-100, #f9fafb);
+  --c24-color-gray-100: var(--bs-secondary-bg, #f3f4f6);
+  --c24-color-gray-200: #e5e7eb;
+  --c24-color-gray-500: var(--bs-gray, #6b7280);
+  --c24-color-gray-600: var(--bs-secondary-color, #4b5563);
+  --c24-color-gray-900: var(--bs-body-color, #111827);
+  
+  /* Focus styles for accessibility */
+  --c24-focus-color: var(--bs-primary, #003366);
+  --c24-focus-ring: 0 0 0 3px rgba(0, 51, 102, 0.3);
+  
+  /* Typography - Use site fonts when available */
+  --c24-font-family: var(--bs-body-font-family, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif);
+  --c24-font-size-sm: var(--font-size-sm, 0.875rem);
+  --c24-font-size-base: var(--font-size-base, 0.9375rem);
+  --c24-font-size-lg: 1.125rem;
+  --c24-font-size-xl: 1.25rem;
+  --c24-font-size-2xl: 1.5rem;
+  --c24-font-size-3xl: 1.75rem;
+  
+  /* Spacing */
+  --c24-space-2: 0.5rem;
+  --c24-space-3: 0.75rem;
+  --c24-space-4: 1rem;
+  --c24-space-5: 1.25rem;
+  --c24-space-6: 1.5rem;
+  --c24-space-8: 2rem;
+  --c24-space-10: 2.5rem;
+  --c24-space-12: 3rem;
+  
+  /* Borders & Shadows */
+  --c24-border-radius: 12px;
+  --c24-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --c24-shadow-md: var(--bs-box-shadow-sm, 0 2px 4px rgba(0, 0, 0, 0.08));
+  --c24-shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.15);
+  
+  /* Transitions */
+  --c24-transition-base: 250ms ease-in-out;
+
+  /* Base Component Styles */
+  font-family: var(--c24-font-family);
+  font-size: var(--c24-font-size-base);
+  line-height: 1.6;
+  color: var(--c24-color-gray-900);
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  /* ============================================
+     LOCATION SECTION
+     ============================================ */
+  .location-section {
+    padding: var(--c24-space-12) var(--c24-space-4);
+    background-color: var(--c24-color-gray-50);
+  }
+
+  .location-container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  /* ============================================
+     SECTION HEADER
+     ============================================ */
+  .location-header {
+    margin-bottom: var(--c24-space-10);
+  }
+
+  .location-header__title {
+    font-size: var(--c24-font-size-3xl);
+    font-weight: 700;
+    color: var(--c24-color-primary);
+    margin: 0 0 var(--c24-space-3);
+
+    @media (min-width: 768px) {
+      font-size: 2.5rem;
+    }
+  }
+
+  /* ============================================
+     LOCATION CONTENT - TWO COLUMN GRID
+     ============================================ */
+  .location-content {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--c24-space-8);
+    align-items: start;
+
+    @media (min-width: 768px) {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--c24-space-10);
+      align-items: center;
+    }
+  }
+
+  /* ============================================
+     LOCATION TEXT CONTENT
+     ============================================ */
+  .location-text__subtitle {
+    font-size: var(--c24-font-size-xl);
+    font-weight: 700;
+    color: var(--c24-color-primary);
+    margin: 0 0 var(--c24-space-4);
+
+    @media (min-width: 768px) {
+      font-size: var(--c24-font-size-2xl);
+    }
+  }
+
+  .location-text__description {
+    color: var(--c24-color-gray-600);
+    margin: 0 0 var(--c24-space-4);
+    line-height: 1.8;
+  }
+
+  /* ============================================
+     LOCATION FEATURES LIST
+     ============================================ */
+  .location-features {
+    list-style: none;
+    margin: var(--c24-space-6) 0 0;
+    padding: 0;
+  }
+
+  .location-features__item {
+    padding: var(--c24-space-3) 0;
+    border-bottom: 1px solid var(--c24-color-gray-200);
+    display: flex;
+    align-items: center;
+    gap: var(--c24-space-3);
+    color: var(--c24-color-gray-600);
+    font-size: var(--c24-font-size-base);
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  .location-features__icon {
+    font-size: 1.25rem;
+    flex-shrink: 0;
+  }
+
+  /* ============================================
+     GOOGLE MAP CONTAINER
+     ============================================ */
+  .location-map {
+    position: relative;
+    width: 100%;
+    height: 350px;
+    border-radius: var(--c24-border-radius);
+    overflow: hidden;
+    box-shadow: var(--c24-shadow-lg);
+    background: linear-gradient(135deg, #e8f4ff 0%, #d4e9ff 100%);
+
+    @media (min-width: 768px) {
+      height: 400px;
+    }
+
+    @media (min-width: 1024px) {
+      height: 450px;
+    }
+  }
+
+  .location-map__iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  /* ============================================
+     ANIMATION
+     ============================================ */
+  @keyframes compass24LocationFadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .location-content {
+    animation: compass24LocationFadeIn 0.6s ease-out both;
+
+    @media (prefers-reduced-motion: reduce) {
+      animation: none;
+    }
+  }
+}
+</style>
+
+<!-- Component HTML -->
+<div class="compass24-location-component">
+  <section class="location-section" id="standort">
+    <div class="location-container">
+      <header class="location-header">
+        <h2 class="location-header__title">Unser Standort in Ascheberg</h2>
+      </header>
+
+      <div class="location-content">
+        <div class="location-text">
+          <h3 class="location-text__subtitle">Modern, maritim, mittendrin</h3>
+          <p class="location-text__description">
+            Unser Hauptsitz in Ascheberg im Münsterland vereint modernste Lager- und Logistikeinrichtungen 
+            mit einem einladenden Maritim-Shop auf über 5.000 m².
+          </p>
+          <p class="location-text__description">
+            Besuche uns vor Ort und erlebe unser umfangreiches Sortiment hautnah. Unser erfahrenes Team 
+            berät dich gerne persönlich zu allen Fragen rund um Bootszubehör und Wassersport.
+          </p>
+
+          <ul class="location-features">
+            <li class="location-features__item">
+              <span class="location-features__icon" aria-hidden="true">📍</span>
+              <span>Lüdinghauser Str. 34, 59387 Ascheberg</span>
+            </li>
+            <li class="location-features__item">
+              <span class="location-features__icon" aria-hidden="true">🏢</span>
+              <span>5.000 m² Lager- und Verkaufsfläche</span>
+            </li>
+            <li class="location-features__item">
+              <span class="location-features__icon" aria-hidden="true">🚚</span>
+              <span>Modernste Logistik & Express-Versand</span>
+            </li>
+            <li class="location-features__item">
+              <span class="location-features__icon" aria-hidden="true">🛒</span>
+              <span>Großer Maritim-Shop zum Stöbern</span>
+            </li>
+            <li class="location-features__item">
+              <span class="location-features__icon" aria-hidden="true">👥</span>
+              <span>Persönliche Fachberatung vor Ort</span>
+            </li>
+            <li class="location-features__item">
+              <span class="location-features__icon" aria-hidden="true">🅿️</span>
+              <span>Kostenlose Parkplätze direkt am Haus</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="location-map">
+          <iframe 
+            class="location-map__iframe"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2456.8!2d7.6059903!3d51.7910097!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47b9a771ed5898f1%3A0x1dc57689c3d34d40!2sCompass%20Maritim-Shop%20Ascheberg!5e0!3m2!1sde!2sde"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Google Maps - Compass Maritim-Shop Ascheberg"
+            aria-label="Standort der Compass Maritim-Shop in Ascheberg auf Google Maps">
+          </iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+
+<!-- The HTML footer below is for preview purposes (mobile emulator devtools) only. Do not copy to CMS content page. -->
+</body>
+</html>
