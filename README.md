@@ -375,7 +375,7 @@ Wir freuen uns über Beiträge! Bitte lesen Sie zuerst unsere [Contributing Guid
 
 ## 📝 Lizenz
 
-Wo Open Source/MIT Lizenz vorliegt, ist es im Code markiert. Einige Rechte vorbehalten bei Compass24.
+Wo Open Source/MIT Lizenz vorliegt, ist es im Code markiert. Einige Rechte vorbehalten von Compass24®.
 
 ## 📧 Sonstiges
 
