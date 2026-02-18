@@ -375,14 +375,9 @@ Wir freuen uns über Beiträge! Bitte lesen Sie zuerst unsere [Contributing Guid
 
 ## 📝 Lizenz
 
-Dieses Projekt ist proprietary und vertraulich. Alle Rechte vorbehalten bei Compass24.
+Wo Open Source/MIT Lizenz vorliegt, ist es im Code markiert. Einige Rechte vorbehalten bei Compass24.
 
-## 📧 Kontakt
+## 📧 Sonstiges
 
-- **Email**: info@compass24.de
-- **Website**: www.compass24.de
+- **Website**, die referenziert wird: www.compass24.de (diese verlinkten Inhalte unterliegen natürlich dem Copyright)
 - **GitHub**: github.com/schafeld/compass24-landing-pages
-
----
-
-Gemacht mit ❤️ vom Compass24 Team
