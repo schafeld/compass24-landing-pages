@@ -242,14 +242,6 @@ Zeigt akzeptierte Zahlungsmethoden:
 
 ---
 
-### 10. **Unternehmens-Leistungen** `company-benefits/` (Alternative)
-
-Variante zur Benefits-Sektion mit anderen Inhalten:
-- Detaillierte Leistungsbeschreibungen
-- **Verwendung:** HR-Seite, Recruiting
-
----
-
 ## 🔧 NPM Scripts
 
 | Befehl | Beschreibung |
