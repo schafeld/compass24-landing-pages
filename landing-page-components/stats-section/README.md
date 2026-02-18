@@ -36,7 +36,7 @@ Version: 1.0.2 | Datum: 2026-02-16
 
 ## Funktionen
 
-- **Responsive Design**: Passt sich an Mobile (vertical Stack), Tablet (3 Spalten) und Desktop (5 Spalten) an
+- **Responsive Design**: Passt sich an Mobile/Tablet (3 in erster, 2 in zweiter Zeile) und Desktop (5 Spalten) an
 - **Moderne Animationen**: Fade-In Animationen mit Versatzeffekt für atraktive Wirkung
 - **Gradient Hintergrund**: Ansprechendes Blau-Gradient im Compass24 Brand
 - **Accessibility**: Vollständige WCAG 2.1 AA Konformität mit semantichem HTML und ARIA-Labels
@@ -46,8 +46,8 @@ Version: 1.0.2 | Datum: 2026-02-16
 
 ## Responsive Breakpoints
 
-- **Mobile**: 0 - 479px (vertikaler Stack)
-- **Tablet**: 480px - 767px (3 Spalten)
+- **Mobile**: 0 - 479px (3 in erster, 2 in zweiter Zeile)
+- **Tablet**: 480px - 767px (3 in erster, 2 in zweiter Zeile)
 - **Desktop**: 768px - 1199px (5 Spalten, mittlerer Abstand)
 - **Large Desktop**: 1200px+ (5 Spalten, großer Abstand)
 
