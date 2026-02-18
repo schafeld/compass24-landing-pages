@@ -171,7 +171,8 @@ Das Widget ist eine **Single-File-Komponente** ohne Build-Step und ohne externe 
 │  <style>                                    │  ← Block 1/2 in PROD
 │    Scoped Design Tokens & Komponentenstile  │
 │  </style>                                   │
-├─────────────────────────────────────────────┤
+└─────────────────────────────────────────────┘
+┌─────────────────────────────────────────────┐
 │  <div id="job-widget-app">                  │  ← Block 2/2 in PROD
 │    Petite Vue Template (HTML + Direktiven)  │
 │  </div>                                     │
