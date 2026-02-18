@@ -1,6 +1,6 @@
 # Timeline – Unternehmensgeschichte
 
-![Compass24 Timeline](timeline-vertical-fun-facts.png)
+![Compass24 Timeline](./timeline-vertical-fun-facts-text-and-images-in-one-bubbles.png)
 
 **Version:** 1.2.0 (12. Februar 2026)  
 **Datei:** `timeline-vertical-fun-facts-text-and-images-in-one-bubbles.html`
