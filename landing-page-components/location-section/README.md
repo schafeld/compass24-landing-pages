@@ -208,7 +208,7 @@ Sie können die Emojis (📍, 🏢, 🚚, etc.) durch andere Unicode-Symbole ers
 - Google Maps Embed wird mit `loading="lazy"` geladen – verbessert Page Load
 - Keine externen Abhängigkeiten außer Google Maps
 - CSS ist vollständig inline – für mehrfache Nutzung in zentrale Dateien auslagern
-- Keine JavaScript erforderlich
+- Kein JavaScript erforderlich
 
 ## Anpassung der Farben
 
