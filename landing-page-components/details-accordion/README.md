@@ -9,7 +9,7 @@ Die `job-details-accordion.html` ist eine responsive Akkordeon-Komponente zur Da
 ## Funktionen
 
 - **Responsive Design**: Passt sich automatisch an Mobile und Desktop an
-- **Native HTML Akkordeons**: Nutzt `<details>/<summary>` – funktioniert überall, keine JS erforderlich
+- **Native HTML Akkordeons**: Nutzt `<details>/<summary>` – funktioniert überall, kein Javascript erforderlich
 - **Moderne Animationen**: Fade-In-Up Einleitung und smooth Expand/Collapse
 - **Accessibility**: WCAG 2.1 AA konform mit semantischem HTML und ARIA-Labels
 - **Design Tokens**: Verwendet Bootstrap-Variablen und Fallback-Werte
@@ -34,7 +34,7 @@ Die `job-details-accordion.html` ist eine responsive Akkordeon-Komponente zur Da
 - **Reduzierte Darstellung** der Positionen
 - **Beispiel-Use-Case:** Dedizierte Jobs-Seite mit großem Angebot
 
-**Entscheidungshilfe:** Bei weniger als 8 Stellenanzeigen ist diese Accordion-Komponente meist die bessere Wahl. Bei mehr Positionen solltest du das [Job Widget](../job-widget/) verwenden.
+**Entscheidungshilfe:** Bei weniger als 5 Stellenanzeigen dürfte diese Accordion-Komponente die bessere Wahl sein. Bei mehr als 10 Positionen solltest du das [Job Widget](../job-widget/) verwenden.
 
 ## Kompatibilität mit Job Widget
 
@@ -76,6 +76,8 @@ Jede Job-Position folgt diesem Aufbau:
 ```
 
 ## Einbindung in Shopware CMS
+
+CSS und HTML für diese einfache Komponente können in dasselbe HTML-Module gepackt werden.
 
 ### Schritt 1: Datei öffnen
 Öffnen Sie `job-details-accordion.html` in einem Text-Editor
