@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Compass24 Payment Methods Banner</title>
+</head>
+<body>
+<!-- The HTML header above is for preview purposes (mobile emulator devtools) only. Do not copy to CMS content page. -->
+
+<!--
+  Compass24 Payment Methods Banner
+  Full-Width Payment Providers Section
+  
+  Shows accepted payment methods: Rechnung, PayPal, Visa/Mastercard, Lastschrift, Gutschein
+
+  Version: 1.0.0
+  Date: 2026-02-16
+-->
+
+<style>
+/* ============================================
+   SCOPED DESIGN TOKENS & BASE STYLES
+   Uses Bootstrap variables from compass24.de with fallbacks for standalone viewing
+   ============================================ */
+.compass24-payment-banner-component {
+  /* 
+   * Colors - Light blue gradient background
+   * Primary: --bs-primary (#002856), Light variants for this component
+   */
+  --c24-color-bg-light: #e8f2f8;
+  --c24-color-bg-lighter: #f0f7fc;
+  --c24-color-primary: var(--bs-primary, #003366);
+  --c24-color-text-dark: var(--bs-dark, #212529);
+  --c24-color-text-muted: #666666;
+  --c24-color-white: var(--bs-white, #ffffff);
+  
+  /* Typography - Use site fonts when available */
+  --c24-font-family: var(--bs-body-font-family, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif);
+  --c24-font-size-sm: var(--font-size-sm, 0.875rem);
+  --c24-font-size-base: var(--font-size-base, 0.9375rem);
+  --c24-font-size-lg: 1.125rem;
+  --c24-font-size-xl: 1.25rem;
+  --c24-font-size-2xl: 1.5rem;
+  
+  /* Spacing */
+  --c24-space-2: 0.5rem;
+  --c24-space-3: 0.75rem;
+  --c24-space-4: 1rem;
+  --c24-space-6: 1.5rem;
+  --c24-space-8: 2rem;
+  --c24-space-10: 2.5rem;
+  --c24-space-12: 3rem;
+  
+  /* Transitions */
+  --c24-transition-base: 250ms ease-in-out;
+
+  /* Base Component Styles */
+  font-family: var(--c24-font-family);
+  font-size: var(--c24-font-size-base);
+  line-height: 1.6;
+  color: var(--c24-color-text-dark);
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  /* ============================================
+     PAYMENT SECTION - FULL WIDTH BANNER
+     ============================================ */
+  .payment-section {
+    position: relative;
+    width: 100%;
+    background: linear-gradient(135deg, var(--c24-color-bg-lighter) 0%, var(--c24-color-bg-light) 100%);
+    padding: var(--c24-space-4) var(--c24-space-4);
+    overflow: hidden;
+    
+    /* Optional: Add subtle pattern overlay */
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: 
+        radial-gradient(circle at 20% 50%, rgba(0, 51, 102, 0.03) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(0, 51, 102, 0.02) 0%, transparent 50%);
+      pointer-events: none;
+    }
+  }
+
+  /* ============================================
+     PAYMENT HEADER
+     ============================================ */
+  .payment-header {
+    position: relative;
+    text-align: center;
+    margin-bottom: var(--c24-space-8);
+    z-index: 1;
+  }
+
+  .payment-header__title {
+    display: block;
+    font-size: var(--c24-font-size-lg);
+    font-weight: 600;
+    color: var(--c24-color-text-dark);
+    line-height: 1.4;
+    margin: 0;
+    
+    @media (min-width: 768px) {
+      font-size: var(--c24-font-size-xl);
+    }
+    
+    @media (min-width: 1200px) {
+      font-size: var(--c24-font-size-2xl);
+    }
+  }
+
+  /* ============================================
+     PAYMENT CONTAINER - RESPONSIVE FLEX/GRID
+     ============================================ */
+  .payment-container {
+    position: relative;
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--c24-space-6);
+    z-index: 1;
+    
+    /* Desktop: Grid with 5 columns (one line) */
+    @media (min-width: 768px) {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: var(--c24-space-8);
+    }
+    
+    /* Large desktop: more spacing */
+    @media (min-width: 1200px) {
+      gap: var(--c24-space-10);
+    }
+  }
+
+  /* ============================================
+     PAYMENT ITEM
+     ============================================ */
+  .payment-item {
+    text-align: center;
+    padding: var(--c24-space-4);
+    animation: compass24PaymentFadeIn 0.6s ease-out both;
+    flex: 0 0 calc(50% - var(--c24-space-3));
+    min-width: 0;
+    
+    /* Mobile: 2 columns */
+    @media (min-width: 480px) {
+      flex: 0 0 calc(33.333% - var(--c24-space-4));
+    }
+    
+    /* Desktop: use grid auto-sizing */
+    @media (min-width: 768px) {
+      padding: var(--c24-space-6);
+      flex: none;
+    }
+    
+    /* Stagger animation delays */
+    &:nth-child(1) { animation-delay: 0.1s; }
+    &:nth-child(2) { animation-delay: 0.2s; }
+    &:nth-child(3) { animation-delay: 0.3s; }
+    &:nth-child(4) { animation-delay: 0.4s; }
+    &:nth-child(5) { animation-delay: 0.5s; }
+    
+    /* Subtle hover effect */
+    transition: transform var(--c24-transition-base);
+    
+    &:hover {
+      transform: translateY(-4px);
+      
+      @media (prefers-reduced-motion: reduce) {
+        transform: none;
+      }
+    }
+  }
+
+  /* ============================================
+     PAYMENT LOGO
+     ============================================ */
+  .payment-item__logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60px;
+    margin-bottom: var(--c24-space-2);
+    
+    @media (min-width: 768px) {
+      height: 80px;
+      margin-bottom: var(--c24-space-4);
+    }
+
+    img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+  }
+
+  /* ============================================
+     PAYMENT LABEL (Name/Description)
+     ============================================ */
+  .payment-item__label {
+    display: block;
+    font-size: var(--c24-font-size-sm);
+    font-weight: 500;
+    color: var(--c24-color-text-dark);
+    line-height: 1.4;
+    
+    @media (min-width: 768px) {
+      font-size: var(--c24-font-size-base);
+      line-height: 1.5;
+    }
+  }
+
+  /* ============================================
+     PAYMENT FOOTER
+     ============================================ */
+  .payment-footer {
+    position: relative;
+    text-align: center;
+    margin-top: var(--c24-space-8);
+    z-index: 1;
+  }
+
+  .payment-footer__link {
+    display: inline-block;
+    font-size: var(--c24-font-size-sm);
+    color: var(--c24-color-primary);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color var(--c24-transition-base);
+    
+    &:hover {
+      color: var(--c24-color-text-dark);
+      text-decoration: underline;
+    }
+    
+    &:focus {
+      outline: 2px solid var(--c24-color-primary);
+      outline-offset: 2px;
+      border-radius: 2px;
+    }
+    
+    @media (min-width: 768px) {
+      font-size: var(--c24-font-size-base);
+    }
+  }
+
+  /* ============================================
+     UNIVERSAL BOX SIZING
+     ============================================ */
+  & *,
+  & *::before,
+  & *::after {
+    box-sizing: inherit;
+  }
+
+  /* ============================================
+     ANIMATIONS
+     ============================================ */
+  @keyframes compass24PaymentFadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Disable animations if user prefers reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .payment-item {
+      animation: none;
+    }
+    
+    .payment-item:hover {
+      transform: none;
+    }
+  }
+}
+</style>
+
+<div class="compass24-payment-banner-component">
+  <section class="payment-section" aria-label="Akzeptierte Zahlungsarten">
+    
+    <!-- Payment Header -->
+    <header class="payment-header">
+      <h2 class="payment-header__title">So können Sie bezahlen:</h2>
+    </header>
+    
+    <!-- Payment Methods Grid -->
+    <div class="payment-container" role="list">
+      
+      <!-- Payment Method 1: Rechnung -->
+      <div class="payment-item" role="listitem">
+        <div class="payment-item__logo">
+          <img src="https://www.compass24.de/media/d9/dc/1b/1690793872/Rechnung.png" alt="" loading="lazy">
+        </div>
+        <span class="payment-item__label">Rechnung</span>
+      </div>
+      
+      <!-- Payment Method 2: PayPal -->
+      <div class="payment-item" role="listitem">
+        <div class="payment-item__logo">
+          <img src="https://www.compass24.de/media/d4/26/79/1690793872/PayPal.png" alt="" loading="lazy">
+        </div>
+        <span class="payment-item__label">PayPal</span>
+      </div>
+      
+      <!-- Payment Method 3: Visa / Mastercard -->
+      <div class="payment-item" role="listitem">
+        <div class="payment-item__logo">
+          <img src="https://www.compass24.de/media/3b/13/8d/1690793872/Visa.png" alt="" loading="lazy">
+        </div>
+        <span class="payment-item__label">Visa/Mastercard</span>
+      </div>
+      
+      <!-- Payment Method 4: Lastschrift -->
+      <div class="payment-item" role="listitem">
+        <div class="payment-item__logo">
+          <img src="https://www.compass24.de/media/90/c0/f0/1750103891/lastschriftlogo-qf_rgb.png?width=1920" alt="" loading="lazy">
+        </div>
+        <span class="payment-item__label">Lastschrift</span>
+      </div>
+      
+      <!-- Payment Method 5: Gutschein -->
+      <div class="payment-item" role="listitem">
+        <div class="payment-item__logo">
+          <img src="https://www.compass24.de/media/51/25/02/1750106940/voucher.png?width=1920" alt="" loading="lazy">
+        </div>
+        <span class="payment-item__label">Gutschein</span>
+      </div>
+      
+    </div>
+    
+    <!-- Payment Footer with Info Link -->
+    <footer class="payment-footer">
+      <a href="https://www.compass24.de/zahlungsarten" class="payment-footer__link">
+        Weitere Informationen zu unseren Zahlungsarten
+      </a>
+    </footer>
+    
+  </section>
+</div>
+
+<!-- The HTML "footer" below is for preview purposes (mobile emulator devtools) only. Do not copy to CMS content page. -->
+</body>
+</html>
