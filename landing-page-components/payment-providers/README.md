@@ -453,10 +453,8 @@ SVGs sind sogar empfohlen, da sie lossless skalieren.
 
 ---
 
-## 📧 Support & Feedback
+## 📧 Sonstiges
 
-Fragen oder Verbesserungen?
-- **Email**: info@compass24.de
 - **GitHub**: github.com/schafeld/compass24-landing-pages
 - **Zahlungsarten Info**: https://www.compass24.de/zahlungsarten
 
