@@ -1,298 +1,388 @@
 # Compass24 Landing Pages
 
-Modern, responsive landing pages for www.compass24.de featuring a beautiful design with a company history timeline.
+Moderne, responsive Landing Pages für www.compass24.de mit durchdachtem Design und einer interaktiven Zeitleiste zur Unternehmensgeschichte.
 
-## 📋 Overview
+## 📋 Übersicht
 
-This repository contains two main landing pages:
+Dieses Projekt enthält wiederverwendbare Komponenten und Seiten für Compass24:
 
-- **Über uns (About Us)**: Company information with an interactive timeline showcasing Compass24's history since 1995
-- **Jobs (Careers)**: Career opportunities and open positions at Compass24
+- **Über uns**: Unternehmensinfo mit interaktiver Zeitleiste (1995 bis heute)
+- **Jobs**: Stellenangebote und Karrieremöglichkeiten
+- **Landing Page Komponenten**: Modulare, wiederverwendbare Komponenten für CMS-Integration
 
-## ✨ Features
+Alle Komponenten sind für die Injection in Shopware und andere CMS-Systeme optimiert.
 
-- 🎨 **Modern Design**: Clean, professional design with modern CSS and HTML
-- 📱 **Fully Responsive**: Optimized for mobile, tablet, and desktop devices
-- ♿ **Accessible**: WCAG 2.1 AA compliant with semantic HTML and ARIA labels
-- 🎯 **Design System**: Comprehensive design tokens for consistent styling
-- 📈 **Interactive Timeline**: Visual company history on the About Us page
-- 🚀 **Performance Optimized**: Fast loading and smooth animations
-- 🤖 **AI-Ready**: GitHub Copilot instructions included for development
+## ✨ Kernfeatures
+
+- 🎨 **Modernes Design**: Sauberes, professionelles Design mit modernem CSS und HTML
+- 📱 **Vollständig Responsive**: Optimiert für Mobile, Tablet und Desktop
+- ♿ **Barrierefreiheit**: WCAG 2.1 AA konform mit semantischem HTML und ARIA-Labels
+- 🎯 **Design System**: Umfassende Design Tokens für konsistentes Styling
+- 📈 **Interaktive Timeline**: Visuelle Unternehmensgeschichte
+- 🚀 **Performance**: Schnelle Ladezeiten und flüssige Animationen
+- 💉 **CMS-Ready**: Einfache Injection in Shopware und andere Systeme
+- 🤖 **AI-Freundlich**: GitHub Copilot Instructions für Entwicklung
 
 ## 🚀 Quick Start
 
-1. Clone the repository:
+1. Repository klonen:
 ```bash
 git clone https://github.com/schafeld/compass24-landing-pages.git
 cd compass24-landing-pages
 ```
 
-2. Install dependencies:
+2. Abhängigkeiten installieren:
 ```bash
 npm install
 ```
 
-3. Start the development server with hot-reloading:
+3. Entwicklungsserver starten:
 ```bash
 npm run dev
 ```
 
-4. Open the pages in your browser:
-- Open `ueber-uns.html` for the About Us page
-- Open `jobs.html` for the Jobs page
+4. Seiten im Browser öffnen:
+- `ueber-uns.html` für die Über-uns-Seite
+- `jobs.html` für die Jobs-Seite
 
-## 🔨 Build & Deploy
-
-### Building for Production
-
-To compile pages into standalone, injection-ready files:
-
-```bash
-npm run build
-```
-
-This outputs to the `dist/` folder:
-- `ueber-uns.html` - Compiled HTML with all CSS/JS inlined
-- `ueber-uns.inject.js` - JavaScript injector for easy integration
-- `jobs.html` - Compiled HTML with all CSS/JS inlined
-- `jobs.inject.js` - JavaScript injector for easy integration
-
-### CSS Scoping
-
-All built CSS is scoped under the unique wrapper class `.compass24-landing-2026` to prevent style conflicts with the live site.
-
-## 💉 Injection into Production Site
-
-The built files are designed to be injected into the live compass24.de website. All content is wrapped in `.compass24-landing-2026` to prevent CSS conflicts.
-
-### Option 1: Auto-Inject with JavaScript File
-
-Upload the `.inject.js` file to your server and add to the page:
-
-```html
-<script src="https://your-cdn.com/ueber-uns.inject.js" data-auto-inject></script>
-```
-
-This will automatically inject the content into `.cms-page` on page load.
-
-### Option 2: Manual JavaScript Injection
-
-Include the injector script and call it manually:
-
-```html
-<script src="https://your-cdn.com/ueber-uns.inject.js"></script>
-<script>
-  // Inject into default .cms-page selector
-  injectCompass24LandingPage();
-  
-  // Or inject into a custom selector
-  injectCompass24LandingPage('#my-custom-container');
-</script>
-```
-
-### Option 3: Direct innerHTML Injection
-
-For CMS systems, copy the content from `dist/ueber-uns.html` (excluding the comment header) and inject directly:
-
-```javascript
-// In your CMS or page script
-document.querySelector('.cms-page').innerHTML = `
-  <style>/* ... scoped CSS ... */</style>
-  <div class="compass24-landing-2026">
-    <!-- ... page content ... -->
-  </div>
-  <script>/* ... JS ... */</script>
-`;
-```
-
-### Option 4: Server-Side Include
-
-For backend systems, read the built file and inject:
-
-```php
-<?php
-$content = file_get_contents('dist/ueber-uns.html');
-// Remove the comment header (first 17 lines)
-$content = preg_replace('/^<!--[\s\S]*?-->\s*/', '', $content);
-echo $content;
-?>
-```
-
-### Wrapper Class
-
-All styles use the unique scoped class `.compass24-landing-2026`:
-- Prevents CSS conflicts with existing site styles
-- All selectors are prefixed with this class
-- JavaScript queries are also scoped to this wrapper
-
-### Updating Content
-
-1. Edit the source files (`ueber-uns.html`, `jobs.html`, CSS, JS)
-2. Run `npm run build`
-3. Upload the new `dist/*.inject.js` or `dist/*.html` files
-4. Clear any CDN caches
-
-## 📁 Project Structure
+## 📁 Projektstruktur
 
 ```
 compass24-landing-pages/
 ├── .github/
-│   └── copilot-instructions.md    # GitHub Copilot guidelines
+│   └── copilot-instructions.md      # GitHub Copilot Richtlinien
 ├── css/
-│   ├── design-tokens.css          # Design system variables
-│   ├── styles.css                 # Main stylesheet
+│   ├── design-tokens.css            # Design System Variablen
+│   ├── styles.css                   # Hauptstylesheet
 │   └── components/
-│       ├── accordion.css          # Accordion component
-│       └── timeline.css           # Timeline component styles
+│       ├── accordion.css            # Akkordeon Komponente
+│       └── timeline.css             # Timeline Komponente
 ├── js/
-│   ├── main.js                    # Main JavaScript
+│   ├── main.js                      # Hauptscript
 │   └── components/
-│       ├── image-slider.js        # Image slider web component
-│       └── animated-counter.js    # Counter animation component
+│       ├── image-slider.js          # Bild-Slider
+│       └── animated-counter.js      # Counter Animation
+├── landing-page-components/         # Wiederverwendbare Komponenten
+│   ├── company-benefits/            # Unternehmens-Benefits
+│   ├── contact-card/                # Kontaktkarte
+│   ├── details-accordion/           # Job-Details Akkordeon
+│   ├── job-widget/                  # Interaktives Job-Widget
+│   ├── location-section/            # Standort-Sektion
+│   ├── stats-section/               # Schlüsselzahlen-Banner
+│   ├── timeline/                    # Timeline-Variationen
+│   ├── values-section/              # Unternehmens-Werte
+│   ├── payment-providers/           # Zahlungsmittel-Banner
+│   └── mockups/                     # Mockup-Dateien
 ├── scripts/
-│   └── build.js                   # Build script for production
-├── dist/                          # Built files (gitignored)
-│   ├── ueber-uns.html             # Compiled page
-│   ├── ueber-uns.inject.js        # JS injector
-│   ├── jobs.html                  # Compiled page
-│   └── jobs.inject.js             # JS injector
-├── ueber-uns.html                 # About Us page (source)
-├── jobs.html                      # Jobs page (source)
-├── package.json                   # npm dependencies & scripts
-├── CONTRIBUTING.md                # Contribution guidelines
-└── README.md                      # This file
+│   └── build.js                     # Build-Script
+├── dist/                            # Gebaute Dateien (gitignored)
+├── ueber-uns.html                   # Über-uns-Seite
+├── jobs.html                        # Jobs-Seite
+├── package.json                     # npm Dependencies
+├── CONTRIBUTING.md                  # Contribution Guidelines
+└── README.md                        # Diese Datei
 ```
 
-## 🔧 NPM Scripts
+## 🧩 Landing Page Komponenten
 
-| Script | Description |
-|--------|-------------|
-| `npm run dev` | Start development server with hot-reloading |
-| `npm run build` | Build pages for production (outputs to `dist/`) |
-| `npm run build:watch` | Build and watch for changes |
-| `npm run lint` | Run all linters (HTML, CSS, JS) |
-| `npm run lint:fix` | Auto-fix linting issues |
-| `npm run clean` | Remove `dist/` folder |
+### 1. **Unternehmens-Benefits** `company-benefits/`
 
-## 🎨 Design System
+![Compass24 Benefits](landing-page-components/company-benefits/company-benefits.png)
 
-The project uses a comprehensive design token system defined in `css/design-tokens.css`:
+Zeigt die Vorteile, die das Arbeiten bei Compass24 bietet:
+- 6 Benefit-Karten mit Icons
+- Responsive Grid-Layout (1–3 Spalten)
+- Animationen beim Laden
+- **Verwendung:** Jobs-Seite, Karriere-Seite
 
-- **Colors**: Primary brand colors, semantic colors, and neutral palette
-- **Typography**: Font families, sizes, weights, and line heights
-- **Spacing**: Consistent spacing scale (4px base)
-- **Shadows**: Elevation system for depth
-- **Borders**: Radius values and border styles
-- **Transitions**: Timing functions and durations
-
-### Brand Colors (Do Not Modify)
-
-- Primary: `#0066b3` (Compass24 Blue)
-- Secondary: `#00a3e0` (Light Blue)
-- Accent: `#ff6b35` (Orange)
-
-## 🧩 Components
-
-### Timeline Component
-
-The timeline component displays company history in an engaging, visual format:
-
-- **Alternating Layout**: Items alternate between left and right on desktop
-- **Responsive**: Stacks vertically on mobile devices
-- **Interactive**: Hover effects and smooth animations
-- **Milestone Markers**: Special styling for important years
-
-## 🤖 GitHub Copilot Integration
-
-This project includes comprehensive GitHub Copilot instructions in `.github/copilot-instructions.md`. When working with VS Code and GitHub Copilot, the AI will automatically follow the project's:
-
-- Coding standards and conventions
-- Design system usage guidelines
-- Accessibility requirements
-- Performance best practices
-- Brand guidelines (logo, colors, fonts)
-
-## 🛠️ Development
-
-### Prerequisites
-
-- A modern web browser
-- A text editor (VS Code recommended)
-- Git for version control
-
-### Making Changes
-
-1. Create a new branch for your feature
-2. Make your changes following the [Contributing Guidelines](CONTRIBUTING.md)
-3. Test across different browsers and devices
-4. Submit a pull request
-
-### Coding Standards
-
-- **HTML**: Semantic HTML5, BEM naming convention
-- **CSS**: Use design tokens, mobile-first approach
-- **JavaScript**: ES6+, const/let, JSDoc comments
-- **Accessibility**: WCAG 2.1 AA compliance
-
-See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
-
-## 📱 Responsive Breakpoints
-
-- **Mobile**: 0-767px (default styles)
-- **Tablet**: 768px and up
-- **Desktop**: 1024px and up
-- **Large Desktop**: 1440px and up
-
-## ♿ Accessibility
-
-This project prioritizes accessibility:
-
-- Semantic HTML structure
-- ARIA labels and roles
-- Keyboard navigation support
-- Screen reader compatibility
-- Sufficient color contrast (4.5:1 minimum)
-- Focus indicators on interactive elements
-
-## 🌐 Browser Support
-
-- Chrome (last 2 versions)
-- Firefox (last 2 versions)
-- Safari (last 2 versions)
-- Edge (last 2 versions)
-- Mobile: iOS Safari, Chrome Android
-
-## 📄 Pages
-
-### Über uns (About Us)
-
-Features:
-- Company introduction and mission
-- Interactive timeline from 1995 to present
-- Company values section
-- Call-to-action to jobs page
-
-### Jobs (Careers)
-
-Features:
-- Why work at Compass24
-- Current job openings
-- Application process overview
-- Contact information
-
-## 🤝 Contributing
-
-We welcome contributions! Please read our [Contributing Guidelines](CONTRIBUTING.md) before submitting a pull request.
-
-## 📝 License
-
-This project is proprietary and confidential. All rights reserved by Compass24.
-
-## 📧 Contact
-
-- **Email**: info@compass24.de
-- **Website**: www.compass24.de
+📄 [Vollständige Dokumentation](landing-page-components/company-benefits/README.md)
 
 ---
 
-Made with ❤️ by the Compass24 team
+### 2. **Kontaktkarte** `contact-card/`
+
+![Compass24 Contact Card](landing-page-components/contact-card/contact-card-secretary.png)
+
+Zeigt Kontaktinformationen für die Sekretärin:
+- E-Mail und Telefonnummer
+- Ansprechpartner und Adresse
+- Interaktive Links (mailto, tel)
+- **Verwendung:** Jobs-Seite, Footer, Kontakt-Sektion
+
+📄 [Vollständige Dokumentation](landing-page-components/contact-card/README.md)
+
+---
+
+### 3. **Job-Details Akkordeon** `details-accordion/`
+
+![Compass24 Job Accordion](landing-page-components/details-accordion/job-details-accordion.png)
+
+Detaillierte Stellenbeschreibungen in expandierbarem Format:
+- Native `<details>`/`<summary>` HTML
+- Keine JavaScript erforderlich
+- Meta-Informationen (Standort, Typ, Startdatum)
+- Call-to-Action "Jetzt bewerben"
+- **Verwendung:** Wenn nur wenige Stellen (< 8) zu zeigen sind
+- **Alternative:** Job Widget für viele Positionen
+
+📄 [Vollständige Dokumentation](landing-page-components/details-accordion/README.md)
+
+---
+
+### 4. **Job Widget** `job-widget/`
+
+![Compass24 Job Widget](landing-page-components/job-widget/job-widget--no-dependency--adapted-for-shopware.png)
+
+Interaktives, filterbares Job-Angebot System:
+- Petite Vue (inlined, keine externe Abhängigkeit)
+- Such- und Filter-Funktionalität
+- Accordion-Darstellung
+- Automatische Generierung von Filter-Dropdowns
+- **Verwendung:** Jobs-Seite mit vielen Positionen (> 8)
+- **Hinweis:** Zwei-Block-Aufteilung erforderlich in Shopware PROD
+
+📄 [Vollständige Dokumentation](landing-page-components/job-widget/README.md)
+
+---
+
+### 5. **Standort-Sektion** `location-section/`
+
+![Compass24 Location](landing-page-components/location-section/company-location.png)
+
+Zeigt Unternehmensstandort mit Karte:
+- Embedded Google Maps
+- Text mit Feature-Liste
+- Responsive Two-Column Layout
+- **Verwendung:** About-Seite, Kontakt-Seite, Footer
+
+📄 [Vollständige Dokumentation](landing-page-components/location-section/README.md)
+
+---
+
+### 6. **Schlüsselzahlen-Banner** `stats-section/`
+
+![Compass24 Key Metrics 1](landing-page-components/stats-section/key-metrics-section-data-1.png)
+
+Zwei Datensätze mit wichtigen Unternehmens-Statistiken:
+
+**Datensatz 1:**
+- Gründungsjahr (1979)
+- Artikel (42.000+)
+- Katalogseiten (400+)
+- Pakete täglich (3.000+)
+- Online Shops (11)
+
+**Datensatz 2:**
+- Mitarbeiter (100+)
+- Lagerfläche (15.000 m²)
+- Kunden (800.000+)
+- Marken (150+)
+- Eigenprodukte (2.000+)
+
+- Full-Width Gradient Banner
+- Responsive 5-spaltig → 1-spaltig
+- **Verwendung:** About-Seite, Teaser-Section
+
+📄 [Vollständige Dokumentation](landing-page-components/stats-section/README.md)
+
+---
+
+### 7. **Timeline-Sektion** `timeline/`
+
+![Compass24 Timeline](landing-page-components/timeline/timeline-vertical-fun-facts.png)
+
+Interaktive Zeitleiste der Unternehmensgeschichte:
+- Vertikales Layout mit Bildern und Text
+- Bubble-Design für Meilensteine
+- Responsive auf Mobile
+- Mehrere Layouts verfügbar
+
+**Verfügbare Variationen:**
+- Nur Text-Bubbles
+- Text + Bilder in Bubbles
+- Fun Facts mit Bildern
+
+- **Verwendung:** About-Seite, History-Section
+
+📄 [Siehe Unterordner für Details](landing-page-components/timeline/)
+
+---
+
+### 8. **Unternehmens-Werte** `values-section/`
+
+![Compass24 Values](landing-page-components/values-section/values-section.png)
+
+Zeigt die 6 Kernwerte von Compass24:
+- Qualität & Expertise
+- Kundenorientierung
+- Innovation
+- Familienunternehmen
+- Leidenschaft
+- Nachhaltigkeit
+
+- Kompaktes 3×2 Grid-Layout
+- Kantige Karten-Design
+- Staggered Animations
+- **Verwendung:** About-Seite, Culture-Section
+
+📄 [Vollständige Dokumentation](landing-page-components/values-section/README.md)
+
+---
+
+### 9. **Zahlungsmittel-Banner** `payment-providers/`
+
+![Compass24 Payment Methods](landing-page-components/payment-providers/payment-banner.png)
+
+Zeigt akzeptierte Zahlungsmethoden:
+- Logos verschiedener Payment-Provider
+- Responsive Anordnung
+- **Verwendung:** Footer, Checkout-Seite
+
+📄 [Siehe Unterordner für Details](landing-page-components/payment-providers/)
+
+---
+
+### 10. **Unternehmens-Leistungen** `company-benefits/` (Alternative)
+
+Variante zur Benefits-Sektion mit anderen Inhalten:
+- Detaillierte Leistungsbeschreibungen
+- **Verwendung:** HR-Seite, Recruiting
+
+---
+
+## 🔧 NPM Scripts
+
+| Befehl | Beschreibung |
+|--------|-------------|
+| `npm run dev` | Entwicklungsserver mit Hot-Reload |
+| `npm run build` | Build für Produktion (→ `dist/`) |
+| `npm run build:watch` | Build mit Watch-Modus |
+| `npm run lint` | Alle Linter ausführen |
+| `npm run lint:fix` | Linting-Fehler automatisch beheben |
+| `npm run clean` | `dist/` Ordner löschen |
+
+## 🎨 Design System
+
+Das Projekt nutzt ein umfassendes Design Token System (`css/design-tokens.css`):
+
+- **Farben**: Brand-Farben, semantische Farben, neutrale Palette
+- **Typografie**: Font-Familie, Größen, Gewichte, Zeilenhöhe
+- **Abstände**: Konsistente Spacing-Skala (4px Basis)
+- **Schatten**: Elevation System für Tiefe
+- **Grenzen**: Border-Radius und Border-Stile
+- **Übergänge**: Timing und Dauer
+
+### Brand-Farben (Nicht verändern!)
+
+- **Primär**: #003366 (Compass24 Blau)
+- **Sekundär**: #0066b3 (Helles Blau)
+- **Akzent**: #0099cc (Cyan)
+
+## 💉 Integration in Shopware CMS
+
+Alle Komponenten sind für die Injection in Shopware optimiert. Jede Komponente kann unabhängig eingebunden werden:
+
+### Schritt-für-Schritt Integration
+
+1. **HTML-Datei öffnen** → Komponenten-Ordner
+2. **CSS kopieren** → `<style>` Block aus `<head>`
+3. **HTML kopieren** → Nur das `.compass24-*-component` Div
+4. **In Shopware einfügen** → HTML-Editor Block
+5. **Speichern**
+
+### Best Practices
+
+- Jede Komponente nutzt einen eindeutigen Wrapper-Class (z. B. `.compass24-job-widget-component`)
+- CSS ist vollständig scoped → Keine Konflikte mit bestehenden Styles
+- Alle Komponenten sind self-contained
+
+## 🌍 Browser-Unterstützung
+
+- Chrome (letzte 2 Versionen)
+- Firefox (letzte 2 Versionen)
+- Safari (letzte 2 Versionen)
+- Edge (letzte 2 Versionen)
+- Mobile: iOS Safari, Chrome Android
+
+## 📱 Responsive Breakpoints
+
+- **Mobile**: 0–479px (1 Spalte, optimiert)
+- **Tablet**: 480–1023px (2–3 Spalten)
+- **Desktop**: 1024px+ (volle 3+ Spalten)
+- **Large Desktop**: 1440px+ (erweiterte Abstände)
+
+## ♿ Barrierefreiheit
+
+Das Projekt erfüllt WCAG 2.1 AA Standard:
+
+- ✅ Semantisches HTML
+- ✅ ARIA-Labels und Rollen
+- ✅ Keyboard-Navigation
+- ✅ Screen Reader Kompatibilität
+- ✅ Farbkontrast 4.5:1 minimum
+- ✅ Sichtbare Focus-Indikatoren
+- ✅ Animationen respektieren `prefers-reduced-motion`
+
+## 🤖 GitHub Copilot Integration
+
+Das Projekt enthält umfassende Copilot-Richtlinien (`.github/copilot-instructions.md`). Bei der Verwendung von VS Code + GitHub Copilot werden automatisch befolgt:
+
+- Coding Standards
+- Design System Richtlinien
+- Accessibility Requirements
+- Performance Best Practices
+- Brand Guidelines
+
+## 🛠️ Entwicklung
+
+### Anforderungen
+
+- Moderner Web-Browser
+- Text-Editor (VS Code empfohlen)
+- Git für Versionskontrolle
+
+### Änderungen durchführen
+
+1. Feature-Branch erstellen
+2. Änderungen gemäß [Contributing Guidelines](CONTRIBUTING.md)
+3. Auf verschiedenen Geräten/Browsern testen
+4. Pull Request einreichen
+
+### Code-Standards
+
+- **HTML**: Semantisches HTML5, BEM Naming
+- **CSS**: Design Tokens, Mobile-First
+- **JavaScript**: ES6+, const/let, JSDoc Comments
+- **Accessibility**: WCAG 2.1 AA Konformität
+
+Siehe [CONTRIBUTING.md](CONTRIBUTING.md) für Details.
+
+## 📊 Komponenten-Übersicht Checkliste
+
+- ✅ Company Benefits – 6 Benefit-Karten
+- ✅ Contact Card – Kontaktinformationen
+- ✅ Job Details Accordion – Stellenbeschreibungen (< 8)
+- ✅ Job Widget – Interaktive Job-Suche (> 8)
+- ✅ Location Section – Google Maps + Info
+- ✅ Key Metrics – Statistiken Banner (2 Datensätze)
+- ✅ Timeline – Unternehmensgeschichte
+- ✅ Values Section – 6 Unternehmens-Werte
+- ✅ Payment Providers – Zahlungsmittel
+
+## 🤝 Beitragen
+
+Wir freuen uns über Beiträge! Bitte lesen Sie zuerst unsere [Contributing Guidelines](CONTRIBUTING.md).
+
+## 📝 Lizenz
+
+Dieses Projekt ist proprietary und vertraulich. Alle Rechte vorbehalten bei Compass24.
+
+## 📧 Kontakt
+
+- **Email**: info@compass24.de
+- **Website**: www.compass24.de
+- **GitHub**: github.com/schafeld/compass24-landing-pages
+
+---
+
+Gemacht mit ❤️ vom Compass24 Team
