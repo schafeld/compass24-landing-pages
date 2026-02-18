@@ -189,7 +189,7 @@ Zwei Datensätze mit wichtigen Unternehmens-Statistiken:
 
 ### 7. **Timeline-Sektion** `timeline/`
 
-![Compass24 Timeline](landing-page-components/timeline/timeline-vertical-fun-facts.png)
+![Compass24 Timeline](timeline-vertical-fun-facts-text-and-images-in-one-bubbles.png)
 
 Interaktive Zeitleiste der Unternehmensgeschichte:
 - Vertikales Layout mit Bildern und Text
